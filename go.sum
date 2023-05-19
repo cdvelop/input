@@ -1,0 +1,4 @@
+github.com/cdvelop/model v0.0.15 h1:j+J+5qPRTb4aIir6Zh5Gy6U6rgVrELN+kEZE1mpkQAI=
+github.com/cdvelop/model v0.0.15/go.mod h1:cYJNxbv1WV/aDgiVPV9VXs8LrbF8+0nU+X+KfSevyzw=
+golang.org/x/text v0.9.0 h1:2sjJmO8cDvYveuX97RDLsxlyUxLl+GHoLxBiRdHllBE=
+golang.org/x/text v0.9.0/go.mod h1:e1OnstbJyHTd6l/uOt8jFFHp6TRDWZR/bV3emEE/zU8=
