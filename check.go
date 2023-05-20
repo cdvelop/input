@@ -6,6 +6,7 @@ import (
 	"github.com/cdvelop/model"
 )
 
+// SourceData() map[string]string
 func Check(data sourceData, onlyInternalContend bool) model.Input {
 	in := check{
 		Data:                  data,

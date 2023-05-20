@@ -4,6 +4,7 @@ import "github.com/cdvelop/model"
 
 //{"d":"Dama","v":"Varón"}
 // options: title="xxx"
+// SourceData() map[string]string
 func Radio(data sourceData, options ...string) model.Input {
 	in := radio{
 		Data:       data,
@@ -51,7 +52,6 @@ func (r radio) ValidateField(data_in string, skip_validation bool) bool {
 	} else {
 		return true
 	}
-	return false
 }
 
 func (r radio) GoodTestData(table_name, field_name string, random bool) (out []string) {

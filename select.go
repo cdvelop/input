@@ -2,6 +2,7 @@ package input
 
 import "github.com/cdvelop/model"
 
+// SourceData() map[string]string
 func SelecTag(data sourceData) model.Input {
 	in := selecTag{
 		Data: data,
