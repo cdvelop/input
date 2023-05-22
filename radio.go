@@ -7,8 +7,10 @@ import "github.com/cdvelop/model"
 // SourceData() map[string]string
 func Radio(data sourceData, options ...string) model.Input {
 	in := radio{
-		Data:       data,
-		attributes: attributes{},
+		Data: data,
+		attributes: attributes{
+			Oninput: `oninput="` + DefaultValidateFunction + `"`,
+		},
 	}
 	in.Set(options...)
 
@@ -21,7 +23,7 @@ func Radio(data sourceData, options ...string) model.Input {
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		Build:    in,
+		HtmlTag:  in,
 		Validate: in,
 		TestData: in,
 	}
@@ -54,7 +56,7 @@ func (r radio) ValidateField(data_in string, skip_validation bool) bool {
 	}
 }
 
-func (r radio) GoodTestData(table_name, field_name string, random bool) (out []string) {
+func (r radio) GoodTestData() (out []string) {
 	for k := range r.Data.SourceData() {
 		out = append(out, k)
 	}

@@ -38,7 +38,7 @@ func Test_InputPrimaryKey(t *testing.T) {
 }
 
 func Test_GoodInputPrimaryKey(t *testing.T) {
-	for _, data := range modelPrimaryKey.TestData.GoodTestData("", "", true) {
+	for _, data := range modelPrimaryKey.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
 			if ok := modelPrimaryKey.Validate.ValidateField(data, false); !ok {
 				log.Fatalf("resultado [%v] [%v]", ok, data)

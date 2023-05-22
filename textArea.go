@@ -2,52 +2,41 @@ package input
 
 import "github.com/cdvelop/model"
 
-// pattern ej: `^[a-zA-Z 0-9\:\.\,\+\-]{0,30}$`
-// info ej: `permitido letras números - , :
-// cols ej: 1,2 ... 0 = default 1
-// rows ej; 4,6 ... 0 = default 3
-func TextArea(pattern, info string, cols, rows uint8) model.Input {
-	in := textArea{}
-
-	if pattern != "" {
-		in.pattern = pattern
-	} else {
-		in.pattern = `^[A-Za-zÑñáéíóú 0-9:$%.,+-/\\()|\n/g]{2,1000}$`
+//options:
+// pattern="`^[a-zA-Z 0-9\:\.\,\+\-]{0,30}$`"
+// title="permitido letras números - , :"
+// cols="2" default 1
+// rows="8" default 3
+func TextArea(options ...string) model.Input {
+	in := textArea{
+		attributes: attributes{
+			Rows:    `rows="3"`,
+			Cols:    `cols="1"`,
+			Title:   `title="letras números - , : . () $ % permitidos min 2 max 1000 caracteres"`,
+			Pattern: `^[A-Za-zÑñáéíóú 0-9:$%.,+-/\\()|\n/g]{2,1000}$`,
+			Oninput: `oninput="TextAreaAutoGrow(this)"`,
+			Onkeyup: `onkeyup="` + DefaultValidateFunction + `"`,
+		},
 	}
-	if info != "" {
-		in.info = info
-	} else {
-		in.info = `letras números - , : . () $ % permitidos min 2 max 1000 caracteres`
-	}
-
-	if rows != 0 && cols != 0 {
-		in.Rows = rows
-		in.Cols = cols
-	} else {
-		in.Cols = 1
-		in.Rows = 3
-	}
+	in.Set(options...)
 
 	return model.Input{
 		Component: model.Component{
 			Name:        in.Name(),
 			CssGlobal:   nil,
 			CssPrivate:  nil,
-			JsGlobal:    nil,
+			JsGlobal:    in,
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		Build:    in,
+		HtmlTag:  in,
 		Validate: in,
 		TestData: in,
 	}
 }
 
 type textArea struct {
-	info    string
-	pattern string
-	Rows    byte //filas ej 4,5,6
-	Cols    byte //columnas ej 50,80
+	attributes
 }
 
 func (t textArea) Name() string {
@@ -56,4 +45,14 @@ func (t textArea) Name() string {
 
 func (t textArea) HtmlName() string {
 	return "textarea"
+}
+
+func (t textArea) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+	return t.buildHtmlTag(t.HtmlName(), t.Name(), id, field_name, allow_skip_completed)
+}
+func (t textArea) JsGlobal() string {
+	return `function TextAreaAutoGrow(input) {
+		input.style.height = "5px";
+		input.style.height = (input.scrollHeight) + "px";
+	};`
 }

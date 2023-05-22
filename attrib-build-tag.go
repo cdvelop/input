@@ -5,9 +5,23 @@ import (
 )
 
 // Type:radio,text,number etc TagInput <input type="input"
-func (a attributes) Build(html_name, input_name, id, field_name string, allow_skip_completed bool) string {
+func (a attributes) buildHtmlTag(html_name, input_name, id, field_name string, allow_skip_completed bool) string {
 
-	result := `<input type="` + html_name + `" id="` + id + `" name="` + field_name + `" data-name="` + input_name + `"`
+	var open string
+	var close string
+
+	switch input_name {
+	case "textarea":
+		open = `<textarea `
+		close = `></textarea>`
+
+	default:
+		open = `<input type="` + html_name + `" `
+		close = `>`
+
+	}
+
+	result := open + `id="` + id + `" name="` + field_name + `" data-name="` + input_name + `"`
 
 	elem := reflect.ValueOf(a)
 	elemType := elem.Type()
@@ -45,7 +59,11 @@ func (a attributes) Build(html_name, input_name, id, field_name string, allow_sk
 		result += ` required`
 	}
 
-	result += ">"
+	if a.Onkeyup == "" && a.Oninput == "" {
+		result += ` onkeyup="` + DefaultValidateFunction + `"`
+	}
+
+	result += close
 
 	return result
 }

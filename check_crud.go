@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-func (c check) BuildCrudResponseUiElement(rq_type, destiny_module_name, field_name, text_field, field_value string, required bool) (out string) {
+func (c check) HtmlTagCrudResponseUiElement(rq_type, destiny_module_name, field_name, text_field, field_value string, required bool) (out string) {
 
 	var tag string
 	var id string

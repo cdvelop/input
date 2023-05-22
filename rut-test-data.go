@@ -1,6 +1,6 @@
 package input
 
-func (r rut) GoodTestData(table_name, field_name string, random bool) (out []string) {
+func (r rut) GoodTestData() (out []string) {
 
 	ok_rut := []string{
 		"22537160-1",
@@ -18,7 +18,7 @@ func (r rut) GoodTestData(table_name, field_name string, random bool) (out []str
 	if r.dni_mode {
 		out = []string{
 			"ax001223b",
-			"A0C00A38",
+			"A0C00A389",
 			"B0004DF678",
 		}
 		out = append(out, ok_rut...)

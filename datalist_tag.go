@@ -6,13 +6,13 @@ import (
 	"strconv"
 )
 
-func (d datalist) HtmlTAG(id, field_name string, allow_skip_completed bool) string {
+func (d datalist) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 	var req string
 	if !allow_skip_completed {
 		req = ` required`
 	}
 
-	tag := fmt.Sprintf(`<input list="%v" name="%v" id="%v"%v>`, field_name, field_name, id, req)
+	tag := fmt.Sprintf(`<input list="%v" name="%v" id="%v"%v oninput="`+DefaultValidateFunction+`">`, field_name, field_name, id, req)
 	tag += fmt.Sprintf(`<datalist id="%v">`, id)
 	tag += d.GetAllTagOption()
 	tag += `</datalist>`
@@ -54,6 +54,6 @@ func (d datalist) GetAllTagOption() (opt string) {
 
 // etiqueta html option de un datalist
 func (d datalist) LabelOptSelect(key, value string) (opt string) {
-	opt = `<option id="` + key + `" value="` + value + `">`
+	opt = `<option data-id="` + key + `" value="` + value + `">`
 	return
 }

@@ -2,8 +2,10 @@ package input
 
 import "github.com/cdvelop/model"
 
-func Info() model.Input {
-	in := info{}
+func Info(value string) model.Input {
+	in := info{
+		Value: value,
+	}
 
 	return model.Input{
 		Component: model.Component{
@@ -14,7 +16,7 @@ func Info() model.Input {
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		Build:    in,
+		HtmlTag:  in,
 		Validate: nil,
 		TestData: nil,
 	}
@@ -33,6 +35,6 @@ func (i info) HtmlName() string {
 	return "text"
 }
 
-func (i info) HtmlTAG(id, field_name string, allow_skip_completed bool) string {
+func (i info) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 	return i.Value
 }

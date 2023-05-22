@@ -29,7 +29,7 @@ func Number(options ...string) model.Input {
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		Build:    in,
+		HtmlTag:  in,
 		Validate: in,
 		TestData: in,
 	}
@@ -47,8 +47,8 @@ func (n number) HtmlName() string {
 	return "number"
 }
 
-func (n number) HtmlTAG(id, field_name string, allow_skip_completed bool) string {
-	return n.Build(n.HtmlName(), n.Name(), id, field_name, allow_skip_completed)
+func (n number) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+	return n.buildHtmlTag(n.HtmlName(), n.Name(), id, field_name, allow_skip_completed)
 
 }
 
@@ -73,7 +73,7 @@ func (n number) FieldRemoveEventListener(field_name string) string {
 	return fmt.Sprintf(`input_%v.removeEventListener("input", InputValidationWithPattern);`, field_name)
 }
 
-func (n number) GoodTestData(table_name, field_name string, random bool) (out []string) {
+func (n number) GoodTestData() (out []string) {
 
 	temp := []string{
 		"56988765432",

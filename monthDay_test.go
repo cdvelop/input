@@ -37,7 +37,7 @@ func Test_InputMonthDay(t *testing.T) {
 }
 
 func Test_GoodInputMonthDay(t *testing.T) {
-	for _, data := range modelMonthDay.TestData.GoodTestData("", "", true) {
+	for _, data := range modelMonthDay.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
 			if ok := modelMonthDay.Validate.ValidateField(data, false); !ok {
 				log.Fatalf("resultado [%v] [%v]", ok, data)

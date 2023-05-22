@@ -6,7 +6,7 @@ import "regexp"
 func (t textArea) ValidateField(data_in string, skip_validation bool) bool {
 	if !skip_validation {
 
-		pvalid := regexp.MustCompile(t.pattern)
+		pvalid := regexp.MustCompile(t.Pattern)
 
 		return pvalid.MatchString(data_in)
 

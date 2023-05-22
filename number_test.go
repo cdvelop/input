@@ -73,7 +73,7 @@ func Test_InputPhoneNumber(t *testing.T) {
 }
 
 func Test_GoodInputPhoneNumber(t *testing.T) {
-	for _, data := range modelPhoneNumber.TestData.GoodTestData("", "", true) {
+	for _, data := range modelPhoneNumber.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
 			if ok := modelPhoneNumber.Validate.ValidateField(data, false); !ok {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
@@ -83,7 +83,7 @@ func Test_GoodInputPhoneNumber(t *testing.T) {
 }
 
 func Test_GoodInputNumber(t *testing.T) {
-	for _, data := range modelNumber.TestData.GoodTestData("", "", true) {
+	for _, data := range modelNumber.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
 			if ok := modelNumber.Validate.ValidateField(data, false); !ok {
 				log.Fatalf("resultado [%v] [%v]", ok, data)

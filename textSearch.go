@@ -23,7 +23,7 @@ func TextSearch() model.Input {
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		Build:    in,
+		HtmlTag:  in,
 		Validate: in,
 		TestData: in,
 	}
@@ -41,9 +41,8 @@ func (t textSearch) HtmlName() string {
 	return "search"
 }
 
-func (t textSearch) HtmlTAG(id, field_name string, allow_skip_completed bool) string {
-
-	return t.Build(t.HtmlName(), t.Name(), id, field_name, allow_skip_completed)
+func (t textSearch) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+	return t.buildHtmlTag(t.HtmlName(), t.Name(), id, field_name, allow_skip_completed)
 
 }
 
@@ -60,7 +59,7 @@ func (t textSearch) ValidateField(data_in string, skip_validation bool) bool {
 	}
 }
 
-func (s textSearch) GoodTestData(table_name, field_name string, random bool) (out []string) {
+func (s textSearch) GoodTestData() (out []string) {
 	out = []string{
 		"Ñuñez perez",
 		"Maria Jose Diaz",

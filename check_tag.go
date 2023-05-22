@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-func (c check) HtmlTAG(id, field_name string, allow_skip_completed bool) string {
+func (c check) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 
 	keys := make([]string, 0, len(c.Data.SourceData()))
 	for k := range c.Data.SourceData() {
@@ -44,7 +44,7 @@ func (c check) newTag(id, field_name, field_value, text_field string, only_inter
 		id = field_value
 	}
 
-	tag_input := fmt.Sprintf(`<input type="checkbox" id="%v" name="%v" value="%v"><span>%v</span>`,
+	tag_input := fmt.Sprintf(`<input type="checkbox" id="%v" name="%v" value="%v" oninput="`+DefaultValidateFunction+`"><span>%v</span>`,
 		id, field_name, field_value, text_field)
 
 	if !c.only_internal_contend {

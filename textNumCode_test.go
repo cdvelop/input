@@ -45,7 +45,7 @@ func Test_InputTextNumCode(t *testing.T) {
 }
 
 func Test_GoodInputTextNumCode(t *testing.T) {
-	for _, data := range modelTextNumCode.TestData.GoodTestData("", "", true) {
+	for _, data := range modelTextNumCode.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
 			if ok := modelTextNumCode.Validate.ValidateField(data, false); !ok {
 				log.Fatalf("resultado [%v] [%v]", ok, data)

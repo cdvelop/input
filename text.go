@@ -2,6 +2,7 @@ package input
 
 import (
 	"regexp"
+	"strings"
 
 	"github.com/cdvelop/model"
 )
@@ -34,7 +35,7 @@ func Text(options ...string) model.Input {
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		Build:    in,
+		HtmlTag:  in,
 		Validate: in,
 		TestData: in,
 	}
@@ -57,8 +58,8 @@ func (t text) HtmlName() string {
 	return "text"
 }
 
-func (t text) HtmlTAG(id, field_name string, allow_skip_completed bool) string {
-	return t.Build(t.HtmlName(), t.Name(), id, field_name, allow_skip_completed)
+func (t text) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+	return t.buildHtmlTag(t.HtmlName(), t.Name(), id, field_name, allow_skip_completed)
 }
 
 // validación con datos de entrada
@@ -75,7 +76,7 @@ func (t text) ValidateField(data_in string, skip_validation bool) bool {
 }
 
 // options: first_name,last_name, phrase
-func (text) GoodTestData(table_name, field_name string, random bool) (out []string) {
+func (t text) GoodTestData() (out []string) {
 
 	first_name := []string{"Maria", "Juan", "Marcela", "Luz", "Carmen", "Jose", "Octavio"}
 
@@ -83,13 +84,15 @@ func (text) GoodTestData(table_name, field_name string, random bool) (out []stri
 
 	phrase := []string{"Dr. Maria Jose Diaz Cadiz", "son 4 (4 bidones)", "pc dental (1)", "equipo (4)"}
 
-	switch field_name {
-	case table_name + "_name":
+	placeholder := strings.ToLower(t.PlaceHolder)
+
+	switch {
+	case strings.Contains(placeholder, "nombre y apellido"):
 		return combineStringArray(true, first_name, last_name, last_name)
-	case "first_name":
+	case strings.Contains(placeholder, "nombre"):
 		return first_name
 
-	case "last_name":
+	case strings.Contains(placeholder, "apellido"):
 		return last_name
 
 	default:

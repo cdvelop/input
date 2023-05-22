@@ -10,7 +10,7 @@ func TextNumCode() model.Input {
 	in := textNumCode{
 		attributes: attributes{
 			Pattern: `^[A-Za-z0-9-]{2,15}$`,
-			Title:   `title="texto,-, numero 2 a 15 caracteres"`,
+			Title:   `title="ej: V235X, 2e-45 (texto,-, numero 2 a 15 caracteres)"`,
 		},
 	}
 
@@ -23,7 +23,7 @@ func TextNumCode() model.Input {
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		Build:    in,
+		HtmlTag:  in,
 		Validate: in,
 		TestData: in,
 	}
@@ -42,10 +42,8 @@ func (t textNumCode) HtmlName() string {
 	return "tel"
 }
 
-func (t textNumCode) HtmlTAG(id, field_name string, allow_skip_completed bool) string {
-
-	return t.Build(t.HtmlName(), t.Name(), id, field_name, allow_skip_completed)
-
+func (t textNumCode) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+	return t.buildHtmlTag(t.HtmlName(), t.Name(), id, field_name, allow_skip_completed)
 }
 
 // validación con datos de entrada
@@ -66,7 +64,7 @@ func (t textNumCode) ValidateField(data_in string, skip_validation bool) bool {
 	}
 }
 
-func (t textNumCode) GoodTestData(table_name, field_name string, random bool) (out []string) {
+func (t textNumCode) GoodTestData() (out []string) {
 
 	out = []string{
 		"et1",

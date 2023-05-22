@@ -14,7 +14,7 @@ func (a *attributes) Set(options ...string) {
 	for _, option := range options {
 		switch {
 
-		//en caso que nos envíen otro pattern necesitamos solo en contenido de este para poder reutilizarlo
+		//en caso que nos envíen otro pattern necesitamos solo el contenido de este para poder reutilizarlo
 		case strings.Contains(option, "pattern="):
 			a.Pattern = a.add(option, "pattern")
 
@@ -29,6 +29,9 @@ func (a *attributes) Set(options ...string) {
 
 		case strings.Contains(option, "max="):
 			a.Max = a.add(option, "max")
+
+		case strings.Contains(option, "maxlength="):
+			a.Maxlength = option
 
 		case strings.Contains(option, "data-"):
 			a.DataSet = option
@@ -55,6 +58,16 @@ func (a *attributes) Set(options ...string) {
 
 		case strings.Contains(option, "oninput="):
 			a.Oninput = option
+
+		case strings.Contains(option, "onkeyup="):
+			a.Onkeyup = option
+
+		case strings.Contains(option, "accept="):
+			a.Accept = option
+
+		case option == "multiple":
+			a.Multiple = option
+
 		}
 	}
 

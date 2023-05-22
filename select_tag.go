@@ -6,30 +6,21 @@ import (
 	"strconv"
 )
 
-func (s selecTag) HtmlTAG(id, field_name string, allow_skip_completed bool) string {
+func (s selecTag) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 	var req string
 	if !allow_skip_completed {
 		req = ` required`
 	}
 
-	tag := fmt.Sprintf(`<selecTag name="%v"%v>`, field_name, req)
+	tag := fmt.Sprintf(`<select name="%v" oninput="`+DefaultValidateFunction+`"%v>`, field_name, req)
 	tag += `<option selected></option>`
 	tag += s.GetAllTagOption()
-	tag += `</selecTag>`
+	tag += `</select>`
 
 	return tag
 }
 
-func (s selecTag) BuildTagSelect(selectName, cssClassName, title string) string {
-	// tag := fmt.Sprintf(`<label for="%v">%v</label>`, selectName, title)
-	tag := fmt.Sprintf(`<selecTag name="%v" class="%v">`, selectName, cssClassName)
-	tag += fmt.Sprintf(`<option value="">%v</option>`, title)
-	tag += s.GetAllTagOption()
-	tag += `</selecTag>`
-	return tag
-}
-
-// retorna strin html option de un selecTag
+// retorna string html option de un selecTag
 func (s selecTag) GetAllTagOption() (opt string) {
 	var keys []string
 	for key := range s.Data.SourceData() {

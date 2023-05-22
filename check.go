@@ -22,7 +22,7 @@ func Check(data sourceData, onlyInternalContend bool) model.Input {
 			JsPrivate:   in,
 			JsListeners: nil,
 		},
-		Build:    in,
+		HtmlTag:  in,
 		Validate: in,
 		TestData: in,
 	}

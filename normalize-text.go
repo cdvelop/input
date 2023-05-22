@@ -10,7 +10,7 @@ import (
 	"golang.org/x/text/unicode/norm"
 )
 
-func removeAcent(in string) (out string) {
+func RemoveAcent(in string) (out string) {
 	t := transform.Chain(norm.NFD, runes.Remove(runes.In(unicode.Mn)), norm.NFD)
 	output, _, e := transform.String(t, in)
 	if e != nil {
@@ -21,7 +21,7 @@ func removeAcent(in string) (out string) {
 
 // remueve tildes,espacio blanco inicio-final y todo a minúscula
 func NormalizeTextData(in *string) {
-	*in = removeAcent(*in)
+	*in = RemoveAcent(*in)
 	*in = strings.TrimSpace(*in) //remover espacios en blanco inicial final
 }
 

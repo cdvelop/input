@@ -36,7 +36,7 @@ func Test_InputTextSearch(t *testing.T) {
 }
 
 func Test_GoodInputTextSearch(t *testing.T) {
-	for _, data := range modelTextSearch.TestData.GoodTestData("", "", true) {
+	for _, data := range modelTextSearch.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
 			if ok := modelTextSearch.Validate.ValidateField(data, false); !ok {
 				log.Fatalf("resultado [%v] [%v]", ok, data)

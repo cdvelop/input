@@ -36,7 +36,7 @@ func Test_InputHour(t *testing.T) {
 }
 
 func Test_GoodInputHour(t *testing.T) {
-	for _, data := range modelHour.TestData.GoodTestData("", "", true) {
+	for _, data := range modelHour.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
 			if ok := modelHour.Validate.ValidateField(data, false); !ok {
 				log.Fatalf("resultado [%v] [%v]", ok, data)

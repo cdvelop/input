@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-func (r radio) HtmlTAG(id, field_name string, allow_skip_completed bool) string {
+func (r radio) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 	var id3 string
 
 	keys := make([]string, 0, len(r.Data.SourceData()))
@@ -39,7 +39,7 @@ func (r radio) HtmlTAG(id, field_name string, allow_skip_completed bool) string 
 
 		r.Value = `value="` + value + `"`
 
-		tags += r.Build(r.HtmlName(), r.Name(), id3, field_name, allow_skip_completed)
+		tags += r.buildHtmlTag(r.HtmlName(), r.Name(), id3, field_name, allow_skip_completed)
 
 		tags += `<span>` + r.Data.SourceData()[value] + `</span>`
 		tags += `</label>`

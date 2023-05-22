@@ -10,7 +10,9 @@ import (
 // options: "hidden": campo oculto para el usuario
 func MonthDay(options ...string) model.Input {
 	in := monthDay{
-		attributes: attributes{},
+		attributes: attributes{
+			Pattern: `^[0-9]{2,2}$`,
+		},
 	}
 	in.Set(options...)
 
@@ -23,13 +25,11 @@ func MonthDay(options ...string) model.Input {
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		Build:    in,
+		HtmlTag:  in,
 		Validate: in,
 		TestData: in,
 	}
 }
-
-const patternMonthDay = `^[0-9]{2,2}$`
 
 // formato fecha: DD-MM
 type monthDay struct {
@@ -44,8 +44,8 @@ func (d monthDay) HtmlName() string {
 	return "text"
 }
 
-func (m monthDay) HtmlTAG(id, field_name string, allow_skip_completed bool) string {
-	return m.Build(m.HtmlName(), m.Name(), id, field_name, allow_skip_completed)
+func (m monthDay) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+	return m.buildHtmlTag(m.HtmlName(), m.Name(), id, field_name, allow_skip_completed)
 }
 
 // validación con datos de entrada
@@ -61,7 +61,7 @@ func (m monthDay) ValidateField(data_in string, skip_validation bool) bool {
 			return false
 		}
 
-		pvalid := regexp.MustCompile(patternMonthDay)
+		pvalid := regexp.MustCompile(m.Pattern)
 
 		return pvalid.MatchString(data_in)
 
@@ -70,7 +70,7 @@ func (m monthDay) ValidateField(data_in string, skip_validation bool) bool {
 	}
 }
 
-func (m monthDay) GoodTestData(table_name, field_name string, random bool) (out []string) {
+func (m monthDay) GoodTestData() (out []string) {
 
 	out = []string{
 		"01",

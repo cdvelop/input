@@ -44,7 +44,7 @@ func Test_RadioButton(t *testing.T) {
 }
 
 func Test_GoodInputRadio(t *testing.T) {
-	for _, data := range modelRadio.TestData.GoodTestData("", "", true) {
+	for _, data := range modelRadio.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
 			if ok := modelRadio.Validate.ValidateField(data, false); !ok {
 				log.Fatalf("resultado [%v] [%v]", ok, data)

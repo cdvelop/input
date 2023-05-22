@@ -41,7 +41,7 @@ func Test_DataList(t *testing.T) {
 	}
 }
 func Test_GoodInputDataList(t *testing.T) {
-	for _, data := range modelSelect.TestData.GoodTestData("", "", true) {
+	for _, data := range modelSelect.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
 			if ok := modelSelect.Validate.ValidateField(data, false); !ok {
 				log.Fatalf("resultado [%v] [%v]", ok, data)

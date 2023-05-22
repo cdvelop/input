@@ -1,7 +1,6 @@
 package input
 
 import (
-	"fmt"
 	"regexp"
 
 	"github.com/cdvelop/model"
@@ -9,7 +8,10 @@ import (
 
 func Date() model.Input {
 	in := date{
-		pattern: `[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])`,
+		attributes: attributes{
+			Title:   `title="formato fecha: DD-MM-YYYY"`,
+			Pattern: `[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])`,
+		},
 	}
 
 	return model.Input{
@@ -21,7 +23,7 @@ func Date() model.Input {
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		Build:    in,
+		HtmlTag:  in,
 		Validate: in,
 		TestData: in,
 	}
@@ -29,7 +31,7 @@ func Date() model.Input {
 
 // formato fecha: DD-MM-YYYY
 type date struct {
-	pattern string
+	attributes
 }
 
 func (d date) Name() string {
@@ -40,18 +42,8 @@ func (d date) HtmlName() string {
 	return "date"
 }
 
-const titleDateInfo = "formato fecha: DD-MM-YYYY"
-
-func (d date) HtmlTAG(id, field_name string, allow_skip_completed bool) string {
-
-	var valide string
-	if !allow_skip_completed { //si cadena de validación no esta vacía
-		valide = ` pattern="` + d.pattern + `" required`
-	}
-
-	tag := fmt.Sprintf(`<input`+id+`type="%v" name="%v" title="%v" %v>`, d.HtmlName(),
-		field_name, titleDateInfo, valide)
-	return tag
+func (d date) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+	return d.buildHtmlTag(d.HtmlName(), d.Name(), id, field_name, allow_skip_completed)
 }
 
 // validación con datos de entrada
@@ -61,7 +53,7 @@ func (d date) ValidateField(data_in string, skip_validation bool) bool {
 			return false
 		}
 
-		pvalid := regexp.MustCompile(d.pattern)
+		pvalid := regexp.MustCompile(d.Pattern)
 
 		return pvalid.MatchString(data_in)
 
@@ -70,7 +62,7 @@ func (d date) ValidateField(data_in string, skip_validation bool) bool {
 	}
 }
 
-func (d date) GoodTestData(table_name, field_name string, random bool) (out []string) {
+func (d date) GoodTestData() (out []string) {
 	out = []string{
 		"2002-01-03",
 		"1998-02-01",

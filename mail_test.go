@@ -44,7 +44,7 @@ func Test_InputMail(t *testing.T) {
 }
 
 func Test_GoodInputMail(t *testing.T) {
-	for _, data := range modelMail.TestData.GoodTestData("", "", true) {
+	for _, data := range modelMail.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
 			if ok := modelMail.Validate.ValidateField(data, false); !ok {
 				log.Fatalf("resultado [%v] [%v]", ok, data)

@@ -1,13 +1,17 @@
 package input
 
+import "strings"
+
 // option prescription,
-func (t textArea) GoodTestData(table_name, field_name string, random bool) (out []string) {
+func (t textArea) GoodTestData() (out []string) {
 	phrase := []string{"hola: esto, es. la - prueba 10",
 		"soy ñato o Ñato (aqui)", "son dos examenes", "costo total es de $23.230. pesos",
 	}
 
-	switch field_name {
-	case "phrase":
+	placeholder := strings.ToLower(t.PlaceHolder)
+
+	switch {
+	case strings.Contains(placeholder, "nombre y apellido"):
 		return phrase
 
 	default:

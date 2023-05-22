@@ -8,10 +8,9 @@ import (
 )
 
 var (
-	modelRunGlobal = input.Rut("dni-mode")
-	// ("", "", false, false)
+	modelDNI = input.Rut("dni-mode")
 
-	dataRunGlobal = map[string]struct {
+	dataDNI = map[string]struct {
 		inputData       string
 		skip_validation bool
 		expected        bool
@@ -32,30 +31,30 @@ var (
 	}
 )
 
-func Test_InputRunGlobal(t *testing.T) {
-	for prueba, data := range dataRunGlobal {
+func Test_InputDNI(t *testing.T) {
+	for prueba, data := range dataDNI {
 		t.Run((prueba), func(t *testing.T) {
-			if ok := modelRunGlobal.Validate.ValidateField(data.inputData, data.skip_validation); ok != data.expected {
+			if ok := modelDNI.Validate.ValidateField(data.inputData, data.skip_validation); ok != data.expected {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
 	}
 }
 
-func Test_GoodInputRunGlobal(t *testing.T) {
-	for _, data := range modelRunGlobal.TestData.GoodTestData("", "", true) {
+func Test_GoodInputDNI(t *testing.T) {
+	for _, data := range modelDNI.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelRunGlobal.Validate.ValidateField(data, false); !ok {
+			if ok := modelDNI.Validate.ValidateField(data, false); !ok {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
 	}
 }
 
-func Test_WrongInputRunGlobal(t *testing.T) {
-	for _, data := range modelRunGlobal.TestData.WrongTestData() {
+func Test_WrongInputDNI(t *testing.T) {
+	for _, data := range modelDNI.TestData.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelRunGlobal.Validate.ValidateField(data, false); ok {
+			if ok := modelDNI.Validate.ValidateField(data, false); ok {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

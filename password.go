@@ -43,7 +43,7 @@ func Password(options ...string) model.Input {
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		Build:    in,
+		HtmlTag:  in,
 		Validate: in,
 		TestData: in,
 	}
@@ -63,10 +63,8 @@ func (p password) HtmlName() string {
 	return "password"
 }
 
-func (p password) HtmlTAG(id, field_name string, allow_skip_completed bool) string {
-
-	return p.Build(p.HtmlName(), p.Name(), id, field_name, allow_skip_completed)
-
+func (p password) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+	return p.buildHtmlTag(p.HtmlName(), p.Name(), id, field_name, allow_skip_completed)
 }
 
 // validación con datos de entrada
@@ -82,7 +80,7 @@ func (p password) ValidateField(data_in string, skip_validation bool) (ok bool) 
 	}
 }
 
-func (p password) GoodTestData(table_name, field_name string, random bool) (out []string) {
+func (p password) GoodTestData() (out []string) {
 
 	temp := []string{
 		"c0ntra3",

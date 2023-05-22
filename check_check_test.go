@@ -23,7 +23,7 @@ var (
 		skip_validation bool
 		result          bool
 	}{
-		"una credencial ok?":         {m_check.TestData.GoodTestData("", "", true)[0], false, true},
+		"una credencial ok?":         {m_check.TestData.GoodTestData()[0], false, true},
 		"editor y admin ok?":         {"1,2", false, true},
 		"todas las credenciales ok?": {`1,3`, false, true},
 		"0 existe?":                  {"0", false, false},
@@ -44,8 +44,8 @@ func Test_check(t *testing.T) {
 	}
 }
 
-func Test_GoodInputcheck(t *testing.T) {
-	for _, data := range m_check.TestData.GoodTestData("", "", true) {
+func Test_GoodInputCheck(t *testing.T) {
+	for _, data := range m_check.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
 			if ok := m_check.Validate.ValidateField(data, false); !ok {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
@@ -54,7 +54,7 @@ func Test_GoodInputcheck(t *testing.T) {
 	}
 }
 
-func Test_WrongInputcheck(t *testing.T) {
+func Test_WrongInputCheck(t *testing.T) {
 	for _, data := range m_check.TestData.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
 			if ok := m_check.Validate.ValidateField(data, false); ok {

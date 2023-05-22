@@ -8,8 +8,6 @@ import (
 )
 
 var (
-	modelIp = input.Ip()
-
 	dataIp = map[string]struct {
 		inputData       string
 		skip_validation bool
@@ -25,7 +23,7 @@ var (
 func Test_InputIp(t *testing.T) {
 	for prueba, data := range dataIp {
 		t.Run((prueba + data.inputData), func(t *testing.T) {
-			if ok := modelIp.Validate.ValidateField(data.inputData, data.skip_validation); ok != data.expected {
+			if ok := input.Ip().Validate.ValidateField(data.inputData, data.skip_validation); ok != data.expected {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -33,9 +31,9 @@ func Test_InputIp(t *testing.T) {
 }
 
 func Test_GoodInputIp(t *testing.T) {
-	for _, data := range modelIp.TestData.GoodTestData("", "", true) {
+	for _, data := range input.Ip().TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelIp.Validate.ValidateField(data, false); !ok {
+			if ok := input.Ip().Validate.ValidateField(data, false); !ok {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -43,9 +41,9 @@ func Test_GoodInputIp(t *testing.T) {
 }
 
 func Test_WrongInputIp(t *testing.T) {
-	for _, data := range modelIp.TestData.WrongTestData() {
+	for _, data := range input.Ip().TestData.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelIp.Validate.ValidateField(data, false); ok {
+			if ok := input.Ip().Validate.ValidateField(data, false); ok {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

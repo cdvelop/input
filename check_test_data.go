@@ -1,6 +1,6 @@
 package input
 
-func (c check) GoodTestData(table_name, field_name string, random bool) (out []string) {
+func (c check) GoodTestData() (out []string) {
 	for k := range c.Data.SourceData() {
 		out = append(out, k)
 	}

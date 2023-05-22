@@ -46,7 +46,7 @@ func Test_InputTextOnly(t *testing.T) {
 }
 
 func Test_GoodInputTextOnly(t *testing.T) {
-	for _, data := range modelTexOnly.TestData.GoodTestData("", "", true) {
+	for _, data := range modelTexOnly.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
 			if ok := modelTexOnly.Validate.ValidateField(data, false); !ok {
 				log.Fatalf("resultado [%v] [%v]", ok, data)

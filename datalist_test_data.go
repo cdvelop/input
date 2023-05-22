@@ -1,6 +1,6 @@
 package input
 
-func (d datalist) GoodTestData(table_name, field_name string, random bool) (out []string) {
+func (d datalist) GoodTestData() (out []string) {
 	for k := range d.Data.SourceData() {
 		out = append(out, k)
 	}

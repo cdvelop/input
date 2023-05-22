@@ -26,7 +26,7 @@ func Hour(options ...string) model.Input {
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		Build:    in,
+		HtmlTag:  in,
 		Validate: in,
 		TestData: in,
 	}
@@ -44,8 +44,8 @@ func (h hour) HtmlName() string {
 	return "time"
 }
 
-func (h hour) HtmlTAG(id, field_name string, allow_skip_completed bool) string {
-	return h.Build(h.HtmlName(), h.Name(), id, field_name, allow_skip_completed)
+func (h hour) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+	return h.buildHtmlTag(h.HtmlName(), h.Name(), id, field_name, allow_skip_completed)
 }
 
 // validación con datos de entrada
@@ -64,7 +64,7 @@ func (h hour) ValidateField(data_in string, skip_validation bool) bool { //en re
 	}
 }
 
-func (h hour) GoodTestData(table_name, field_name string, random bool) (out []string) {
+func (h hour) GoodTestData() (out []string) {
 	out = []string{
 		"23:59",
 		"00:00",

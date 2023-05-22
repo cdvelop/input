@@ -73,7 +73,7 @@ func Test_RutDigito(t *testing.T) {
 }
 
 func Test_GoodInputRut(t *testing.T) {
-	for _, data := range modelRut.TestData.GoodTestData("", "", true) {
+	for _, data := range modelRut.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
 			if ok := modelRut.Validate.ValidateField(data, false); !ok {
 				log.Fatalf("resultado [%v] [%v]", ok, data)

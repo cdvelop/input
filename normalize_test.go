@@ -17,7 +17,7 @@ var (
 func Test_RemoveAcent(t *testing.T) {
 	for prueba, data := range dataAcent {
 		t.Run((prueba), func(t *testing.T) {
-			if res := removeAcent(data.input); res != data.result {
+			if res := RemoveAcent(data.input); res != data.result {
 				t.Fatalf("err input [%v] resultado [%v]", data.input, res)
 			}
 		})

@@ -17,7 +17,7 @@ func SelecTag(data sourceData) model.Input {
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		Build:    in,
+		HtmlTag:  in,
 		Validate: in,
 		TestData: in,
 	}
@@ -32,5 +32,35 @@ func (s selecTag) Name() string {
 }
 
 func (s selecTag) HtmlName() string {
-	return "selecTag"
+	return "select"
+}
+
+// validación con datos de entrada
+func (s selecTag) ValidateField(data_in string, skip_validation bool) bool {
+	if !skip_validation {
+		if data_in != "" {
+			if _, exists := s.Data.SourceData()[data_in]; exists {
+				return true
+			}
+		}
+	} else {
+		return true
+	}
+	return false
+}
+
+func (s selecTag) GoodTestData() (out []string) {
+	for k := range s.Data.SourceData() {
+		out = append(out, k)
+	}
+	return
+}
+
+func (s selecTag) WrongTestData() (out []string) {
+	for _, wd := range wrong_data {
+		if _, exist := s.Data.SourceData()[wd]; !exist {
+			out = append(out, wd)
+		}
+	}
+	return
 }
