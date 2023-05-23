@@ -9,8 +9,8 @@ import (
 func TextNumCode() model.Input {
 	in := textNumCode{
 		attributes: attributes{
-			Pattern: `^[A-Za-z0-9-]{2,15}$`,
-			Title:   `title="ej: V235X, 2e-45 (texto,-, numero 2 a 15 caracteres)"`,
+			Pattern: `^[A-Za-z0-9-_]{2,15}$`,
+			Title:   `title="ej: V235X, 2e-45 525_45w (texto,-_, numero 2 a 15 caracteres)"`,
 		},
 	}
 
@@ -74,6 +74,7 @@ func (t textNumCode) GoodTestData() (out []string) {
 		"Wednesday",
 		"los567",
 		"677GH",
+		"son_24_botellas",
 	}
 
 	return
@@ -84,7 +85,6 @@ func (t textNumCode) WrongTestData() (out []string) {
 	out = []string{
 		"los cuatro",
 		"son 2 cuadros",
-		"son_24_botellas",
 	}
 	out = append(out, wrong_data...)
 
