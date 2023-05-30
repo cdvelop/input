@@ -14,6 +14,12 @@ func (t textArea) GoodTestData() (out []string) {
 	case strings.Contains(placeholder, "nombre y apellido"):
 		return phrase
 
+	case strings.Contains(placeholder, "diagnostic"):
+		return combineStringArray(true, discomforts, prepositions, body_parts)
+
+	case strings.Contains(placeholder, "prescription"):
+		return combineStringArray(true, prescription, prepositions, body_parts)
+
 	default:
 		return combineStringArray(true, phrase, prepositions, hours)
 	}

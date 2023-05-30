@@ -16,7 +16,7 @@ func (c checkData) SourceData() map[string]string {
 var (
 	// newData = checkData{}
 
-	m_check = input.Check(checkData{}, false)
+	m_check = input.Check(checkData{})
 
 	datacheck = map[string]struct {
 		inputData       string

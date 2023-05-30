@@ -7,10 +7,16 @@ import (
 )
 
 // SourceData() map[string]string
-func Check(data sourceData, onlyInternalContend bool) model.Input {
+// options ej: "internal" = only internal contend
+func Check(data sourceData, options ...string) model.Input {
 	in := check{
-		Data:                  data,
-		only_internal_contend: onlyInternalContend,
+		Data: data,
+	}
+
+	for _, opt := range options {
+		if opt == "internal" {
+			in.only_internal_contend = true
+		}
 	}
 
 	return model.Input{
