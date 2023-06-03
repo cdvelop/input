@@ -20,6 +20,13 @@ var (
 	}
 )
 
+func Test_TagIp(t *testing.T) {
+	tag := input.Ip().Tag.HtmlTag("1", "name", true)
+	if tag == "" {
+		log.Fatalln("ERROR NO TAG RENDERING ")
+	}
+}
+
 func Test_InputIp(t *testing.T) {
 	for prueba, data := range dataIp {
 		t.Run((prueba + data.inputData), func(t *testing.T) {

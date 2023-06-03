@@ -23,7 +23,7 @@ func Mail() model.Input {
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		HtmlTag:  in,
+		Tag:      in,
 		Validate: in,
 		TestData: in,
 	}
@@ -34,7 +34,7 @@ type mail struct {
 }
 
 func (m mail) HtmlTag(id, field_name string, allow_skip_completed bool) string {
-	return m.buildHtmlTag(m.HtmlName(), m.Name(), id, field_name, allow_skip_completed)
+	return m.BuildHtmlTag(m.HtmlName(), m.Name(), id, field_name, allow_skip_completed)
 }
 
 func (mail) Name() string {

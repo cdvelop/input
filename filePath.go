@@ -27,7 +27,7 @@ func FilePath(options ...string) model.Input {
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		HtmlTag:  in,
+		Tag:      in,
 		Validate: in,
 		TestData: in,
 	}
@@ -46,7 +46,7 @@ func (f filePath) HtmlName() string {
 }
 
 func (f filePath) HtmlTag(id, field_name string, allow_skip_completed bool) (tags string) {
-	return f.buildHtmlTag(f.HtmlName(), f.Name(), id, field_name, allow_skip_completed)
+	return f.BuildHtmlTag(f.HtmlName(), f.Name(), id, field_name, allow_skip_completed)
 }
 
 // validación con datos de entrada

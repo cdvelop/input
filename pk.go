@@ -28,7 +28,7 @@ func Pk(options ...string) model.Input {
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		HtmlTag:  in,
+		Tag:      in,
 		Validate: in.Number,
 		TestData: in.Number,
 	}
@@ -53,5 +53,7 @@ func (p pk) HtmlName() string {
 
 // representación
 func (p pk) HtmlTag(id, field_name string, allow_skip_completed bool) string {
-	return p.buildHtmlTag(p.HtmlName(), p.Name(), id, field_name, allow_skip_completed)
+
+	// p.Number.HtmlTag.HtmlTag()
+	return p.BuildHtmlTag(p.HtmlName(), p.Name(), id, field_name, allow_skip_completed)
 }

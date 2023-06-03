@@ -15,23 +15,17 @@ var (
 		skip_validation bool
 		expected        bool
 	}{
-		"correo normal ": {"mi.correo@mail.com", false, true},
-		// "código numero y letras":   {"12f", false, true},
-		// "guion bajo permitido?":    {"son_24_botellas", false, false},
-		// "espacio permitido?":       {"1os cuatro", false, false},
-		// "palabras guion bajo si? ": {"son_2_cuadros", false, false},
-		// "palabras separadas si?":   {"son 2 cuadros", false, false},
-		// "palabras guion medio si?": {"son-2-cuadros", false, true},
-		// "solo texto ok":            {"tres", false, true},
-		// "friday ok":                {"friday", false, true},
-		// "saturday ok":              {"saturday", false, true},
-		// "wednesday ok":             {"Wednesday", false, true},
-		// "month 10 ok":              {"10", false, true},
-		// "month 03 ok":              {"03", false, true},
-		// "solo un carácter":         {"3", false, false},
-		// "2 caracteres":             {"-1", false, false},
+		"correo normal ":   {"mi.correo@mail.com", false, true},
+		"correo un campo ": {"correo@mail.com", false, true},
 	}
 )
+
+func Test_TagMail(t *testing.T) {
+	tag := modelMail.Tag.HtmlTag("1", "name", true)
+	if tag == "" {
+		log.Fatalln("ERROR NO TAG RENDERING ")
+	}
+}
 
 func Test_InputMail(t *testing.T) {
 	for prueba, data := range dataMail {

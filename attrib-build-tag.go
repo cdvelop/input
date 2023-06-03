@@ -5,7 +5,7 @@ import (
 )
 
 // Type:radio,text,number etc TagInput <input type="input"
-func (a attributes) buildHtmlTag(html_name, input_name, id, field_name string, allow_skip_completed bool) string {
+func (a attributes) BuildHtmlTag(html_name, input_name, id, field_name string, allow_skip_completed bool) string {
 
 	var open string
 	var close string

@@ -24,7 +24,7 @@ func Ip() model.Input {
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		HtmlTag:  in,
+		Tag:      in,
 		Validate: in,
 		TestData: in,
 	}
@@ -43,7 +43,7 @@ func (i ip) HtmlName() string {
 }
 
 func (i ip) HtmlTag(id, field_name string, allow_skip_completed bool) string {
-	return i.buildHtmlTag(i.HtmlName(), i.Name(), id, field_name, allow_skip_completed)
+	return i.BuildHtmlTag(i.HtmlName(), i.Name(), id, field_name, allow_skip_completed)
 
 }
 

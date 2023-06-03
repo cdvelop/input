@@ -50,7 +50,7 @@ func Rut(options ...string) model.Input {
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		HtmlTag:  in,
+		Tag:      in,
 		Validate: in,
 		TestData: in,
 	}
@@ -77,7 +77,7 @@ func (r rut) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 
 		tag := `<div class="run-type">`
 
-		tag += r.buildHtmlTag(r.HtmlName(), r.Name(), id, field_name, allow_skip_completed)
+		tag += r.BuildHtmlTag(r.HtmlName(), r.Name(), id, field_name, allow_skip_completed)
 
 		tag += `<label class="block-label">
 			<input type="radio" name="type-dni" data-name="dni-ch" value="ch" checked="checked" oninput="changeDniType(this)">
@@ -93,7 +93,7 @@ func (r rut) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 		return tag
 
 	} else {
-		return r.buildHtmlTag(r.HtmlName(), r.Name(), id, field_name, allow_skip_completed)
+		return r.BuildHtmlTag(r.HtmlName(), r.Name(), id, field_name, allow_skip_completed)
 	}
 }
 

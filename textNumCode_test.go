@@ -34,6 +34,13 @@ var (
 	}
 )
 
+func Test_TagTextNumCode(t *testing.T) {
+	tag := modelTextNumCode.Tag.HtmlTag("1", "name", true)
+	if tag == "" {
+		log.Fatalln("ERROR NO TAG RENDERING ")
+	}
+}
+
 func Test_InputTextNumCode(t *testing.T) {
 	for prueba, data := range dataTextNumCode {
 		t.Run((prueba + data.inputData), func(t *testing.T) {

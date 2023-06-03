@@ -23,7 +23,7 @@ func Date() model.Input {
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		HtmlTag:  in,
+		Tag:      in,
 		Validate: in,
 		TestData: in,
 	}
@@ -43,7 +43,7 @@ func (d date) HtmlName() string {
 }
 
 func (d date) HtmlTag(id, field_name string, allow_skip_completed bool) string {
-	return d.buildHtmlTag(d.HtmlName(), d.Name(), id, field_name, allow_skip_completed)
+	return d.BuildHtmlTag(d.HtmlName(), d.Name(), id, field_name, allow_skip_completed)
 }
 
 // validación con datos de entrada

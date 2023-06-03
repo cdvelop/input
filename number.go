@@ -29,7 +29,7 @@ func Number(options ...string) model.Input {
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		HtmlTag:  in,
+		Tag:      in,
 		Validate: in,
 		TestData: in,
 	}
@@ -48,7 +48,7 @@ func (n number) HtmlName() string {
 }
 
 func (n number) HtmlTag(id, field_name string, allow_skip_completed bool) string {
-	return n.buildHtmlTag(n.HtmlName(), n.Name(), id, field_name, allow_skip_completed)
+	return n.BuildHtmlTag(n.HtmlName(), n.Name(), id, field_name, allow_skip_completed)
 
 }
 

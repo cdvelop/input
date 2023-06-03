@@ -18,11 +18,11 @@ func (a *attributes) Set(options ...string) {
 		case strings.Contains(option, "pattern="):
 			a.Pattern = a.add(option, "pattern")
 
-		case strings.Contains(option, "pattern_start="):
-			a.pattern_start = a.add(option, "pattern_start")
+		case strings.Contains(option, "Pattern_start="):
+			a.Pattern_start = a.add(option, "Pattern_start")
 
-		case strings.Contains(option, "pattern_end="):
-			a.pattern_end = a.add(option, "pattern_end")
+		case strings.Contains(option, "Pattern_end="):
+			a.Pattern_end = a.add(option, "Pattern_end")
 
 		case strings.Contains(option, "min="):
 			a.Min = a.add(option, "min")
@@ -77,10 +77,10 @@ func (a *attributes) Set(options ...string) {
 
 func (a *attributes) patternUpdate() {
 	// agregar min y max al pattern
-	if a.pattern_start != "" && a.pattern_end != "" && a.Min != "" && a.Max != "" {
-		a.Pattern = a.pattern_start + a.Min + `,` + a.Max + a.pattern_end
-		a.pattern_start = ""
-		a.pattern_end = ""
+	if a.Pattern_start != "" && a.Pattern_end != "" && a.Min != "" && a.Max != "" {
+		a.Pattern = a.Pattern_start + a.Min + `,` + a.Max + a.Pattern_end
+		a.Pattern_start = ""
+		a.Pattern_end = ""
 
 	}
 }

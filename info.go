@@ -16,7 +16,7 @@ func Info(value string) model.Input {
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		HtmlTag:  in,
+		Tag:      in,
 		Validate: nil,
 		TestData: nil,
 	}

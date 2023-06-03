@@ -25,6 +25,13 @@ var (
 	}
 )
 
+func Test_TagTextSearch(t *testing.T) {
+	tag := modelTextSearch.Tag.HtmlTag("1", "name", true)
+	if tag == "" {
+		log.Fatalln("ERROR NO TAG RENDERING ")
+	}
+}
+
 func Test_InputTextSearch(t *testing.T) {
 	for prueba, data := range dataTextSearch {
 		t.Run((prueba + data.inputData), func(t *testing.T) {

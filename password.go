@@ -12,8 +12,8 @@ import (
 // ej: min="2", max="10", hidden....
 // min mínimo de caracteres permitidos ej: 3 o 5 ... min default 5
 // max máximo de caracteres permitidos ej: 20 50 ... max default 50
-// pattern_start="^[A-Za-zÑñ 0-9:.-]{"
-// pattern_end="}$"
+// Pattern_start="^[A-Za-zÑñ 0-9:.-]{"
+// Pattern_end="}$"
 func Password(options ...string) model.Input {
 	in := password{
 		attributes: attributes{},
@@ -29,8 +29,8 @@ func Password(options ...string) model.Input {
 		if in.Max == "" {
 			in.Max = "50"
 		}
-		in.pattern_start = `^[A-Za-zÑñ 0-9:.-]{`
-		in.pattern_end = `}$`
+		in.Pattern_start = `^[A-Za-zÑñ 0-9:.-]{`
+		in.Pattern_end = `}$`
 		in.patternUpdate()
 	}
 
@@ -43,7 +43,7 @@ func Password(options ...string) model.Input {
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		HtmlTag:  in,
+		Tag:      in,
 		Validate: in,
 		TestData: in,
 	}
@@ -64,7 +64,7 @@ func (p password) HtmlName() string {
 }
 
 func (p password) HtmlTag(id, field_name string, allow_skip_completed bool) string {
-	return p.buildHtmlTag(p.HtmlName(), p.Name(), id, field_name, allow_skip_completed)
+	return p.BuildHtmlTag(p.HtmlName(), p.Name(), id, field_name, allow_skip_completed)
 }
 
 // validación con datos de entrada

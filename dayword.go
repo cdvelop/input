@@ -26,7 +26,7 @@ func DayWord(options ...string) model.Input {
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		HtmlTag:  in,
+		Tag:      in,
 		Validate: in,
 		TestData: in,
 	}
@@ -46,7 +46,7 @@ func (d dayWord) HtmlName() string {
 
 func (d dayWord) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 	tag := `<label class="date-spanish">`
-	tag += d.buildHtmlTag(d.HtmlName(), d.Name(), id, field_name, allow_skip_completed)
+	tag += d.BuildHtmlTag(d.HtmlName(), d.Name(), id, field_name, allow_skip_completed)
 	tag += `</label>`
 	return tag
 }

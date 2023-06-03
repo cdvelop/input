@@ -31,6 +31,13 @@ var (
 	}
 )
 
+func Test_TagNumber(t *testing.T) {
+	tag := modelNumber.Tag.HtmlTag("1", "name", true)
+	if tag == "" {
+		log.Fatalln("ERROR NO TAG RENDERING ")
+	}
+}
+
 func Test_InputNumber(t *testing.T) {
 	for prueba, data := range dataNumber {
 		t.Run((prueba), func(t *testing.T) {

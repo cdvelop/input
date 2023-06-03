@@ -16,14 +16,14 @@ func (c checkData) SourceData() map[string]string {
 var (
 	// newData = checkData{}
 
-	m_check = input.Check(checkData{})
+	modelCheck = input.Check(checkData{})
 
 	datacheck = map[string]struct {
 		inputData       string
 		skip_validation bool
 		result          bool
 	}{
-		"una credencial ok?":         {m_check.TestData.GoodTestData()[0], false, true},
+		"una credencial ok?":         {modelCheck.TestData.GoodTestData()[0], false, true},
 		"editor y admin ok?":         {"1,2", false, true},
 		"todas las credenciales ok?": {`1,3`, false, true},
 		"0 existe?":                  {"0", false, false},
@@ -34,10 +34,17 @@ var (
 	}
 )
 
+func Test_TagCheck(t *testing.T) {
+	tag := modelCheck.Tag.HtmlTag("1", "name", true)
+	if tag == "" {
+		log.Fatalln("ERROR NO TAG RENDERING ")
+	}
+}
+
 func Test_check(t *testing.T) {
 	for prueba, data := range datacheck {
 		t.Run((prueba + " " + data.inputData), func(t *testing.T) {
-			if ok := m_check.Validate.ValidateField(data.inputData, data.skip_validation); ok != data.result {
+			if ok := modelCheck.Validate.ValidateField(data.inputData, data.skip_validation); ok != data.result {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -45,9 +52,9 @@ func Test_check(t *testing.T) {
 }
 
 func Test_GoodInputCheck(t *testing.T) {
-	for _, data := range m_check.TestData.GoodTestData() {
+	for _, data := range modelCheck.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := m_check.Validate.ValidateField(data, false); !ok {
+			if ok := modelCheck.Validate.ValidateField(data, false); !ok {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -55,9 +62,9 @@ func Test_GoodInputCheck(t *testing.T) {
 }
 
 func Test_WrongInputCheck(t *testing.T) {
-	for _, data := range m_check.TestData.WrongTestData() {
+	for _, data := range modelCheck.TestData.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := m_check.Validate.ValidateField(data, false); ok {
+			if ok := modelCheck.Validate.ValidateField(data, false); ok {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

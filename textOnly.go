@@ -30,7 +30,7 @@ func TextOnly(options ...string) model.Input {
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		HtmlTag:  in,
+		Tag:      in,
 		Validate: in,
 		TestData: in,
 	}
@@ -53,7 +53,7 @@ func (t textOnly) HtmlName() string {
 }
 
 func (t textOnly) HtmlTag(id, field_name string, allow_skip_completed bool) string {
-	return t.buildHtmlTag(t.HtmlName(), t.Name(), id, field_name, allow_skip_completed)
+	return t.BuildHtmlTag(t.HtmlName(), t.Name(), id, field_name, allow_skip_completed)
 }
 
 // validación con datos de entrada

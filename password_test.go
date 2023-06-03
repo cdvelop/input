@@ -25,6 +25,13 @@ var (
 	}
 )
 
+func Test_TagPassword(t *testing.T) {
+	tag := modelPassword.Tag.HtmlTag("1", "name", true)
+	if tag == "" {
+		log.Fatalln("ERROR NO TAG RENDERING ")
+	}
+}
+
 func Test_InputPassword(t *testing.T) {
 	for prueba, data := range dataPassword {
 		t.Run((prueba + ": " + data.inputData), func(t *testing.T) {

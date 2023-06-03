@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	modelTexOnly = input.TextOnly()
+	modelTextOnly = input.TextOnly()
 
 	dataTextOnly = map[string]struct {
 		inputData       string
@@ -35,10 +35,17 @@ var (
 	}
 )
 
+func Test_TagTextOnly(t *testing.T) {
+	tag := modelTextOnly.Tag.HtmlTag("1", "name", true)
+	if tag == "" {
+		log.Fatalln("ERROR NO TAG RENDERING ")
+	}
+}
+
 func Test_InputTextOnly(t *testing.T) {
 	for prueba, data := range dataTextOnly {
 		t.Run((prueba + data.inputData), func(t *testing.T) {
-			if ok := modelTexOnly.Validate.ValidateField(data.inputData, data.skip_validation); ok != data.expected {
+			if ok := modelTextOnly.Validate.ValidateField(data.inputData, data.skip_validation); ok != data.expected {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -46,9 +53,9 @@ func Test_InputTextOnly(t *testing.T) {
 }
 
 func Test_GoodInputTextOnly(t *testing.T) {
-	for _, data := range modelTexOnly.TestData.GoodTestData() {
+	for _, data := range modelTextOnly.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelTexOnly.Validate.ValidateField(data, false); !ok {
+			if ok := modelTextOnly.Validate.ValidateField(data, false); !ok {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -56,9 +63,9 @@ func Test_GoodInputTextOnly(t *testing.T) {
 }
 
 func Test_WrongInputTextOnly(t *testing.T) {
-	for _, data := range modelTexOnly.TestData.WrongTestData() {
+	for _, data := range modelTextOnly.TestData.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelTexOnly.Validate.ValidateField(data, false); ok {
+			if ok := modelTextOnly.Validate.ValidateField(data, false); ok {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

@@ -31,6 +31,13 @@ var (
 	}
 )
 
+func Test_TagSelect(t *testing.T) {
+	tag := modelSelect.Tag.HtmlTag("1", "name", true)
+	if tag == "" {
+		log.Fatalln("ERROR NO TAG RENDERING ")
+	}
+}
+
 func Test_Select(t *testing.T) {
 	for prueba, data := range dataSelect {
 		t.Run((prueba + " " + data.inputData), func(t *testing.T) {

@@ -28,7 +28,7 @@ func Check(data sourceData, options ...string) model.Input {
 			JsPrivate:   in,
 			JsListeners: nil,
 		},
-		HtmlTag:  in,
+		Tag:      in,
 		Validate: in,
 		TestData: in,
 	}

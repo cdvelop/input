@@ -33,6 +33,13 @@ func (radio) SourceData() map[string]string {
 	return map[string]string{"": "sin data", "1": "1 min.", "D": "Dama", "V": "Varón", "20": "20 min"}
 }
 
+func Test_TagRadio(t *testing.T) {
+	tag := modelRadio.Tag.HtmlTag("1", "name", true)
+	if tag == "" {
+		log.Fatalln("ERROR NO TAG RENDERING ")
+	}
+}
+
 func Test_RadioButton(t *testing.T) {
 	for prueba, data := range TestData {
 		t.Run((prueba), func(t *testing.T) {

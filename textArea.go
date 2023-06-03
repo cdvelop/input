@@ -29,7 +29,7 @@ func TextArea(options ...string) model.Input {
 			JsPrivate:   nil,
 			JsListeners: nil,
 		},
-		HtmlTag:  in,
+		Tag:      in,
 		Validate: in,
 		TestData: in,
 	}
@@ -48,7 +48,7 @@ func (t textArea) HtmlName() string {
 }
 
 func (t textArea) HtmlTag(id, field_name string, allow_skip_completed bool) string {
-	return t.buildHtmlTag(t.HtmlName(), t.Name(), id, field_name, allow_skip_completed)
+	return t.BuildHtmlTag(t.HtmlName(), t.Name(), id, field_name, allow_skip_completed)
 }
 func (t textArea) JsGlobal() string {
 	return `function TextAreaAutoGrow(input) {

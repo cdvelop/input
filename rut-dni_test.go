@@ -31,6 +31,13 @@ var (
 	}
 )
 
+func Test_TagDNI(t *testing.T) {
+	tag := modelDNI.Tag.HtmlTag("1", "name", true)
+	if tag == "" {
+		log.Fatalln("ERROR NO TAG RENDERING ")
+	}
+}
+
 func Test_InputDNI(t *testing.T) {
 	for prueba, data := range dataDNI {
 		t.Run((prueba), func(t *testing.T) {
