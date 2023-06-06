@@ -1,4 +1,4 @@
-github.com/cdvelop/model v0.0.27 h1:VZxTKnH9gs9PMPDE99w6Ot40AKYP5aY5hfrNJWxI0X0=
-github.com/cdvelop/model v0.0.27/go.mod h1:cYJNxbv1WV/aDgiVPV9VXs8LrbF8+0nU+X+KfSevyzw=
+github.com/cdvelop/model v0.0.28 h1:dGYkBonF14Hg6s17Gl6mNol5RPqQUkGkkakg46c69Ew=
+github.com/cdvelop/model v0.0.28/go.mod h1:cYJNxbv1WV/aDgiVPV9VXs8LrbF8+0nU+X+KfSevyzw=
 golang.org/x/text v0.9.0 h1:2sjJmO8cDvYveuX97RDLsxlyUxLl+GHoLxBiRdHllBE=
 golang.org/x/text v0.9.0/go.mod h1:e1OnstbJyHTd6l/uOt8jFFHp6TRDWZR/bV3emEE/zU8=
