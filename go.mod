@@ -4,4 +4,4 @@ go 1.20
 
 require golang.org/x/text v0.9.0
 
-require github.com/cdvelop/model v0.0.29
+require github.com/cdvelop/model v0.0.30
