@@ -42,12 +42,13 @@ func Rut(options ...string) model.Input {
 	}
 
 	return model.Input{
-		Component: model.Component{
-			Name:        in.Name(),
-			CssGlobal:   in,
-			CssPrivate:  nil,
+		Object: model.Object{
+			ApiHandler: model.ApiHandler{
+				Name: in.Name(),
+			},
+			Css:         in,
 			JsGlobal:    in,
-			JsPrivate:   nil,
+			JsFunctions: nil,
 			JsListeners: nil,
 		},
 		Tag:      in,
@@ -97,7 +98,7 @@ func (r rut) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 	}
 }
 
-func (r rut) CssGlobal() string {
+func (r rut) Css() string {
 	return `.run-type{
     display: flex;
     flex-direction: row;

@@ -52,8 +52,6 @@ var (
 	// 1 408 XXX XXXX
 	// 5 699 524 9966
 
-	modelPhoneNumber = input.Number(`pattern="^[0-9]{7,11}$"`)
-
 	dataPhoneNumber = map[string]struct {
 		inputData       string
 		skip_validation bool
@@ -72,7 +70,7 @@ var (
 func Test_InputPhoneNumber(t *testing.T) {
 	for prueba, data := range dataPhoneNumber {
 		t.Run((prueba), func(t *testing.T) {
-			if ok := modelPhoneNumber.Validate.ValidateField(data.inputData, data.skip_validation); ok != data.expected {
+			if ok := input.Phone().ValidateField(data.inputData, data.skip_validation); ok != data.expected {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -80,9 +78,9 @@ func Test_InputPhoneNumber(t *testing.T) {
 }
 
 func Test_GoodInputPhoneNumber(t *testing.T) {
-	for _, data := range modelPhoneNumber.TestData.GoodTestData() {
+	for _, data := range input.Phone().GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelPhoneNumber.Validate.ValidateField(data, false); !ok {
+			if ok := input.Phone().ValidateField(data, false); !ok {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

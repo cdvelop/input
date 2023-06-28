@@ -11,7 +11,7 @@ func (check) JsGlobal() string {
 	return check_global
 }
 
-func (check) JsPrivate() string {
+func (check) JsFunctions() string {
 	return `crud.ModifyDomAfterCreate = Object({
 		"checkbox": function (data) {
 			crudFunctions.checkboxCreate(form, data);

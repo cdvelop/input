@@ -20,12 +20,13 @@ func Check(data sourceData, options ...string) model.Input {
 	}
 
 	return model.Input{
-		Component: model.Component{
-			Name:        in.Name(),
-			CssGlobal:   nil,
-			CssPrivate:  nil,
+		Object: model.Object{
+			ApiHandler: model.ApiHandler{
+				Name: in.Name(),
+			},
+			Css:         nil,
 			JsGlobal:    in,
-			JsPrivate:   in,
+			JsFunctions: in,
 			JsListeners: nil,
 		},
 		Tag:      in,

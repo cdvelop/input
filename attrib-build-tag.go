@@ -4,7 +4,7 @@ import (
 	"reflect"
 )
 
-// Type:radio,text,number etc TagInput <input type="input"
+// Action:radio,text,number etc TagInput <input type="input"
 func (a attributes) BuildHtmlTag(html_name, input_name, id, field_name string, allow_skip_completed bool) string {
 
 	var open string

@@ -22,12 +22,13 @@ func TextOnly(options ...string) model.Input {
 	}
 
 	return model.Input{
-		Component: model.Component{
-			Name:        in.Name(),
-			CssGlobal:   nil,
-			CssPrivate:  nil,
+		Object: model.Object{
+			ApiHandler: model.ApiHandler{
+				Name: in.Name(),
+			},
+			Css:         nil,
 			JsGlobal:    nil,
-			JsPrivate:   nil,
+			JsFunctions: nil,
 			JsListeners: nil,
 		},
 		Tag:      in,
