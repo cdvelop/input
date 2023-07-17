@@ -20,15 +20,7 @@ func Check(data sourceData, options ...string) model.Input {
 	}
 
 	return model.Input{
-		Object: model.Object{
-			ApiHandler: model.ApiHandler{
-				Name: in.Name(),
-			},
-			Css:         nil,
-			JsGlobal:    in,
-			JsFunctions: in,
-			JsListeners: nil,
-		},
+		Name:     in.Name(),
 		Tag:      in,
 		Validate: in,
 		TestData: in,

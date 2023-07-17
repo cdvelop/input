@@ -15,15 +15,7 @@ func TextSearch() model.Input {
 	}
 
 	return model.Input{
-		Object: model.Object{
-			ApiHandler: model.ApiHandler{
-				Name: in.Name(),
-			},
-			Css:         nil,
-			JsGlobal:    nil,
-			JsFunctions: nil,
-			JsListeners: nil,
-		},
+		Name:     in.Name(),
 		Tag:      in,
 		Validate: in,
 		TestData: in,

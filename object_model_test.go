@@ -31,9 +31,7 @@ func (dataGenero) SourceData() map[string]string {
 
 func Object1() *model.Object {
 	t1 := model.Object{
-		ApiHandler: model.ApiHandler{
-			Name: TableName1,
-		},
+		Name: TableName1,
 		Fields: []model.Field{
 			{Name: id_user_key, Input: input.Pk()},
 			{Name: nameKey, Input: input.Text(), Legend: "Nombre"},
@@ -57,9 +55,7 @@ func (dataState) SourceData() map[string]string {
 func Object2() *model.Object {
 
 	t2 := model.Object{
-		ApiHandler: model.ApiHandler{
-			Name: TableName2,
-		},
+		Name: TableName2,
 		Fields: []model.Field{
 			{Name: "id_" + TableName2, Input: input.Pk()},
 			{Name: id_user_key, Legend: "Id Usuario", Input: input.Pk()},

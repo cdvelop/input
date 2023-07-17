@@ -1,16 +1,5 @@
 package input
 
-import (
-	_ "embed"
-)
-
-//go:embed check.js
-var check_global string
-
-func (check) JsGlobal() string {
-	return check_global
-}
-
 func (check) JsFunctions() string {
 	return `crud.ModifyDomAfterCreate = Object({
 		"checkbox": function (data) {

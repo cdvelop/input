@@ -21,15 +21,7 @@ func TextArea(options ...string) model.Input {
 	in.Set(options...)
 
 	return model.Input{
-		Object: model.Object{
-			ApiHandler: model.ApiHandler{
-				Name: in.Name(),
-			},
-			Css:         nil,
-			JsGlobal:    in,
-			JsFunctions: nil,
-			JsListeners: nil,
-		},
+		Name:     in.Name(),
 		Tag:      in,
 		Validate: in,
 		TestData: in,
