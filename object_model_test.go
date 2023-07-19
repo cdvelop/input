@@ -36,8 +36,8 @@ func Object1() *model.Object {
 			{Name: id_user_key, Input: input.Pk()},
 			{Name: nameKey, Input: input.Text(), Legend: "Nombre"},
 			{Name: genderKey, Input: input.Radio(dataGenero{})},
-			{Name: descriptionKey, Input: input.Text(), Legend: "Descripción", SkipCompletionAllowed: true, SkipValidation: true},
-			{Name: rutKey, Input: input.Rut(), Inalterable: true, SkipCompletionAllowed: true},
+			{Name: descriptionKey, Input: input.Text(), Legend: "Descripción", SkipCompletionAllowed: true},
+			{Name: rutKey, Input: input.Rut(), Unique: true, SkipCompletionAllowed: true},
 		},
 	}
 
