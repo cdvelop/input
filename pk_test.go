@@ -15,14 +15,14 @@ var (
 		skip_validation bool
 		expected        bool
 	}{
-		"id 1 correcto?":        {"1624397134562544800", false, true},
-		"id 2 ok?":              {"1624397172303448900", false, true},
-		"id 3 ok?":              {"1634394443466878800", false, true},
-		"numero 5 correcto?":    {"5", false, true},
-		"numero 45 correcto?":   {"45", false, true},
-		"id con letra valido?":  {"E624397172303448900", false, false},
-		"id con data completa?": {"", false, false},
-		"id cero?":              {"0", false, true},
+		"id 1 correcto?":                 {"1624397134562544800", false, true},
+		"id 2 ok?":                       {"1624397172303448900", false, true},
+		"id 3 ok?":                       {"1634394443466878800", false, true},
+		"numero 5 correcto?":             {"5", false, true},
+		"numero 45 correcto?":            {"45", false, true},
+		"id con letra valido?":           {"E624397172303448900", false, false},
+		"primary key se permite vació ?": {"", false, false},
+		"id cero?":                       {"0", false, true},
 	}
 )
 

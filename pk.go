@@ -20,10 +20,10 @@ func Pk(options ...string) model.Input {
 	}
 
 	return model.Input{
-		Name:     in.Name(),
-		Tag:      in,
-		Validate: in.Number,
-		TestData: in.Number,
+		InputName: in.Name(),
+		Tag:       in,
+		Validate:  in.Number,
+		TestData:  in.Number,
 	}
 }
 
@@ -48,5 +48,5 @@ func (p pk) HtmlName() string {
 func (p pk) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 
 	// p.Number.HtmlTag.HtmlTag()
-	return p.BuildHtmlTag(p.HtmlName(), p.Name(), id, field_name, allow_skip_completed)
+	return p.BuildHtmlTag(p.HtmlName(), p.Name(), id, field_name, true)
 }

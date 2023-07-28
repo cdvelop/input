@@ -22,10 +22,10 @@ func TextOnly(options ...string) model.Input {
 	}
 
 	return model.Input{
-		Name:     in.Name(),
-		Tag:      in,
-		Validate: in,
-		TestData: in,
+		InputName: in.Name(),
+		Tag:       in,
+		Validate:  in,
+		TestData:  in,
 	}
 }
 

@@ -11,7 +11,7 @@ func Test_Validate(t *testing.T) {
 
 			object := objects[data.Object]
 
-			err := object.ValidateData(data.ItsNew, data.ItsUpdate, &data.Data)
+			err := object.ValidateData(data.ItsNew, data.ItsUpdate, data.Data)
 
 			if err == nil {
 				if data.Expected != "" {

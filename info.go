@@ -8,10 +8,10 @@ func Info(value string) model.Input {
 	}
 
 	return model.Input{
-		Name:     in.Name(),
-		Tag:      in,
-		Validate: nil,
-		TestData: nil,
+		InputName: in.Name(),
+		Tag:       in,
+		Validate:  nil,
+		TestData:  nil,
 	}
 }
 

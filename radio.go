@@ -15,10 +15,10 @@ func Radio(data sourceData, options ...string) model.Input {
 	in.Set(options...)
 
 	return model.Input{
-		Name:     in.Name(),
-		Tag:      in,
-		Validate: in,
-		TestData: in,
+		InputName: in.Name(),
+		Tag:       in,
+		Validate:  in,
+		TestData:  in,
 	}
 }
 
