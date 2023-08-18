@@ -20,12 +20,14 @@ func Number(options ...string) model.Input {
 	}
 	in.Set(options...)
 
-	return model.Input{
+	out := model.Input{
 		InputName: in.Name(),
-		Tag:       in,
-		Validate:  in,
-		TestData:  in,
+		Tag:       &in,
+		Validate:  &in,
+		TestData:  &in,
 	}
+
+	return out
 }
 
 func Phone() model.Input {

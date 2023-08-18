@@ -21,9 +21,9 @@ func Pk(options ...string) model.Input {
 
 	return model.Input{
 		InputName: in.Name(),
-		Tag:       in,
-		Validate:  in.Number,
-		TestData:  in.Number,
+		Tag:       &in,
+		Validate:  &in.Number,
+		TestData:  &in.Number,
 	}
 }
 

@@ -16,9 +16,9 @@ func TextNumCode() model.Input {
 
 	return model.Input{
 		InputName: in.Name(),
-		Tag:       in,
-		Validate:  in,
-		TestData:  in,
+		Tag:       &in,
+		Validate:  &in,
+		TestData:  &in,
 	}
 }
 
