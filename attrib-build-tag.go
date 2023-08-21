@@ -59,7 +59,7 @@ func (a attributes) BuildHtmlTag(html_name, input_name, id, field_name string, a
 		result += ` required`
 	}
 
-	if a.Onkeyup == "" && a.Oninput == "" {
+	if a.Onkeyup == "" && a.Oninput == "" && html_name != "hidden" {
 		result += ` onkeyup="` + DefaultValidateFunction + `"`
 	}
 

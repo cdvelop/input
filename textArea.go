@@ -43,9 +43,3 @@ func (t textArea) HtmlName() string {
 func (t textArea) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 	return t.BuildHtmlTag(t.HtmlName(), t.Name(), id, field_name, allow_skip_completed)
 }
-func (t textArea) JsGlobal() string {
-	return `function TextAreaAutoGrow(input) {
-		input.style.height = "5px";
-		input.style.height = (input.scrollHeight) + "px";
-	};`
-}

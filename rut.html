@@ -1,40 +1,17 @@
-<style>
-    .run-type {
-        display: flex;
-        flex-direction: row;
-        max-width: 25vw;
-    }
-</style>
+
 
 <div class="run-type">
 
     <input type="text" name="dni" data-name="dni">
 
-    <label class="block-label">
+    <label class="rut-radio-label">
         <input type="radio" name="type-dni" data-name="dni-ch" value="ch" checked="checked"
             oninput="changeDniType(this)">
         <span title="Documento Chileno">ch</span>
     </label>
 
-    <label class="block-label">
+    <label class="rut-radio-label">
         <input type="radio" name="type-dni" data-name="dni-ex" value="ex" oninput="changeDniType(this)">
         <span title="Documento Extranjero">ex</span>
     </label>
 </div>
-
-<script>
-
-    function changeDniType(e) {
-        const input_dni = e.closest('.run-type').querySelector('input[type="text"][data-name="dni"]');
-
-        if (e.value === "ch") {
-            input_dni.setAttribute("maxlength", 10);
-        } else {
-            input_dni.setAttribute("maxlength", 15);
-        }
-
-        console.log("CHANGE DNI TYPE: ", e, " INPUT DNI: ", input_dni);
-        validateField(input_dni);
-    }
-
-</script>

@@ -3,7 +3,7 @@ package input
 type attributes struct {
 	DataSet string // `data-xxx="nnn"`
 
-	Class string // clase css ej: "age"
+	Class string // clase css ej: class="age"
 
 	PlaceHolder string
 	Title       string //info
