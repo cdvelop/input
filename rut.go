@@ -74,12 +74,12 @@ func (r rut) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 		tag += r.BuildHtmlTag(r.HtmlName(), r.Name(), id, field_name, allow_skip_completed)
 
 		tag += `<div class="rut-label-container"><label class="rut-radio-label">
-			<input type="radio" name="type-dni" data-name="dni-ch" value="ch" checked="checked" oninput="changeDniType(this, this.form.id)">
+			<input type="radio" name="type-dni" data-name="dni-ch" value="ch" checked="checked" oninput="changeDniType(this, this.form)">
 			<span title="Documento Chileno">ch</span>
 		</label>
 	
 		<label class="rut-radio-label">
-			<input type="radio" name="type-dni" data-name="dni-ex" value="ex" oninput="changeDniType(this, this.form.id)">
+			<input type="radio" name="type-dni" data-name="dni-ex" value="ex" oninput="changeDniType(this, this.form)">
 			<span title="Documento Extranjero">ex</span>
 		</label>
 	  </div>

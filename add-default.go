@@ -1,3 +1,3 @@
 package input
 
-const DefaultValidateFunction = `validateField(this, this.form.id)`
+const DefaultValidateFunction = `UserTyping(this, this.form)`

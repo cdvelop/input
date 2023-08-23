@@ -37,9 +37,9 @@ func (a attributes) BuildHtmlTag(html_name, input_name, id, field_name string, a
 			switch attributeName {
 
 			case "Pattern":
-				if !allow_skip_completed {
-					result += ` pattern="` + a.Pattern + `"`
-				}
+				// if !allow_skip_completed {
+				// 	result += ` pattern="` + a.Pattern + `"`
+				// }
 
 			case "Min":
 				result += ` min="` + a.Min + `"`

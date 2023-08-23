@@ -1,5 +1,4 @@
-function changeDniType(e,form_id) {
-
+function changeDniType(e,form) {
     const input_dni = e.closest('.run-type').querySelector('input[type="text"][data-name="rut_dni"]');
 
     if (e.value === "ch") {
@@ -7,9 +6,8 @@ function changeDniType(e,form_id) {
     } else {
         input_dni.setAttribute("maxlength", 15);
     }
-
-    console.log("CHANGE DNI TYPE: ", e, " INPUT DNI: ", input_dni);
-    validateField(e,form_id);
+    // console.log("CHANGE DNI TYPE: ", e, " INPUT DNI: ", input_dni);
+    UserTyping(input_dni,form);
 };
 
 function RunToPointFormat(rut) {

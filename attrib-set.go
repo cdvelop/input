@@ -62,6 +62,9 @@ func (a *attributes) Set(options ...string) {
 		case strings.Contains(option, "onkeyup="):
 			a.Onkeyup = option
 
+		case strings.Contains(option, "onchange="):
+			a.Onchange = option
+
 		case strings.Contains(option, "accept="):
 			a.Accept = option
 

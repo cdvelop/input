@@ -11,8 +11,10 @@ import (
 func DateAge(options ...string) model.Input {
 	in := dateAge{
 		attributes: attributes{
-			Title:   `title="Campo Informativo"`,
-			Pattern: `[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])`,
+			Title:    `title="Campo Informativo"`,
+			Pattern:  `[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])`,
+			Onkeyup:  `onkeyup="DateAgeChange(this, this.form)"`,
+			Onchange: `oninput="DateAgeChange(this, this.form)"`,
 		},
 	}
 	in.Set(options...)
@@ -39,7 +41,7 @@ func (d dateAge) HtmlName() string {
 
 func (d dateAge) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 
-	tag := `<label class="age-number"><input data-name="age-number" type="number" min="0" max="150" title="Campo Informativo"></label>`
+	tag := `<label class="age-number"><input data-name="age-number" type="number" min="0" max="150" oninput="AgeInputChange(this, this.form)" title="Campo Informativo"></label>`
 
 	tag += `<label class="age-date">`
 
