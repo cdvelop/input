@@ -7,7 +7,7 @@ function changeDniType(e,form) {
         input_dni.setAttribute("maxlength", 15);
     }
     // console.log("CHANGE DNI TYPE: ", e, " INPUT DNI: ", input_dni);
-    UserTyping(input_dni,form);
+    userTyping(input_dni,form);
 };
 
 function RunToPointFormat(rut) {

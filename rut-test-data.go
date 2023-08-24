@@ -17,6 +17,7 @@ func (r rut) GoodTestData() (out []string) {
 
 	if r.dni_mode {
 		out = []string{
+			"15890022-k",
 			"ax001223b",
 			"A0C00A389",
 			"B0004DF678",
