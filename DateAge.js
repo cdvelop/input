@@ -1,4 +1,4 @@
-function AgeInputChange(input_age, form) {
+function AgeInputChange(input_age) {
 	// console.log("AgeInputChange INPUT: ", input_age);
 
 	let input_date = input_age.parentNode.nextElementSibling.querySelector('input[type="date"]');
@@ -13,18 +13,18 @@ function AgeInputChange(input_age, form) {
 		input_date.value = '';
 	}
 
-	userTyping(input_date, form);
+	userTyping(input_date);
 };
 
 
-function DateAgeChange(input_date, form) {
+function DateAgeChange(input_date) {
 	// console.log("INPUT DATE CHANGE: ", input_date, " FORM: ", form)
 	let input_age = input_date.parentNode.previousElementSibling.querySelector('input[type="number"]');
 	// console.log("input_age: ", input_age)
 	let age = calculateAge(input_date.value)
 	if (age >= 0) {
 		input_age.value = age;
-		userTyping(input_date, form)
+		userTyping(input_date)
 	} else {
 		input_age.value = '';
 	}

@@ -36,7 +36,7 @@ func (radio) HtmlName() string {
 }
 
 // validación con datos de entrada
-func (r radio) ValidateField(data_in string, skip_validation bool) bool {
+func (r radio) ValidateField(data_in string, skip_validation bool, options ...string) bool {
 	if !skip_validation {
 
 		if _, exists := r.Data.SourceData()[data_in]; !exists {

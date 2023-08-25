@@ -40,7 +40,7 @@ func (d date) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 }
 
 // validación con datos de entrada
-func (d date) ValidateField(data_in string, skip_validation bool) bool {
+func (d date) ValidateField(data_in string, skip_validation bool, options ...string) bool {
 	if !skip_validation {
 		if len(data_in) > 10 {
 			return false

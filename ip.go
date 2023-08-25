@@ -41,7 +41,7 @@ func (i ip) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 }
 
 // validación con datos de entrada
-func (i ip) ValidateField(data_in string, skip_validation bool) bool {
+func (i ip) ValidateField(data_in string, skip_validation bool, options ...string) bool {
 	if !skip_validation {
 
 		if data_in == "0.0.0.0" {

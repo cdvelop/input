@@ -18,6 +18,7 @@ func Rut(options ...string) model.Input {
 		attributes: attributes{
 			Autocomplete: `autocomplete="off"`,
 			Class:        `class="rut"`,
+			DataSet:      `data-option="ch"`,
 		},
 	}
 
@@ -39,6 +40,7 @@ func Rut(options ...string) model.Input {
 		in.Title = `title="rut sin puntos y con guion ejem.: 11222333-4"`
 		in.PlaceHolder = `placeholder="ej: 11222333-4"`
 		in.Maxlength = `maxlength="10"`
+
 		// in.Pattern = `^[0-9]+-[0-9kK]{1}$`
 	}
 
@@ -74,12 +76,12 @@ func (r rut) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 		tag += r.BuildHtmlTag(r.HtmlName(), r.Name(), id, field_name, allow_skip_completed)
 
 		tag += `<div class="rut-label-container"><label class="rut-radio-label">
-			<input type="radio" name="type-dni" data-name="dni-ch" value="ch" checked="checked" oninput="changeDniType(this, this.form)">
+			<input type="radio" name="type-dni" data-name="dni-ch" value="ch" checked="checked" onchange="changeDniType(this)">
 			<span title="Documento Chileno">ch</span>
 		</label>
 	
 		<label class="rut-radio-label">
-			<input type="radio" name="type-dni" data-name="dni-ex" value="ex" oninput="changeDniType(this, this.form)">
+			<input type="radio" name="type-dni" data-name="dni-ex" value="ex" onchange="changeDniType(this)">
 			<span title="Documento Extranjero">ex</span>
 		</label>
 	  </div>

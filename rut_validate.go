@@ -7,21 +7,25 @@ import (
 )
 
 // validación con datos de entrada
-func (r rut) ValidateField(data_in string, skip_validation bool) bool {
+func (r rut) ValidateField(data_in string, skip_validation bool, options ...string) bool {
 	if !skip_validation {
 
-		if r.dni_mode {
-			// verificar si tiene - el string si es asi es run nacional
-			if strings.Contains(data_in, `-`) {
-				return r.runValidate(data_in)
-			} else {
+		for _, doc := range options {
+
+			if doc == "ex" {
 				pvalid := regexp.MustCompile(r.Pattern)
 				return pvalid.MatchString(data_in)
 			}
-
-		} else {
-			return r.runValidate(data_in)
 		}
+
+		if r.dni_mode {
+			if !strings.Contains(data_in, `-`) {
+				pvalid := regexp.MustCompile(r.Pattern)
+				return pvalid.MatchString(data_in)
+			}
+		}
+
+		return r.runValidate(data_in)
 
 	} else {
 		return true

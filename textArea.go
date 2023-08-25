@@ -15,7 +15,7 @@ func TextArea(options ...string) model.Input {
 			Title:   `title="letras números - , : . () $ % permitidos min 2 max 1000 caracteres"`,
 			Pattern: `^[A-Za-zÑñáéíóú 0-9:$%.,+-/\\()|\n/g]{2,1000}$`,
 			Oninput: `oninput="TextAreaAutoGrow(this)"`,
-			Onkeyup: `onkeyup="` + DefaultValidateFunction + `"`,
+			// Onchange: `onchange="` + DefaultValidateFunction + `"`,
 		},
 	}
 	in.Set(options...)

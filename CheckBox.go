@@ -8,7 +8,7 @@ import (
 
 // SourceData() map[string]string
 // options ej: "internal" = only internal contend
-func Check(data sourceData, options ...string) model.Input {
+func CheckBox(data sourceData, options ...string) model.Input {
 	in := check{
 		Data: data,
 	}
@@ -42,7 +42,7 @@ func (check) HtmlName() string {
 }
 
 // validación con datos de entrada
-func (c check) ValidateField(data_in string, skip_validation bool) bool {
+func (c check) ValidateField(data_in string, skip_validation bool, options ...string) bool {
 	if !skip_validation {
 		dataInArray := strings.Split(data_in, ",")
 		var keysFound []string
@@ -61,4 +61,22 @@ func (c check) ValidateField(data_in string, skip_validation bool) bool {
 		return true
 	}
 	return false
+}
+
+func (c check) GoodTestData() (out []string) {
+	for k := range c.Data.SourceData() {
+		out = append(out, k)
+	}
+	return
+}
+
+func (c check) WrongTestData() (out []string) {
+
+	for _, wd := range wrong_data {
+		if _, exist := c.Data.SourceData()[wd]; !exist {
+			out = append(out, wd)
+		}
+	}
+
+	return
 }

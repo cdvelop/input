@@ -1,35 +1,36 @@
+function CheckChange(input) {
+	const father = input.parentNode.parentNode
+	const checkboxes = father.querySelectorAll('input[type="checkbox"]');
+	let all_selected = true;
 
-function TargetCheckChange(inputs, data_selected) {
-
-	console.log("INPUTS CHECK: ",inputs," DATA: ",data_selected)
-	let counter = 0;
-	let targetValues = data_selected[i].dataset.value.split(",");
-	for (let i = 0; i < targetValues.length; i++) {
-		for (let c = 0; c < inputs.length; c++) {
-			// console.log("VALOR FORM ",input[c].value, "VALOR TARGET", targetValues[i]);
-			if (inputs[c].value == targetValues[i]) {
-				inputs[c].checked = true;
-				counter++;
-				break;
-			}
+	for (const cb of checkboxes) {
+		if (cb.checked) {
+			all_selected = false;
+			break;
 		}
 	}
 
-	if (counter > 0) {
-		changeFieldsetColor(inputs[0], true);
+	if (all_selected) {
+		if (input.hasAttribute('required')) {
+			InputWrong(input);
+		} else {
+			InputNormal(input);
+		}
+		// console.log("Ningún checkbox está seleccionado.");
 	} else {
-		changeFieldsetColor(inputs[0], false);
+		InputRight(input);
+		// console.log("Al menos un checkbox está seleccionado.");
 	}
 }
 
-crudFunctions.checkboxCreate = function (form, data) {
+function checkboxCreate(form, data) {
 	const check_container = form.querySelector('[data-name="' + data.name + '"] label[data-id="' + data.id + '"]');
 	if (check_container != null) {
 		check_container.insertAdjacentHTML("beforeend", data.tag);
 	}
 };
 
-crudFunctions.checkboxUpdate = function (form, data) {
+function checkboxUpdate(form, data) {
 	let label_check = form.querySelector('[data-name="' + data.name + '"] label[data-id="' + data.id + '"]');
 	if (label_check != null) {
 		label_check.innerHTML = data.tag;
@@ -43,9 +44,9 @@ crudFunctions.checkboxUpdate = function (form, data) {
 	}
 };
 
-crudFunctions.checkboxDelete = function (form, data) {
+function checkboxDelete(form, data) {
 	let input_check = form.querySelector('[data-name="' + data.name + '"] label[data-id="' + data.id + '"]');
 	if (input_check != null) {
-	  input_check.parentNode.removeChild(input_check);
+		input_check.parentNode.removeChild(input_check);
 	}
-  };
+};

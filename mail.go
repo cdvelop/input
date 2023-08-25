@@ -39,7 +39,7 @@ func (mail) HtmlName() string {
 }
 
 // validación con datos de entrada
-func (m mail) ValidateField(data_in string, skip_validation bool) bool {
+func (m mail) ValidateField(data_in string, skip_validation bool, options ...string) bool {
 	if !skip_validation {
 
 		switch data_in {

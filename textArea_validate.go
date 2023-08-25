@@ -3,7 +3,7 @@ package input
 import "regexp"
 
 // validación con datos de entrada
-func (t textArea) ValidateField(data_in string, skip_validation bool) bool {
+func (t textArea) ValidateField(data_in string, skip_validation bool, options ...string) bool {
 	if !skip_validation {
 
 		pvalid := regexp.MustCompile(t.Pattern)

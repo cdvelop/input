@@ -1,3 +1,3 @@
 package input
 
-const DefaultValidateFunction = `userTyping(this, this.form)`
+const DefaultValidateFunction = `userTyping(this)`

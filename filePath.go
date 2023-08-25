@@ -43,7 +43,7 @@ func (f filePath) HtmlTag(id, field_name string, allow_skip_completed bool) (tag
 }
 
 // validación con datos de entrada
-func (f filePath) ValidateField(data_in string, skip_validation bool) (ok bool) {
+func (f filePath) ValidateField(data_in string, skip_validation bool, options ...string) bool {
 	if !skip_validation {
 
 		if len(data_in) == 2 {

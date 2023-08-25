@@ -1,13 +1,15 @@
-function changeDniType(e,form) {
+function changeDniType(e) {
     const input_dni = e.closest('.run-type').querySelector('input[type="text"][data-name="rut_dni"]');
 
     if (e.value === "ch") {
         input_dni.setAttribute("maxlength", 10);
+        input_dni.dataset.option = "ch";
+
     } else {
         input_dni.setAttribute("maxlength", 15);
+        input_dni.dataset.option = "ex";
     }
-    // console.log("CHANGE DNI TYPE: ", e, " INPUT DNI: ", input_dni);
-    userTyping(input_dni,form);
+    userTyping(input_dni);
 };
 
 function RunToPointFormat(rut) {

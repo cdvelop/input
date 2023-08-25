@@ -14,7 +14,7 @@ func (c checkData) SourceData() map[string]string {
 }
 
 var (
-	modelCheck = input.Check(checkData{})
+	modelCheck = input.CheckBox(checkData{})
 
 	datacheck = map[string]struct {
 		inputData       string

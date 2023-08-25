@@ -50,7 +50,7 @@ func (t textOnly) HtmlTag(id, field_name string, allow_skip_completed bool) stri
 }
 
 // validación con datos de entrada
-func (t textOnly) ValidateField(data_in string, skip_validation bool) bool {
+func (t textOnly) ValidateField(data_in string, skip_validation bool, options ...string) bool {
 	if !skip_validation {
 		pvalid := regexp.MustCompile(t.Pattern)
 

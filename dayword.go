@@ -45,7 +45,7 @@ func (d dayWord) HtmlTag(id, field_name string, allow_skip_completed bool) strin
 }
 
 // validación con datos de entrada
-func (d dayWord) ValidateField(data_in string, skip_validation bool) bool { //en realidad es YYYY-MM-DD
+func (d dayWord) ValidateField(data_in string, skip_validation bool, options ...string) bool { //en realidad es YYYY-MM-DD
 	if !skip_validation {
 
 		pvalid := regexp.MustCompile(d.Pattern)

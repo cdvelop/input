@@ -40,7 +40,7 @@ func (t textSearch) HtmlTag(id, field_name string, allow_skip_completed bool) st
 }
 
 // validación con datos de entrada
-func (t textSearch) ValidateField(data_in string, skip_validation bool) bool {
+func (t textSearch) ValidateField(data_in string, skip_validation bool, options ...string) bool {
 	if !skip_validation {
 
 		pvalid := regexp.MustCompile(t.Pattern)
