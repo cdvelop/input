@@ -1,35 +1,33 @@
-function AgeInputChange(input_age) {
-	// console.log("AgeInputChange INPUT: ", input_age);
-
-	let input_date = input_age.parentNode.nextElementSibling.querySelector('input[type="date"]');
-
-	if (input_age.value >= 0) {
+function AgeInputChange(input) {
+	// console.log("AgeInputChange INPUT: ", input);
+	let input_date = input.parentNode.nextElementSibling.querySelector('input[type="date"]');
+	if (input.value > 0) {
 		// let input_date = input.parentNode.nextElementSibling.querySelector('input[data-name="dateage"]');
-		let new_birthDay = ageToBirthDay(input_age.value);
-		// console.log("new_birthDay: ", new_birthDay, "input_date: ", input_date);
+		let new_birthDay = ageToBirthDay(input.value);
+		inputRight(input_date);
 		input_date.value = new_birthDay
-
+		// console.log("new_birthDay: ", new_birthDay, "input_date: ", input_date);
 	} else {
-		input_date.value = '';
-	}
+		input_date.defaultValue
 
-	userTyping(input_date);
+		if (input_date.hasAttribute('required')) {
+			inputWrong(input_date);
+		} else {
+			inputNormal(input_date);
+		}
+	}
 };
 
-
 function DateAgeChange(input_date) {
-	// console.log("INPUT DATE CHANGE: ", input_date, " FORM: ", form)
 	let input_age = input_date.parentNode.previousElementSibling.querySelector('input[type="number"]');
-	// console.log("input_age: ", input_age)
 	let age = calculateAge(input_date.value)
 	if (age >= 0) {
 		input_age.value = age;
-		userTyping(input_date)
+		userTyping(input_date);
 	} else {
 		input_age.value = '';
 	}
 }
-
 
 // date format: 1980-03-01
 function calculateAge(birthday) {
@@ -60,8 +58,8 @@ function calculateAge(birthday) {
 
 // age ej 0.1, 40.0
 function ageToBirthDay(decimal_age) {
-	let out_date = "0000-00-00";
-	if (!isNaN(decimal_age) && decimal_age != "" && decimal_age != "0" && decimal_age != "0.")  {
+	let out_date = "";
+	if (!isNaN(decimal_age) && decimal_age != "" && decimal_age != "0" && decimal_age != "0.") {
 		// Obtén la fecha actual
 		const now_date = new Date();
 

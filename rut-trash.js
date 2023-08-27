@@ -20,10 +20,10 @@ const valRun = {
 function FieldRutChanged(input) {
     // console.log("VALIDANDO RUN: ", input);
     if (valRun.validaRut(input.value)) {
-        InputRight(input);
+        inputRight(input);
         return true
     } else {
-        InputWrong(input);
+        inputWrong(input);
         return false
     };
 };
@@ -31,10 +31,10 @@ function FieldRutChanged(input) {
 function ValidateForeignDoc(input) {
     const rex = /^[A-Za-z0-9]{9,15}$/;
     if (rex.test(input.value)) {
-        InputRight(input);
+        inputRight(input);
         return true
     } else {
-        InputWrong(input);
+        inputWrong(input);
         return false
     }
 };
@@ -53,7 +53,7 @@ function FieldDniChanged(e) {
 
 function ValidateDni(document_type, input) {
     if (input.value === "") {
-        InputRight(input);
+        inputRight(input);
         return false
     }
 

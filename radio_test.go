@@ -50,6 +50,34 @@ func Test_RadioButton(t *testing.T) {
 	}
 }
 
+func Test_RadioGender(t *testing.T) {
+
+	modelGenderRadio := input.Radio(nil, "gender")
+
+	genderData := map[string]struct {
+		inputData       string
+		skip_validation bool
+		expected        bool
+	}{
+		"f Dato en minúscula correcto": {"f", false, true},
+		"m Dato en minúscula correcto": {"m", false, true},
+		"F Dato mayúscula incorrecto":  {"F", false, false},
+		"M Dato mayúscula incorrecto":  {"M", false, false},
+		"Dato existe?":                 {"1", false, false},
+		"data ok?":                     {"0", false, false},
+		"numero ok?":                   {"20", false, false},
+		"data correcta?":               {"", false, false},
+	}
+
+	for prueba, data := range genderData {
+		t.Run((prueba), func(t *testing.T) {
+			if ok := modelGenderRadio.Validate.ValidateField(data.inputData, data.skip_validation); ok != data.expected {
+				log.Fatalf("se obtuvo [%v] y se esperaba [%v]\n[%v]", ok, data.expected, data)
+			}
+		})
+	}
+}
+
 func Test_GoodInputRadio(t *testing.T) {
 	for _, data := range modelRadio.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {

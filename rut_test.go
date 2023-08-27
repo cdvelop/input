@@ -15,8 +15,11 @@ var (
 		result          bool
 	}{
 		"ok 17734478-8":               {"17734478-8", false, true},
+		"sin guion 15890022k":         {"15890022k", false, false},
+		"no tiene guion 177344788":    {"177344788", false, false},
 		"ok 7863697-1":                {"7863697-1", false, true},
 		"ok 20373221-K":               {"20373221-k", false, true},
+		"no tiene guion 20373221K":    {"20373221k", false, false},
 		"run validado? permitido?":    {"7863697-W", false, false},
 		"cambio dígito a k 7863697-k": {"7863697-k", false, false},
 		"cambio dígito a 0 7863697-0": {"7863697-0", false, false},

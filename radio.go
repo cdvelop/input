@@ -2,17 +2,31 @@ package input
 
 import "github.com/cdvelop/model"
 
-//{"d":"Dama","v":"Varón"}
-// options: title="xxx"
-// SourceData() map[string]string
+// options: title="xxx".
+//gender return {"f": "Femenino", "m": "Masculino"}.
+// SourceData() map[string]string default: {"1": "Opción 1", "2": "Opción 2"}
 func Radio(data sourceData, options ...string) model.Input {
 	in := radio{
+		name: "radio",
 		Data: data,
 		attributes: attributes{
-			Oninput: `oninput="` + DefaultValidateFunction + `"`,
+			Onchange: `onchange="RadioChange(this);"`,
 		},
 	}
 	in.Set(options...)
+
+	for _, opt := range options {
+		switch opt {
+		case "gender":
+			in.name = "gender"
+			in.Data = gender{}
+
+		}
+	}
+
+	if in.Data == nil {
+		in.Data = radioDefault{}
+	}
 
 	return model.Input{
 		InputName: in.Name(),
@@ -23,12 +37,13 @@ func Radio(data sourceData, options ...string) model.Input {
 }
 
 type radio struct {
+	name string
 	Data sourceData
 	attributes
 }
 
 func (r radio) Name() string {
-	return r.HtmlName()
+	return r.name
 }
 
 func (radio) HtmlName() string {

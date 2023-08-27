@@ -55,12 +55,12 @@ func (a attributes) BuildHtmlTag(html_name, input_name, id, field_name string, a
 
 	}
 
-	if !allow_skip_completed {
-		result += ` required`
+	if a.Onchange == "" && a.Onkeyup == "" && a.Oninput == "" && html_name != "hidden" {
+		result += ` oninput="` + DefaultValidateFunction + `"`
 	}
 
-	if a.Onkeyup == "" && a.Oninput == "" && html_name != "hidden" {
-		result += ` onkeyup="` + DefaultValidateFunction + `"`
+	if !allow_skip_completed {
+		result += ` required`
 	}
 
 	result += close

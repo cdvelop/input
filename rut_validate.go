@@ -15,6 +15,8 @@ func (r rut) ValidateField(data_in string, skip_validation bool, options ...stri
 			if doc == "ex" {
 				pvalid := regexp.MustCompile(r.Pattern)
 				return pvalid.MatchString(data_in)
+			} else {
+				return r.runValidate(data_in)
 			}
 		}
 

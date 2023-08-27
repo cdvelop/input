@@ -1,26 +1,5 @@
 function CheckChange(input) {
-	const father = input.parentNode.parentNode
-	const checkboxes = father.querySelectorAll('input[type="checkbox"]');
-	let all_selected = true;
-
-	for (const cb of checkboxes) {
-		if (cb.checked) {
-			all_selected = false;
-			break;
-		}
-	}
-
-	if (all_selected) {
-		if (input.hasAttribute('required')) {
-			InputWrong(input);
-		} else {
-			InputNormal(input);
-		}
-		// console.log("Ningún checkbox está seleccionado.");
-	} else {
-		InputRight(input);
-		// console.log("Al menos un checkbox está seleccionado.");
-	}
+	checkMultipleInputs(input);
 }
 
 function checkboxCreate(form, data) {
