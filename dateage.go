@@ -9,10 +9,10 @@ import (
 func DateAge(options ...string) model.Input {
 	in := dateAge{
 		attributes: attributes{
-			Title: `title="Campo Informativo"`,
+			Title: `title="formato fecha: DD-MM-YYYY"`,
 			// Pattern: `[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])`,
 			// Onkeyup:  `onkeyup="DateAgeChange(this)"`,
-			Onchange: `oninput="DateAgeChange(this)"`,
+			Onchange: `onchange="DateAgeChange(this)"`,
 		},
 	}
 	in.Set(options...)

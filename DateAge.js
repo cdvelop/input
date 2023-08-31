@@ -11,7 +11,7 @@ function AgeInputChange(input) {
 		input_date.defaultValue
 
 		if (input_date.hasAttribute('required')) {
-			inputWrong(input_date);
+			inputWrong(input_date,"0 invalido, 0.1 = un mes");
 		} else {
 			inputNormal(input_date);
 		}

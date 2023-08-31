@@ -1,18 +1,35 @@
 package input
 
-import "github.com/cdvelop/model"
+import (
+	"strconv"
 
-//options:
+	"github.com/cdvelop/model"
+)
+
+// options:
 // pattern="`^[a-zA-Z 0-9\:\.\,\+\-]{0,30}$`"
 // title="permitido letras números - , :"
 // cols="2" default 1
 // rows="8" default 3
 func TextArea(options ...string) model.Input {
+	permitted := []rune{' ', '%', '$', '+', '#', '-', '.', ',', ':', '(', ')', '\n'}
+	var min = 5
+	var max = 1000
+
+	var info = `letras números`
+
+	for _, p := range permitted {
+		info += ` ` + string(p)
+	}
+
+	info += ` permitidos min ` + strconv.Itoa(min) + ` max ` + strconv.Itoa(max) + ` caracteres`
+
 	in := textArea{
 		attributes: attributes{
 			Rows:  `rows="3"`,
 			Cols:  `cols="1"`,
-			Title: `title="letras números - , : . () $ % permitidos min 2 max 1000 caracteres"`,
+			Title: `title="` + info + `"`,
+			// PlaceHolder: `placeHolder="` + info + `"`,
 			// Pattern: `^[A-Za-zÑñáéíóú 0-9:$%.,+-/\\()|\n/g]{2,1000}$`,
 			Oninput: `oninput="TextAreaAutoGrow(this)"`,
 			// Onchange: `onchange="` + DefaultValidateFunction + `"`,
@@ -21,15 +38,17 @@ func TextArea(options ...string) model.Input {
 			Letters:    true,
 			Tilde:      true,
 			Numbers:    true,
-			Characters: []rune{' ', '%', '$', '+', '#', '-', '.', ',', ':', '(', ')', '\n'},
-			Minimum:    2,
-			Maximum:    1000,
+			Characters: permitted,
+			Minimum:    min,
+			Maximum:    max,
 		},
 	}
 	in.Set(options...)
 
 	return model.Input{
 		InputName: in.Name(),
+		Minimum:   min,
+		Maximum:   max,
 		Tag:       &in,
 		Validate:  &in,
 		TestData:  &in,

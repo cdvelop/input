@@ -2,6 +2,7 @@ package input_test
 
 import (
 	"log"
+	"strconv"
 	"testing"
 
 	"github.com/cdvelop/input"
@@ -21,14 +22,14 @@ var (
 		"solo texto y espacio?":             {"hola esto es una prueba", false, ""},
 		"texto y puntuación?":               {"hola: esto es una prueba", false, ""},
 		"texto y puntuación y coma?":        {"hola: esto,true, es una prueba", false, ""},
-		"4 caracteres?":                     {" .s5", false, ""},
-		"sin data permitido?":               {"", false, "tamaño mínimo 2 caracteres"},
+		"5 caracteres?":                     {", .s5", false, ""},
+		"sin data permitido?":               {"", false, "tamaño mínimo " + strconv.Itoa(modelTextArea.Minimum) + " caracteres"},
 		"# permitido?":                      {"# son", false, ""},
 		"¿ ? permitido?":                    {" ¿ si ?", false, "carácter ¿ no permitido"},
 		"tildes si?":                        {" mí tílde", false, ""},
-		"1 carácter?":                       {"1", false, "tamaño mínimo 2 caracteres"},
+		"1 carácter?":                       {"1", false, "tamaño mínimo " + strconv.Itoa(modelTextArea.Minimum) + " caracteres"},
 		"nombre correcto?":                  {"Dr. Pato Gomez", false, ""},
-		"solo espacio en blanco?":           {" ", false, "tamaño mínimo 2 caracteres"},
+		"solo espacio en blanco?":           {" ", false, "tamaño mínimo " + strconv.Itoa(modelTextArea.Minimum) + " caracteres"},
 		"texto largo correcto?":             {`IRRITACION EN PIEL DE ROSTRO. ALERGIAS NO. CIRUGIAS NO. ACTUAL TTO CON ISOTRETINOINA 10MG - ENERO 2022. EN TTO ACTUAL CON VIT D. EXAMEN DE LAB 20-12-2022. SIN OTROS ANTECEDENTES`, false, ""},
 	}
 )
