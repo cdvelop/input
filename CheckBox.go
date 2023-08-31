@@ -45,8 +45,6 @@ func (check) HtmlName() string {
 func (c check) ValidateField(data_in string, skip_validation bool, options ...string) error {
 	if !skip_validation {
 		dataInArray := strings.Split(data_in, ",")
-		// var keysFound []string
-		// var badKey []string
 		for _, idkeyIn := range dataInArray {
 			if _, exists := (c.Data.SourceData())[idkeyIn]; !exists {
 
@@ -54,15 +52,11 @@ func (c check) ValidateField(data_in string, skip_validation bool, options ...st
 					return model.Error("valor", idkeyIn, "no corresponde al checkbox")
 
 				} else {
-					return model.Error("checkbox sin data seleccionada")
-
+					return model.Error("selección requerida")
 				}
-
-				// keysFound = append(keysFound, idkeyIn)
 			}
 		}
-		// if len(keysFound) > 0 && len(badKey) == 0 {
-		// }
+
 	}
 	return nil
 }

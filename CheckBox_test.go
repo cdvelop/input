@@ -27,7 +27,7 @@ var (
 		"0 existe?":                  {"0", false, "valor 0 no corresponde al checkbox"},
 		"-1 valido?":                 {"-1", false, "valor -1 no corresponde al checkbox"},
 		"todas existentes?":          {"1,5", false, "valor 5 no corresponde al checkbox"},
-		"con data?":                  {"", false, "checkbox sin data seleccionada"},
+		"con data?":                  {"", false, "selección requerida"},
 		"sin espacios?":              {"luis ,true, 3", false, "valor luis  no corresponde al checkbox"},
 	}
 )

@@ -35,7 +35,7 @@ func (s selecTag) ValidateField(data_in string, skip_validation bool, options ..
 			if data_in != "" {
 				return model.Error("valor", data_in, "no corresponde al select")
 			} else {
-				return model.Error("select sin data seleccionada")
+				return model.Error("selección requerida")
 			}
 		}
 	}

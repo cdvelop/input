@@ -13,7 +13,7 @@ func TextOnly(options ...string) model.Input {
 		},
 		Permitted: Permitted{
 			Letters:    true,
-			Minimum:    2,
+			Minimum:    3,
 			Maximum:    50,
 			Characters: []rune{' '},
 		},

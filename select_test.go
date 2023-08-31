@@ -26,7 +26,7 @@ var (
 		"0 existe?":           {"0", false, "valor 0 no corresponde al select"},
 		"-1 valido?":          {"-1", false, "valor -1 no corresponde al select"},
 		"carácter permitido?": {"%", false, "valor % no corresponde al select"},
-		"con data?":           {"", false, "select sin data seleccionada"},
+		"con data?":           {"", false, "selección requerida"},
 		"sin espacios?":       {"luis ", false, "valor luis  no corresponde al select"},
 	}
 )

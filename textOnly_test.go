@@ -25,13 +25,13 @@ var (
 		"oración ok ":                      {"hola que tal", false, ""},
 		"Dato numérico 100 no permitido? ": {"100", false, "carácter 1 no permitido"},
 		"con caracteres y coma ?":          {"los,true, vengadores", false, "carácter , no permitido"},
-		"sin data ok":                      {"", false, "tamaño mínimo 2 caracteres"},
-		"un carácter numérico ?":           {"8", false, "tamaño mínimo 2 caracteres"},
+		"sin data ok":                      {"", false, "tamaño mínimo 3 caracteres"},
+		"un carácter numérico ?":           {"8", false, "tamaño mínimo 3 caracteres"},
 		"palabra mas numero permitido ?":   {"son 4 bidones", false, "carácter 4 no permitido"},
 		"con paréntesis y numero ?":        {"son {4 bidones}", false, "carácter { no permitido"},
 		"con solo paréntesis ?":            {"son (bidones)", false, "carácter ( no permitido"},
 		"palabras y numero ?":              {"apellido Actualizado 1", false, "carácter 1 no permitido"},
-		"un carácter ok?":                  {"!", false, "tamaño mínimo 2 caracteres"},
+		"un carácter ok?":                  {"!", false, "tamaño mínimo 3 caracteres"},
 	}
 )
 

@@ -73,7 +73,7 @@ func Test_RadioGender(t *testing.T) {
 		"Dato existe?":                 {"1", false, "valor 1 no corresponde a botón radio"},
 		"data ok?":                     {"0", false, "valor 0 no corresponde a botón radio"},
 		"numero ok?":                   {"20", false, "valor 20 no corresponde a botón radio"},
-		"data correcta?":               {"", false, "valor  no corresponde a botón radio"},
+		"data correcta?":               {"", false, "selección requerida"},
 	}
 
 	for prueba, data := range genderData {

@@ -36,7 +36,7 @@ func (d datalist) ValidateField(data_in string, skip_validation bool, options ..
 			if data_in != "" {
 				return model.Error("valor", data_in, "no permitido en datalist")
 			} else {
-				return model.Error("datalist sin data seleccionada")
+				return model.Error("selección requerida")
 
 			}
 		}

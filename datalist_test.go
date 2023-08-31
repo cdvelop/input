@@ -26,7 +26,7 @@ var (
 		"0 existe?":           {"0", false, "valor 0 no permitido en datalist"},
 		"-1 valido?":          {"-1", false, "valor -1 no permitido en datalist"},
 		"carácter permitido?": {"%", false, "valor % no permitido en datalist"},
-		"con data?":           {"", false, "datalist sin data seleccionada"},
+		"con data?":           {"", false, "selección requerida"},
 		"sin espacios?":       {"luis ", false, "valor luis  no permitido en datalist"},
 	}
 )
