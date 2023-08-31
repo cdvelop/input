@@ -1,8 +1,6 @@
 package input
 
 import (
-	"regexp"
-
 	"github.com/cdvelop/model"
 )
 
@@ -11,8 +9,14 @@ import (
 func Hour(options ...string) model.Input {
 	in := hour{
 		attributes: attributes{
-			Title:   `title="formato hora: HH:MM"`,
-			Pattern: `^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$`,
+			Title: `title="formato hora: HH:MM"`,
+			// Pattern: `^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$`,
+		},
+		per: Permitted{
+			Numbers:    true,
+			Characters: []rune{':'},
+			Minimum:    5,
+			Maximum:    5,
 		},
 	}
 	in.Set(options...)
@@ -27,6 +31,7 @@ func Hour(options ...string) model.Input {
 
 type hour struct {
 	attributes
+	per Permitted
 }
 
 func (h hour) Name() string {
@@ -41,20 +46,17 @@ func (h hour) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 	return h.BuildHtmlTag(h.HtmlName(), h.Name(), id, field_name, allow_skip_completed)
 }
 
-// validación con datos de entrada
-func (h hour) ValidateField(data_in string, skip_validation bool, options ...string) bool { //en realidad es YYYY-MM-DD
+func (h hour) ValidateField(data_in string, skip_validation bool, options ...string) error {
 	if !skip_validation {
-		if len(data_in) > 10 {
-			return false
+
+		if len(data_in) >= 2 && data_in[0] == '2' && data_in[1] == '4' {
+			return model.Error("la hora 24 no existe")
 		}
 
-		pvalid := regexp.MustCompile(h.Pattern)
+		return h.per.Validate(data_in)
 
-		return pvalid.MatchString(data_in)
-
-	} else {
-		return true
 	}
+	return nil
 }
 
 func (h hour) GoodTestData() (out []string) {

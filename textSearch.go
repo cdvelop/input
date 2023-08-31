@@ -1,16 +1,22 @@
 package input
 
 import (
-	"regexp"
-
 	"github.com/cdvelop/model"
 )
 
 func TextSearch() model.Input {
 	in := textSearch{
 		attributes: attributes{
-			Pattern: `^[a-zA-ZÑñ0-9- ]{2,20}$`,
-			Title:   `title="letras números y guion - permitido. max 20 caracteres"`,
+			// Pattern: `^[a-zA-ZÑñ0-9- ]{2,20}$`,
+			Title: `title="letras números y guion - permitido. max 20 caracteres"`,
+		},
+		Permitted: Permitted{
+			Letters:    true,
+			Tilde:      false,
+			Numbers:    true,
+			Characters: []rune{'-', ' '},
+			Minimum:    2,
+			Maximum:    20,
 		},
 	}
 
@@ -24,6 +30,7 @@ func TextSearch() model.Input {
 
 type textSearch struct {
 	attributes
+	Permitted
 }
 
 func (t textSearch) Name() string {
@@ -37,19 +44,6 @@ func (t textSearch) HtmlName() string {
 func (t textSearch) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 	return t.BuildHtmlTag(t.HtmlName(), t.Name(), id, field_name, allow_skip_completed)
 
-}
-
-// validación con datos de entrada
-func (t textSearch) ValidateField(data_in string, skip_validation bool, options ...string) bool {
-	if !skip_validation {
-
-		pvalid := regexp.MustCompile(t.Pattern)
-
-		return pvalid.MatchString(data_in)
-
-	} else {
-		return true
-	}
 }
 
 func (s textSearch) GoodTestData() (out []string) {

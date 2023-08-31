@@ -13,16 +13,16 @@ var (
 	dataTextNum = map[string]struct {
 		inputData       string
 		skip_validation bool
-		expected        bool
+		expected        string
 	}{
-		"guion bajo ":           {"son_24_botellas", false, true},
-		"frase con guion bajo ": {"los_cuatro", false, true},
-		"frase sin guion bajo ": {"los cuatro", false, false},
-		"palabras guion bajo ":  {"son_2_cuadros", false, true},
-		"palabras separadas ":   {"son 2 cuadros", false, false},
-		"palabras guion medio ": {"son-2-cuadros", false, false},
-		"menos de 5 palabras ":  {"tres", false, false},
-		"2 letras un numero ":   {"et1_", false, false},
+		"guion bajo ":           {"son_24_botellas", false, ""},
+		"frase con guion bajo ": {"los_cuatro", false, ""},
+		"frase sin guion bajo ": {"los cuatro", false, "espacios en blanco no permitidos"},
+		"palabras guion bajo ":  {"son_2_cuadros", false, ""},
+		"palabras separadas ":   {"son 2 cuadros", false, "espacios en blanco no permitidos"},
+		"palabras guion medio ": {"son-2-cuadros", false, "carácter - no permitido"},
+		"menos de 5 palabras ":  {"tres", false, "tamaño mínimo 5 caracteres"},
+		"2 letras un numero ":   {"et1_", false, "tamaño mínimo 5 caracteres"},
 	}
 )
 
@@ -36,8 +36,15 @@ func Test_TagTextNum(t *testing.T) {
 func Test_InputTextNum(t *testing.T) {
 	for prueba, data := range dataTextNum {
 		t.Run((prueba + data.inputData), func(t *testing.T) {
-			if ok := modelTextNum.Validate.ValidateField(data.inputData, data.skip_validation); ok != data.expected {
-				log.Fatalf("resultado [%v] [%v]", ok, data)
+			err := modelTextNum.Validate.ValidateField(data.inputData, data.skip_validation)
+			var resp string
+			if err != nil {
+				resp = err.Error()
+			}
+
+			if resp != data.expected {
+				log.Println(prueba)
+				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", resp, data.expected, data.inputData)
 			}
 		})
 	}
@@ -46,7 +53,7 @@ func Test_InputTextNum(t *testing.T) {
 func Test_GoodInputTextNum(t *testing.T) {
 	for _, data := range modelTextNum.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelTextNum.Validate.ValidateField(data, false); !ok {
+			if ok := modelTextNum.Validate.ValidateField(data, false); ok != nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -56,7 +63,7 @@ func Test_GoodInputTextNum(t *testing.T) {
 func Test_WrongInputTextNum(t *testing.T) {
 	for _, data := range modelTextNum.TestData.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelTextNum.Validate.ValidateField(data, false); ok {
+			if ok := modelTextNum.Validate.ValidateField(data, false); ok == nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

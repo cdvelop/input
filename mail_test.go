@@ -13,10 +13,10 @@ var (
 	dataMail = map[string]struct {
 		inputData       string
 		skip_validation bool
-		expected        bool
+		expected        string
 	}{
-		"correo normal ":   {"mi.correo@mail.com", false, true},
-		"correo un campo ": {"correo@mail.com", false, true},
+		"correo normal ":   {"mi.correo@mail.com", false, ""},
+		"correo un campo ": {"correo@mail.com", false, ""},
 	}
 )
 
@@ -30,8 +30,15 @@ func Test_TagMail(t *testing.T) {
 func Test_InputMail(t *testing.T) {
 	for prueba, data := range dataMail {
 		t.Run((prueba + data.inputData), func(t *testing.T) {
-			if ok := modelMail.Validate.ValidateField(data.inputData, data.skip_validation); ok != data.expected {
-				log.Fatalf("resultado [%v] [%v]", ok, data)
+			err := modelMail.Validate.ValidateField(data.inputData, data.skip_validation)
+			var resp string
+			if err != nil {
+				resp = err.Error()
+			}
+
+			if resp != data.expected {
+				log.Println(prueba)
+				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", resp, data.expected, data.inputData)
 			}
 		})
 	}
@@ -40,7 +47,7 @@ func Test_InputMail(t *testing.T) {
 func Test_GoodInputMail(t *testing.T) {
 	for _, data := range modelMail.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelMail.Validate.ValidateField(data, false); !ok {
+			if ok := modelMail.Validate.ValidateField(data, false); ok != nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -50,7 +57,7 @@ func Test_GoodInputMail(t *testing.T) {
 func Test_WrongInputMail(t *testing.T) {
 	for _, data := range modelMail.TestData.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelMail.Validate.ValidateField(data, false); ok {
+			if ok := modelMail.Validate.ValidateField(data, false); ok == nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

@@ -1,9 +1,6 @@
 package input
 
 import (
-	"regexp"
-	"strconv"
-
 	"github.com/cdvelop/model"
 )
 
@@ -11,7 +8,13 @@ import (
 func MonthDay(options ...string) model.Input {
 	in := monthDay{
 		attributes: attributes{
-			Pattern: `^[0-9]{2,2}$`,
+			// Pattern: `^[0-9]{2,2}$`,
+		},
+		Permitted: Permitted{
+			Numbers:    true,
+			Characters: []rune{},
+			Minimum:    2,
+			Maximum:    2,
 		},
 	}
 	in.Set(options...)
@@ -27,6 +30,7 @@ func MonthDay(options ...string) model.Input {
 // formato fecha: DD-MM
 type monthDay struct {
 	attributes
+	Permitted
 }
 
 func (d monthDay) Name() string {
@@ -39,28 +43,6 @@ func (d monthDay) HtmlName() string {
 
 func (m monthDay) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 	return m.BuildHtmlTag(m.HtmlName(), m.Name(), id, field_name, allow_skip_completed)
-}
-
-// validación con datos de entrada
-func (m monthDay) ValidateField(data_in string, skip_validation bool, options ...string) bool {
-	if !skip_validation {
-
-		intVar, err := strconv.Atoi(data_in)
-		if err != nil {
-			return false
-		}
-
-		if intVar > 31 {
-			return false
-		}
-
-		pvalid := regexp.MustCompile(m.Pattern)
-
-		return pvalid.MatchString(data_in)
-
-	} else {
-		return true
-	}
 }
 
 func (m monthDay) GoodTestData() (out []string) {

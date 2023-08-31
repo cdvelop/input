@@ -1,8 +1,6 @@
 package input
 
 import (
-	"log"
-	"regexp"
 	"strconv"
 
 	"github.com/cdvelop/model"
@@ -17,21 +15,23 @@ import (
 func Password(options ...string) model.Input {
 	in := password{
 		attributes: attributes{},
+		Permitted: Permitted{
+			Letters:    true,
+			Tilde:      true,
+			Numbers:    true,
+			Characters: []rune{' ', '$', '#', '%', '?', '.', ',', '-', '_'},
+			Minimum:    5,
+			Maximum:    50,
+		},
 	}
 	in.Set(options...)
 
-	//  si no me envían pattern
-	if in.Pattern == "" {
-		if in.Min == "" {
-			in.Min = "5"
-		}
+	if in.Min != "" {
+		in.Minimum, _ = strconv.Atoi(in.Min)
+	}
 
-		if in.Max == "" {
-			in.Max = "50"
-		}
-		in.Pattern_start = `^[A-Za-zÑñ 0-9:.-]{`
-		in.Pattern_end = `}$`
-		in.patternUpdate()
+	if in.Max != "" {
+		in.Maximum, _ = strconv.Atoi(in.Max)
 	}
 
 	return model.Input{
@@ -46,6 +46,7 @@ func Password(options ...string) model.Input {
 // (No el carácter de barra, que se usa para escapar del punto).
 type password struct {
 	attributes
+	Permitted
 }
 
 func (p password) Name() string {
@@ -58,19 +59,6 @@ func (p password) HtmlName() string {
 
 func (p password) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 	return p.BuildHtmlTag(p.HtmlName(), p.Name(), id, field_name, allow_skip_completed)
-}
-
-// validación con datos de entrada
-func (p password) ValidateField(data_in string, skip_validation bool, options ...string) bool {
-	if !skip_validation {
-
-		pvalid := regexp.MustCompile(p.Pattern)
-
-		return pvalid.MatchString(data_in)
-
-	} else {
-		return true
-	}
 }
 
 func (p password) GoodTestData() (out []string) {
@@ -86,35 +74,13 @@ func (p password) GoodTestData() (out []string) {
 		"CUATRO FraseS tambien CuentaN",
 	}
 
-	if p.Min != "" && p.Max != "" {
-
-		min, err := strconv.Atoi(p.Min)
-		if err != nil {
-			// Manejar el error si la conversión falla
-			log.Fatal("No se pudo convertir el string min: " + p.Min + " a int")
-			return
-		}
-
-		max, err := strconv.Atoi(p.Max)
-		if err != nil {
-			// Manejar el error si la conversión falla
-			log.Fatal("No se pudo convertir el string max: " + p.Max + " a int")
-			return
-		}
-
-		if min > 0 {
-
-			for _, pwd := range temp {
-				if len(pwd) >= min && len(pwd) <= max {
-					out = append(out, pwd)
-				}
-			}
-
-			return
+	for _, v := range temp {
+		if len(v) >= p.Minimum && len(v) <= p.Maximum {
+			out = append(out, v)
 		}
 	}
 
-	return temp
+	return
 }
 
 func (p password) WrongTestData() (out []string) {
@@ -129,35 +95,6 @@ func (p password) WrongTestData() (out []string) {
 		"sdlksññs092830928309280%%%%%9382¿323294720&&/0kdlskdlskdskdñskdlskdsññdkslkdñskdslkdsñ",
 		"sdlksññs0928309283092809382%%¿323294720&&/0kdlskdlskdskdñskdlskdsññdkslkdñskdslkdsñ",
 		"sdlksññs0928309283092809382¿78%%323294720&&/0kdlskdlskdskdñskdlskdsññdkslkdñskdslkdsñ",
-	}
-
-	if p.Min != "" && p.Max != "" {
-
-		min, err := strconv.Atoi(p.Min)
-		if err != nil {
-			// Manejar el error si la conversión falla
-			log.Fatal("No se pudo convertir el string min: " + p.Min + " a int")
-			return
-		}
-
-		max, err := strconv.Atoi(p.Max)
-		if err != nil {
-			// Manejar el error si la conversión falla
-			log.Fatal("No se pudo convertir el string max: " + p.Max + " a int")
-			return
-		}
-
-		if min > 0 {
-
-			for _, pwd := range temp {
-				if len(pwd) != min || len(pwd) > max {
-					out = append(out, pwd)
-				}
-			}
-
-			return
-		}
-
 	}
 
 	return temp

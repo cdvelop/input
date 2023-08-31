@@ -29,17 +29,17 @@ func (s selecTag) HtmlName() string {
 }
 
 // validación con datos de entrada
-func (s selecTag) ValidateField(data_in string, skip_validation bool, options ...string) bool {
+func (s selecTag) ValidateField(data_in string, skip_validation bool, options ...string) error {
 	if !skip_validation {
-		if data_in != "" {
-			if _, exists := s.Data.SourceData()[data_in]; exists {
-				return true
+		if _, exists := s.Data.SourceData()[data_in]; !exists {
+			if data_in != "" {
+				return model.Error("valor", data_in, "no corresponde al select")
+			} else {
+				return model.Error("select sin data seleccionada")
 			}
 		}
-	} else {
-		return true
 	}
-	return false
+	return nil
 }
 
 func (s selecTag) GoodTestData() (out []string) {

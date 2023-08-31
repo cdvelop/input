@@ -15,21 +15,21 @@ func (t textArea) GoodTestData() (out []string) {
 		return phrase
 
 	case strings.Contains(placeholder, "diagnostic"):
-		return combineStringArray(true, discomforts, prepositions, body_parts)
+		return permutation(discomforts, prepositions, body_parts)
 
 	case strings.Contains(placeholder, "prescription"):
-		return combineStringArray(true, prescription, prepositions, body_parts)
+		return permutation(prescription, prepositions, body_parts)
 
 	default:
-		return combineStringArray(true, phrase, prepositions, hours)
+		return permutation(phrase, prepositions, hours)
 	}
 }
 
 func (t textArea) WrongTestData() (out []string) {
 
 	out = []string{
-		"# son",
-		" ", "#", "& ", "SELECT * FROM", "=",
+		"] son",
+		" ", "& ", "SELECT * FROM", "=",
 	}
 
 	return

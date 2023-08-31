@@ -10,12 +10,20 @@ import "github.com/cdvelop/model"
 func TextArea(options ...string) model.Input {
 	in := textArea{
 		attributes: attributes{
-			Rows:    `rows="3"`,
-			Cols:    `cols="1"`,
-			Title:   `title="letras números - , : . () $ % permitidos min 2 max 1000 caracteres"`,
-			Pattern: `^[A-Za-zÑñáéíóú 0-9:$%.,+-/\\()|\n/g]{2,1000}$`,
+			Rows:  `rows="3"`,
+			Cols:  `cols="1"`,
+			Title: `title="letras números - , : . () $ % permitidos min 2 max 1000 caracteres"`,
+			// Pattern: `^[A-Za-zÑñáéíóú 0-9:$%.,+-/\\()|\n/g]{2,1000}$`,
 			Oninput: `oninput="TextAreaAutoGrow(this)"`,
 			// Onchange: `onchange="` + DefaultValidateFunction + `"`,
+		},
+		Permitted: Permitted{
+			Letters:    true,
+			Tilde:      true,
+			Numbers:    true,
+			Characters: []rune{' ', '%', '$', '+', '#', '-', '.', ',', ':', '(', ')', '\n'},
+			Minimum:    2,
+			Maximum:    1000,
 		},
 	}
 	in.Set(options...)
@@ -30,6 +38,7 @@ func TextArea(options ...string) model.Input {
 
 type textArea struct {
 	attributes
+	Permitted
 }
 
 func (t textArea) Name() string {

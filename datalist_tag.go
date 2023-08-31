@@ -1,7 +1,6 @@
 package input
 
 import (
-	"fmt"
 	"sort"
 	"strconv"
 )
@@ -12,8 +11,8 @@ func (d datalist) HtmlTag(id, field_name string, allow_skip_completed bool) stri
 		req = ` required`
 	}
 
-	tag := fmt.Sprintf(`<input list="%v" name="%v" id="%v"%v oninput="`+DefaultValidateFunction+`">`, field_name, field_name, id, req)
-	tag += fmt.Sprintf(`<datalist id="%v">`, id)
+	tag := `<input list="` + field_name + `" name="` + field_name + `" id="` + id + `"` + req + ` oninput="` + DefaultValidateFunction + `">`
+	tag += `<datalist id="` + id + `">`
 	tag += d.GetAllTagOption()
 	tag += `</datalist>`
 

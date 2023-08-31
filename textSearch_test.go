@@ -13,15 +13,15 @@ var (
 	dataTextSearch = map[string]struct {
 		inputData       string
 		skip_validation bool
-		expected        bool
+		expected        string
 	}{
-		"palabra solo texto 15 caracteres?": {"Maria Jose Diaz", false, true},
-		"texto con ñ ok?":                   {"Ñuñez perez", false, true},
-		"tilde permitido?":                  {"peréz del rozal", false, false},
-		"mas de 20 caracteres permitidos?":  {"hola son mas de 21 ca", false, false},
-		"guion permitido":                   {"12038-0", false, true},
-		"fecha correcta?":                   {"1990-07-21", false, true},
-		"fecha incorrecta permitida?":       {"190-07-21", false, true},
+		"palabra solo texto 15 caracteres?": {"Maria Jose Diaz", false, ""},
+		"texto con ñ ok?":                   {"Ñuñez perez", false, ""},
+		"tilde permitido?":                  {"peréz del rozal", false, "é con tilde no permitida"},
+		"mas de 20 caracteres permitidos?":  {"hola son mas de 21 ca", false, "tamaño máximo 20 caracteres"},
+		"guion permitido":                   {"12038-0", false, ""},
+		"fecha correcta?":                   {"1990-07-21", false, ""},
+		"fecha incorrecta permitida?":       {"190-07-21", false, ""},
 	}
 )
 
@@ -35,8 +35,15 @@ func Test_TagTextSearch(t *testing.T) {
 func Test_InputTextSearch(t *testing.T) {
 	for prueba, data := range dataTextSearch {
 		t.Run((prueba + data.inputData), func(t *testing.T) {
-			if ok := modelTextSearch.Validate.ValidateField(data.inputData, data.skip_validation); ok != data.expected {
-				log.Fatalf("resultado [%v] [%v]", ok, data)
+			err := modelTextSearch.Validate.ValidateField(data.inputData, data.skip_validation)
+			var resp string
+			if err != nil {
+				resp = err.Error()
+			}
+
+			if resp != data.expected {
+				log.Println(prueba)
+				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", resp, data.expected, data.inputData)
 			}
 		})
 	}
@@ -45,7 +52,7 @@ func Test_InputTextSearch(t *testing.T) {
 func Test_GoodInputTextSearch(t *testing.T) {
 	for _, data := range modelTextSearch.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelTextSearch.Validate.ValidateField(data, false); !ok {
+			if ok := modelTextSearch.Validate.ValidateField(data, false); ok != nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -55,7 +62,7 @@ func Test_GoodInputTextSearch(t *testing.T) {
 func Test_WrongInputTextSearch(t *testing.T) {
 	for _, data := range modelTextSearch.TestData.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelTextSearch.Validate.ValidateField(data, false); ok {
+			if ok := modelTextSearch.Validate.ValidateField(data, false); ok == nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

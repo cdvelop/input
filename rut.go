@@ -8,6 +8,7 @@ type rut struct {
 	hide_typing bool
 	dni_mode    bool
 	attributes
+	dni Permitted
 }
 
 // parámetro opcionales:
@@ -19,6 +20,12 @@ func Rut(options ...string) model.Input {
 			Autocomplete: `autocomplete="off"`,
 			Class:        `class="rut"`,
 			DataSet:      `data-option="ch"`,
+		},
+		dni: Permitted{
+			Letters: true,
+			Numbers: true,
+			Minimum: 9,
+			Maximum: 15,
 		},
 	}
 
@@ -34,7 +41,7 @@ func Rut(options ...string) model.Input {
 	if in.dni_mode {
 		in.Title = `title="Documento Chileno (ch) o Extranjero (ex)"`
 		in.PlaceHolder = `placeholder="ej: (ch) 11222333-k  /  (ex) 1b2334"`
-		in.Pattern = `^[A-Za-z0-9]{9,15}$`
+		// in.Pattern = `^[A-Za-z0-9]{9,15}$`
 		in.Maxlength = `maxlength="15"`
 	} else {
 		in.Title = `title="rut sin puntos y con guion ejem.: 11222333-4"`

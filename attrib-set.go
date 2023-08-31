@@ -14,16 +14,6 @@ func (a *attributes) Set(options ...string) {
 	for _, option := range options {
 		switch {
 
-		//en caso que nos envíen otro pattern necesitamos solo el contenido de este para poder reutilizarlo
-		case strings.Contains(option, "pattern="):
-			a.Pattern = a.add(option, "pattern")
-
-		case strings.Contains(option, "Pattern_start="):
-			a.Pattern_start = a.add(option, "Pattern_start")
-
-		case strings.Contains(option, "Pattern_end="):
-			a.Pattern_end = a.add(option, "Pattern_end")
-
 		case strings.Contains(option, "min="):
 			a.Min = a.add(option, "min")
 
@@ -74,16 +64,4 @@ func (a *attributes) Set(options ...string) {
 		}
 	}
 
-	a.patternUpdate()
-
-}
-
-func (a *attributes) patternUpdate() {
-	// agregar min y max al pattern
-	if a.Pattern_start != "" && a.Pattern_end != "" && a.Min != "" && a.Max != "" {
-		a.Pattern = a.Pattern_start + a.Min + `,` + a.Max + a.Pattern_end
-		a.Pattern_start = ""
-		a.Pattern_end = ""
-
-	}
 }

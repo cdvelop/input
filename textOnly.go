@@ -1,8 +1,6 @@
 package input
 
 import (
-	"regexp"
-
 	"github.com/cdvelop/model"
 )
 
@@ -12,7 +10,12 @@ func TextOnly(options ...string) model.Input {
 	in := textOnly{
 		attributes: attributes{
 			PlaceHolder: `PlaceHolder="Solo texto permitido min 3 max 50 caracteres"`,
-			Pattern:     `^[A-Za-zÑñáéíóú ]{3,50}$`,
+		},
+		Permitted: Permitted{
+			Letters:    true,
+			Minimum:    2,
+			Maximum:    50,
+			Characters: []rune{' '},
 		},
 	}
 	for _, opt := range options {
@@ -32,6 +35,7 @@ func TextOnly(options ...string) model.Input {
 type textOnly struct {
 	attributes
 	hidden bool
+	Permitted
 }
 
 func (t textOnly) Name() string {
@@ -47,18 +51,6 @@ func (t textOnly) HtmlName() string {
 
 func (t textOnly) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 	return t.BuildHtmlTag(t.HtmlName(), t.Name(), id, field_name, allow_skip_completed)
-}
-
-// validación con datos de entrada
-func (t textOnly) ValidateField(data_in string, skip_validation bool, options ...string) bool {
-	if !skip_validation {
-		pvalid := regexp.MustCompile(t.Pattern)
-
-		return pvalid.MatchString(data_in)
-
-	} else {
-		return true
-	}
 }
 
 func (t textOnly) GoodTestData() (out []string) {

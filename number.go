@@ -1,24 +1,37 @@
 package input
 
 import (
-	"fmt"
-	"regexp"
+	"strconv"
 
 	"github.com/cdvelop/model"
 )
 
-// options ej: data-type, data-after=" Años", pattern="^[0-9]{1,20}$",... this default
+// options ej: data-type, data-after=" Años"
 // hidden, el campo se mantendrá oculto
 // title="xxx"
+// for phone ej: `min="7"`, `max="11"`
 func Number(options ...string) model.Input {
 
 	in := number{
 		attributes: attributes{
-			Title:   `title="solo valores numéricos positivos >= 0 máximo 20 char 18446744073709551615"`,
-			Pattern: `^[0-9]{1,20}$`,
+			Title: `title="solo valores numéricos positivos >= 0 máximo 20 char 18446744073709551615"`,
+			// Pattern: `^[0-9]{1,20}$`,
+		},
+		Permitted: Permitted{
+			Numbers: true,
+			Minimum: 1,
+			Maximum: 20,
 		},
 	}
 	in.Set(options...)
+
+	if in.Min != "" {
+		in.Minimum, _ = strconv.Atoi(in.Min)
+	}
+
+	if in.Max != "" {
+		in.Maximum, _ = strconv.Atoi(in.Max)
+	}
 
 	out := model.Input{
 		InputName: in.Name(),
@@ -31,11 +44,13 @@ func Number(options ...string) model.Input {
 }
 
 func Phone() model.Input {
-	return Number(`pattern="^[0-9]{7,11}$"`)
+	// Phone `pattern="^[0-9]{7,11}$"`
+	return Number(`min="7"`, `max="11"`)
 }
 
 type number struct {
 	attributes
+	Permitted
 }
 
 func (n number) Name() string {
@@ -51,26 +66,13 @@ func (n number) HtmlTag(id, field_name string, allow_skip_completed bool) string
 
 }
 
-// validación con datos de entrada
-func (n number) ValidateField(data_in string, skip_validation bool, options ...string) bool {
-	if !skip_validation {
+// func (n number) FieldAddEventListener(field_name string) string {
+// 	return fmt.Sprintf(`input_%v.addEventListener("input", InputValidationWithPattern);`, field_name)
+// }
 
-		pvalid := regexp.MustCompile(n.Pattern)
-
-		return pvalid.MatchString(data_in)
-
-	} else {
-		return true
-	}
-}
-
-func (n number) FieldAddEventListener(field_name string) string {
-	return fmt.Sprintf(`input_%v.addEventListener("input", InputValidationWithPattern);`, field_name)
-}
-
-func (n number) FieldRemoveEventListener(field_name string) string {
-	return fmt.Sprintf(`input_%v.removeEventListener("input", InputValidationWithPattern);`, field_name)
-}
+// func (n number) FieldRemoveEventListener(field_name string) string {
+// 	return fmt.Sprintf(`input_%v.removeEventListener("input", InputValidationWithPattern);`, field_name)
+// }
 
 func (n number) GoodTestData() (out []string) {
 
@@ -92,14 +94,10 @@ func (n number) GoodTestData() (out []string) {
 		"29",
 	}
 
-	if n.Pattern != "" {
-		for _, num := range temp {
-			if n.ValidateField(num, false) {
-				out = append(out, num)
-			}
+	for _, v := range temp {
+		if len(v) >= n.Minimum && len(v) <= n.Maximum {
+			out = append(out, v)
 		}
-	} else {
-		return temp
 	}
 
 	return

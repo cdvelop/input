@@ -1,7 +1,7 @@
 package input
 
 import (
-	"regexp"
+	"strings"
 
 	"github.com/cdvelop/model"
 )
@@ -10,7 +10,14 @@ func Mail() model.Input {
 	in := mail{
 		attributes: attributes{
 			PlaceHolder: `placeHolder="ej: mi.correo@mail.com"`,
-			Pattern:     `[a-zA-Z0-9!#$%&'*_+-]([\.]?[a-zA-Z0-9!#$%&'*_+-])+@[a-zA-Z0-9]([^@&%$\/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2})?`,
+			// Pattern:     `[a-zA-Z0-9!#$%&'*_+-]([\.]?[a-zA-Z0-9!#$%&'*_+-])+@[a-zA-Z0-9]([^@&%$\/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2})?`,
+		},
+		per: Permitted{
+			Letters:    true,
+			Numbers:    false,
+			Characters: []rune{'@', '.', '_'},
+			Minimum:    0,
+			Maximum:    0,
 		},
 	}
 
@@ -24,6 +31,7 @@ func Mail() model.Input {
 
 type mail struct {
 	attributes
+	per Permitted
 }
 
 func (m mail) HtmlTag(id, field_name string, allow_skip_completed bool) string {
@@ -39,21 +47,23 @@ func (mail) HtmlName() string {
 }
 
 // validación con datos de entrada
-func (m mail) ValidateField(data_in string, skip_validation bool, options ...string) bool {
+func (m mail) ValidateField(data_in string, skip_validation bool, options ...string) error {
 	if !skip_validation {
 
-		switch data_in {
-		case "email@example.com":
-			return false
+		if strings.Contains(data_in, "example") {
+			return model.Error(data_in, "es un correo de ejemplo")
 		}
 
-		pvalid := regexp.MustCompile(m.Pattern)
+		parts := strings.Split(data_in, "@")
+		if len(parts) != 2 {
+			return model.Error("error en @ del correo", data_in)
+		}
 
-		return pvalid.MatchString(data_in)
+		return m.per.Validate(data_in)
 
-	} else {
-		return true
 	}
+
+	return nil
 }
 
 func (mail) GoodTestData() (out []string) {

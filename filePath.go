@@ -1,7 +1,8 @@
 package input
 
 import (
-	"regexp"
+	"fmt"
+	"strings"
 
 	"github.com/cdvelop/model"
 )
@@ -13,7 +14,15 @@ import (
 func FilePath(options ...string) model.Input {
 	in := filePath{
 		attributes: attributes{
-			Pattern: `^(\.\/|\.\?\\|\/)?([\w\s.-]+[\\\/]?)*$`,
+			// Pattern: `^(\.\/|\.\?\\|\/)?([\w\s.-]+[\\\/]?)*$`,
+		},
+		per: Permitted{
+			Letters:    true,
+			Tilde:      false,
+			Numbers:    true,
+			Characters: []rune{'\\', '/', '.'},
+			Minimum:    1,
+			Maximum:    100,
 		},
 	}
 	in.Set(options...)
@@ -28,6 +37,7 @@ func FilePath(options ...string) model.Input {
 
 type filePath struct {
 	attributes
+	per Permitted
 }
 
 func (f filePath) Name() string {
@@ -43,19 +53,39 @@ func (f filePath) HtmlTag(id, field_name string, allow_skip_completed bool) (tag
 }
 
 // validación con datos de entrada
-func (f filePath) ValidateField(data_in string, skip_validation bool, options ...string) bool {
+func (f filePath) ValidateField(data_in string, skip_validation bool, options ...string) error {
 	if !skip_validation {
-
-		if len(data_in) == 2 {
-			return false
+		if data_in == "" {
+			return model.Error("La ruta no puede estar vacía")
 		}
 
-		pvalid := regexp.MustCompile(f.Pattern)
+		if data_in[0] == '\\' {
+			return model.Error("La ruta no puede comenzar con \\ o / ")
+		}
 
-		return pvalid.MatchString(data_in)
-	} else {
-		return true
+		// Reemplazar las barras diagonales hacia adelante con barras diagonales hacia atrás.
+		data_in = strings.ReplaceAll(data_in, "/", "\\")
+
+		fmt.Println("ENTRADA: ", data_in)
+
+		// Eliminar barras diagonales dobles al principio y al final de la cadena.
+		data_in = strings.Trim(data_in, "\\")
+
+		// Dividir la cadena en partes utilizando las barras diagonales como delimitadores.
+		parts := strings.Split(data_in, "\\")
+
+		fmt.Println("PARTES: ", parts)
+
+		for _, part := range parts {
+			err := f.per.Validate(part)
+			if err != nil {
+				return err
+			}
+		}
+
+		// Verificar que la ruta sea válida para Linux y Windows
 	}
+	return nil
 }
 
 func (f filePath) GoodTestData() (out []string) {

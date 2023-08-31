@@ -8,10 +8,6 @@ type attributes struct {
 	PlaceHolder string
 	Title       string //info
 
-	Pattern       string //caracteres para validación
-	Pattern_start string // para rearmado con Min y Max
-	Pattern_end   string // para rearmado con Max y Max
-
 	Min string //valor mínimo
 	Max string //valor máximo
 

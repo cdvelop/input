@@ -19,17 +19,35 @@ var (
 	dataList = map[string]struct {
 		inputData       string
 		skip_validation bool
-		result          bool
+		expected        string
 	}{
-		"una credencial ok?":  {"1", false, true},
-		"otro numero ok?":     {"3", false, true},
-		"0 existe?":           {"0", false, false},
-		"-1 valido?":          {"-1", false, false},
-		"carácter permitido?": {"%", false, false},
-		"con data?":           {"", false, false},
-		"sin espacios?":       {"luis ", false, false},
+		"una credencial ok?":  {"1", false, ""},
+		"otro numero ok?":     {"3", false, ""},
+		"0 existe?":           {"0", false, "valor 0 no permitido en datalist"},
+		"-1 valido?":          {"-1", false, "valor -1 no permitido en datalist"},
+		"carácter permitido?": {"%", false, "valor % no permitido en datalist"},
+		"con data?":           {"", false, "datalist sin data seleccionada"},
+		"sin espacios?":       {"luis ", false, "valor luis  no permitido en datalist"},
 	}
 )
+
+func Test_DataList(t *testing.T) {
+	for prueba, data := range dataList {
+		t.Run((prueba + " " + data.inputData), func(t *testing.T) {
+			err := modelDataList.Validate.ValidateField(data.inputData, data.skip_validation)
+			var resp string
+			if err != nil {
+				resp = err.Error()
+			}
+
+			if resp != data.expected {
+				log.Println(prueba)
+				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", resp, data.expected, data.inputData)
+			}
+
+		})
+	}
+}
 
 func Test_TagDataList(t *testing.T) {
 	tag := modelDataList.Tag.HtmlTag("1", "name", true)
@@ -38,19 +56,10 @@ func Test_TagDataList(t *testing.T) {
 	}
 }
 
-func Test_DataList(t *testing.T) {
-	for prueba, data := range dataList {
-		t.Run((prueba + " " + data.inputData), func(t *testing.T) {
-			if ok := modelDataList.Validate.ValidateField(data.inputData, data.skip_validation); ok != data.result {
-				log.Fatalf("resultado [%v] [%v]", ok, data)
-			}
-		})
-	}
-}
 func Test_GoodInputDataList(t *testing.T) {
 	for _, data := range modelDataList.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelDataList.Validate.ValidateField(data, false); !ok {
+			if ok := modelDataList.Validate.ValidateField(data, false); ok != nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -60,7 +69,7 @@ func Test_GoodInputDataList(t *testing.T) {
 func Test_WrongInputDataList(t *testing.T) {
 	for _, data := range modelDataList.TestData.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelDataList.Validate.ValidateField(data, false); ok {
+			if ok := modelDataList.Validate.ValidateField(data, false); ok == nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

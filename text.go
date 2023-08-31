@@ -1,7 +1,6 @@
 package input
 
 import (
-	"regexp"
 	"strings"
 
 	"github.com/cdvelop/model"
@@ -14,8 +13,16 @@ import (
 func Text(options ...string) model.Input {
 	in := text{
 		attributes: attributes{
-			Title:   `title="texto, punto,coma, paréntesis o números permitidos max. 100 caracteres"`,
-			Pattern: `^[a-zA-ZÑñ]{2,100}[a-zA-ZÑñ0-9()., ]*$`,
+			Title: `title="texto, punto,coma, paréntesis o números permitidos max. 100 caracteres"`,
+			// Pattern: `^[a-zA-ZÑñ]{2,100}[a-zA-ZÑñ0-9()., ]*$`,
+		},
+		Permitted: Permitted{
+			Letters:    true,
+			Tilde:      false,
+			Numbers:    true,
+			Characters: []rune{' ', '.', ',', '(', ')'},
+			Minimum:    2,
+			Maximum:    100,
 		},
 	}
 	in.Set(options...)
@@ -38,6 +45,7 @@ func Text(options ...string) model.Input {
 type text struct {
 	hidden bool
 	attributes
+	Permitted
 }
 
 func (text) Name() string {
@@ -55,19 +63,6 @@ func (t text) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 	return t.attributes.BuildHtmlTag(t.HtmlName(), t.Name(), id, field_name, allow_skip_completed)
 }
 
-// validación con datos de entrada
-func (t text) ValidateField(data_in string, skip_validation bool, options ...string) bool {
-	if !skip_validation {
-
-		pvalid := regexp.MustCompile(t.Pattern)
-
-		return pvalid.MatchString(data_in)
-
-	} else {
-		return true
-	}
-}
-
 // options: first_name,last_name, phrase
 func (t text) GoodTestData() (out []string) {
 
@@ -81,7 +76,8 @@ func (t text) GoodTestData() (out []string) {
 
 	switch {
 	case strings.Contains(placeholder, "nombre y apellido"):
-		return combineStringArray(true, first_name, last_name, last_name)
+
+		return permutation(first_name, last_name)
 	case strings.Contains(placeholder, "nombre"):
 		return first_name
 

@@ -14,16 +14,16 @@ var (
 	TestData = map[string]struct {
 		inputData       string
 		skip_validation bool
-		expected        bool
+		expected        string
 	}{
-		"D Dato correcto":                {"D", false, true},
-		"V Dato correcto":                {"V", false, true},
-		"d Dato en minúscula incorrecto": {"d", false, false},
-		"v Dato en minúscula incorrecto": {"v", false, false},
-		"Dato existe?":                   {"1", false, true},
-		"data ok?":                       {"0", false, false},
-		"numero ok?":                     {"20", false, true},
-		"data correcta?":                 {"", false, true},
+		"D Dato correcto":                {"D", false, ""},
+		"V Dato correcto":                {"V", false, ""},
+		"d Dato en minúscula incorrecto": {"d", false, "valor d no corresponde a botón radio"},
+		"v Dato en minúscula incorrecto": {"v", false, "valor v no corresponde a botón radio"},
+		"Dato existe?":                   {"1", false, ""},
+		"data ok?":                       {"0", false, "valor 0 no corresponde a botón radio"},
+		"numero ok?":                     {"20", false, ""},
+		"data correcta?":                 {"", false, ""},
 	}
 )
 
@@ -43,8 +43,15 @@ func Test_TagRadio(t *testing.T) {
 func Test_RadioButton(t *testing.T) {
 	for prueba, data := range TestData {
 		t.Run((prueba), func(t *testing.T) {
-			if ok := modelRadio.Validate.ValidateField(data.inputData, data.skip_validation); ok != data.expected {
-				log.Fatalf("resultado [%v] [%v]", ok, data)
+			err := modelRadio.Validate.ValidateField(data.inputData, data.skip_validation)
+			var resp string
+			if err != nil {
+				resp = err.Error()
+			}
+
+			if resp != data.expected {
+				log.Println(prueba)
+				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", resp, data.expected, data.inputData)
 			}
 		})
 	}
@@ -57,22 +64,29 @@ func Test_RadioGender(t *testing.T) {
 	genderData := map[string]struct {
 		inputData       string
 		skip_validation bool
-		expected        bool
+		expected        string
 	}{
-		"f Dato en minúscula correcto": {"f", false, true},
-		"m Dato en minúscula correcto": {"m", false, true},
-		"F Dato mayúscula incorrecto":  {"F", false, false},
-		"M Dato mayúscula incorrecto":  {"M", false, false},
-		"Dato existe?":                 {"1", false, false},
-		"data ok?":                     {"0", false, false},
-		"numero ok?":                   {"20", false, false},
-		"data correcta?":               {"", false, false},
+		"f Dato en minúscula correcto": {"f", false, ""},
+		"m Dato en minúscula correcto": {"m", false, ""},
+		"F Dato mayúscula incorrecto":  {"F", false, "valor F no corresponde a botón radio"},
+		"M Dato mayúscula incorrecto":  {"M", false, "valor M no corresponde a botón radio"},
+		"Dato existe?":                 {"1", false, "valor 1 no corresponde a botón radio"},
+		"data ok?":                     {"0", false, "valor 0 no corresponde a botón radio"},
+		"numero ok?":                   {"20", false, "valor 20 no corresponde a botón radio"},
+		"data correcta?":               {"", false, "valor  no corresponde a botón radio"},
 	}
 
 	for prueba, data := range genderData {
 		t.Run((prueba), func(t *testing.T) {
-			if ok := modelGenderRadio.Validate.ValidateField(data.inputData, data.skip_validation); ok != data.expected {
-				log.Fatalf("se obtuvo [%v] y se esperaba [%v]\n[%v]", ok, data.expected, data)
+			err := modelGenderRadio.Validate.ValidateField(data.inputData, data.skip_validation)
+			var resp string
+			if err != nil {
+				resp = err.Error()
+			}
+
+			if resp != data.expected {
+				log.Println(prueba)
+				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", resp, data.expected, data.inputData)
 			}
 		})
 	}
@@ -81,7 +95,7 @@ func Test_RadioGender(t *testing.T) {
 func Test_GoodInputRadio(t *testing.T) {
 	for _, data := range modelRadio.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelRadio.Validate.ValidateField(data, false); !ok {
+			if ok := modelRadio.Validate.ValidateField(data, false); ok != nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -91,7 +105,7 @@ func Test_GoodInputRadio(t *testing.T) {
 func Test_WrongInputRadio(t *testing.T) {
 	for _, data := range modelRadio.TestData.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelRadio.Validate.ValidateField(data, false); ok {
+			if ok := modelRadio.Validate.ValidateField(data, false); ok == nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

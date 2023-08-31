@@ -19,15 +19,15 @@ var (
 	dataSelect = map[string]struct {
 		inputData       string
 		skip_validation bool
-		expected        bool
+		expected        string
 	}{
-		"una credencial ok?":  {"1", false, true},
-		"otro numero ok?":     {"3", false, true},
-		"0 existe?":           {"0", false, false},
-		"-1 valido?":          {"-1", false, false},
-		"carácter permitido?": {"%", false, false},
-		"con data?":           {"", false, false},
-		"sin espacios?":       {"luis ", false, false},
+		"una credencial ok?":  {"1", false, ""},
+		"otro numero ok?":     {"3", false, ""},
+		"0 existe?":           {"0", false, "valor 0 no corresponde al select"},
+		"-1 valido?":          {"-1", false, "valor -1 no corresponde al select"},
+		"carácter permitido?": {"%", false, "valor % no corresponde al select"},
+		"con data?":           {"", false, "select sin data seleccionada"},
+		"sin espacios?":       {"luis ", false, "valor luis  no corresponde al select"},
 	}
 )
 
@@ -41,8 +41,15 @@ func Test_TagSelect(t *testing.T) {
 func Test_Select(t *testing.T) {
 	for prueba, data := range dataSelect {
 		t.Run((prueba + " " + data.inputData), func(t *testing.T) {
-			if ok := modelSelect.Validate.ValidateField(data.inputData, data.skip_validation); ok != data.expected {
-				log.Fatalf("resultado [%v] [%v]", ok, data)
+			err := modelSelect.Validate.ValidateField(data.inputData, data.skip_validation)
+			var resp string
+			if err != nil {
+				resp = err.Error()
+			}
+
+			if resp != data.expected {
+				log.Println(prueba)
+				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", resp, data.expected, data.inputData)
 			}
 		})
 	}
@@ -50,7 +57,7 @@ func Test_Select(t *testing.T) {
 func Test_GoodInputSelect(t *testing.T) {
 	for _, data := range modelSelect.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelSelect.Validate.ValidateField(data, false); !ok {
+			if ok := modelSelect.Validate.ValidateField(data, false); ok != nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -60,7 +67,7 @@ func Test_GoodInputSelect(t *testing.T) {
 func Test_WrongInputSelect(t *testing.T) {
 	for _, data := range modelSelect.TestData.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelSelect.Validate.ValidateField(data, false); ok {
+			if ok := modelSelect.Validate.ValidateField(data, false); ok == nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

@@ -1,7 +1,8 @@
 package input
 
 import (
-	"regexp"
+	"strconv"
+	"strings"
 
 	"github.com/cdvelop/model"
 )
@@ -9,8 +10,8 @@ import (
 func Date() model.Input {
 	in := date{
 		attributes: attributes{
-			Title:   `title="formato fecha: DD-MM-YYYY"`,
-			Pattern: `[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])`,
+			Title: `title="formato fecha: DD-MM-YYYY"`,
+			// Pattern: `[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])`,
 		},
 	}
 
@@ -40,19 +41,45 @@ func (d date) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 }
 
 // validación con datos de entrada
-func (d date) ValidateField(data_in string, skip_validation bool, options ...string) bool {
+func (d date) ValidateField(data_in string, skip_validation bool, options ...string) error {
 	if !skip_validation {
-		if len(data_in) > 10 {
-			return false
+		return validateDate(data_in)
+	}
+	return nil
+}
+
+func validateDate(data_in string) error {
+
+	if data_in == "0000-00-00" {
+		return model.Error("fecha ejemplo no válida")
+	}
+	// Dividir la cadena en partes separadas por "-"
+	parts := strings.Split(data_in, "-")
+
+	// Verificar si hay tres partes (año, mes y día)
+	if len(parts) != 3 {
+		return model.Error("formato fecha no válido")
+	}
+
+	// Verificar si cada parte es un número válido
+	for _, part := range parts {
+		// Intentar convertir la parte en un número entero
+		num, err := strconv.Atoi(part)
+		if err != nil {
+			return model.Error("No es un número válido")
 		}
 
-		pvalid := regexp.MustCompile(d.Pattern)
-
-		return pvalid.MatchString(data_in)
-
-	} else {
-		return true
+		// Verificar los rangos para año, mes y día
+		if part == parts[0] && (num < 1000 || num > 9999) {
+			return model.Error("Año no válido")
+		} else if part == parts[1] && (num < 1 || num > 12) {
+			return model.Error("Mes no válido")
+		} else if part == parts[2] && (num < 1 || num > 31) {
+			return model.Error("Día no válido")
+		}
 	}
+
+	return nil
 }
 
 func (d date) GoodTestData() (out []string) {
