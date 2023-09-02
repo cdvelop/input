@@ -3,7 +3,7 @@ package input
 import "github.com/cdvelop/model"
 
 // SourceData() map[string]string
-func DataList(data sourceData) model.Input {
+func DataList(data model.SourceData) model.Input {
 	in := datalist{
 		Data: data,
 	}
@@ -17,7 +17,7 @@ func DataList(data sourceData) model.Input {
 }
 
 type datalist struct {
-	Data sourceData
+	Data model.SourceData
 }
 
 func (d datalist) Name() string {

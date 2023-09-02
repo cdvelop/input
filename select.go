@@ -3,7 +3,7 @@ package input
 import "github.com/cdvelop/model"
 
 // SourceData() map[string]string
-func SelecTag(data sourceData) model.Input {
+func SelecTag(data model.SourceData) model.Input {
 	in := selecTag{
 		Data: data,
 	}
@@ -17,7 +17,7 @@ func SelecTag(data sourceData) model.Input {
 }
 
 type selecTag struct {
-	Data sourceData
+	Data model.SourceData
 }
 
 func (s selecTag) Name() string {

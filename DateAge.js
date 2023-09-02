@@ -23,7 +23,7 @@ function DateAgeChange(input_date) {
 	let age = calculateAge(input_date.value)
 	if (age >= 0) {
 		input_age.value = age;
-		userTyping(input_date);
+		userFormTyping(input_date);
 	} else {
 		input_age.value = '';
 	}

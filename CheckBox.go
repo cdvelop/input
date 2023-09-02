@@ -8,7 +8,7 @@ import (
 
 // SourceData() map[string]string
 // options ej: "internal" = only internal contend
-func CheckBox(data sourceData, options ...string) model.Input {
+func CheckBox(data model.SourceData, options ...string) model.Input {
 	in := check{
 		Data: data,
 	}
@@ -29,7 +29,7 @@ func CheckBox(data sourceData, options ...string) model.Input {
 
 // check Box id y valor
 type check struct {
-	Data                  sourceData
+	Data                  model.SourceData
 	only_internal_contend bool
 }
 

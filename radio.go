@@ -5,7 +5,7 @@ import "github.com/cdvelop/model"
 // options: title="xxx".
 //gender return {"f": "Femenino", "m": "Masculino"}.
 // SourceData() map[string]string default: {"1": "Opción 1", "2": "Opción 2"}
-func Radio(data sourceData, options ...string) model.Input {
+func Radio(data model.SourceData, options ...string) model.Input {
 	in := radio{
 		name: "radio",
 		Data: data,
@@ -38,7 +38,7 @@ func Radio(data sourceData, options ...string) model.Input {
 
 type radio struct {
 	name string
-	Data sourceData
+	Data model.SourceData
 	attributes
 }
 

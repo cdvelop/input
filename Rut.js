@@ -9,7 +9,7 @@ function changeDniType(e) {
         input_dni.setAttribute("maxlength", 15);
         input_dni.dataset.option = "ex";
     }
-    userTyping(input_dni);
+    userFormTyping(input_dni);
 };
 
 function RunToPointFormat(rut) {
