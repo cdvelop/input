@@ -10,7 +10,7 @@ func (a attributes) BuildHtmlTag(html_name, input_name, id, field_name string, a
 	var open string
 	var close string
 
-	switch input_name {
+	switch html_name {
 	case "textarea":
 		open = `<textarea `
 		close = `></textarea>`

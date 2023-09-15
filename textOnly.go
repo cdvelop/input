@@ -6,7 +6,7 @@ import (
 
 // parámetros opcionales:
 // "hidden" si se vera oculto o no.
-func TextOnly(options ...string) model.Input {
+func TextOnly(options ...string) *model.Input {
 	in := textOnly{
 		attributes: attributes{
 			PlaceHolder: `PlaceHolder="Solo texto permitido min 3 max 50 caracteres"`,
@@ -24,7 +24,7 @@ func TextOnly(options ...string) model.Input {
 		}
 	}
 
-	return model.Input{
+	return &model.Input{
 		InputName: in.Name(),
 		Tag:       &in,
 		Validate:  &in,
@@ -39,7 +39,7 @@ type textOnly struct {
 }
 
 func (t textOnly) Name() string {
-	return "text"
+	return "TextOnly"
 }
 
 func (t textOnly) HtmlName() string {

@@ -7,7 +7,7 @@ import (
 	"github.com/cdvelop/model"
 )
 
-func Date() model.Input {
+func Date() *model.Input {
 	in := date{
 		attributes: attributes{
 			Title: `title="formato fecha: DD-MM-YYYY"`,
@@ -15,7 +15,7 @@ func Date() model.Input {
 		},
 	}
 
-	return model.Input{
+	return &model.Input{
 		InputName: in.Name(),
 		Tag:       &in,
 		Validate:  &in,
@@ -29,7 +29,7 @@ type date struct {
 }
 
 func (d date) Name() string {
-	return "date"
+	return "Date"
 }
 
 func (d date) HtmlName() string {

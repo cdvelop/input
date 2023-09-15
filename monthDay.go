@@ -5,7 +5,7 @@ import (
 )
 
 // options: "hidden": campo oculto para el usuario
-func MonthDay(options ...string) model.Input {
+func MonthDay(options ...string) *model.Input {
 	in := monthDay{
 		attributes: attributes{
 			// Pattern: `^[0-9]{2,2}$`,
@@ -19,7 +19,7 @@ func MonthDay(options ...string) model.Input {
 	}
 	in.Set(options...)
 
-	return model.Input{
+	return &model.Input{
 		InputName: in.Name(),
 		Tag:       &in,
 		Validate:  &in,
@@ -34,7 +34,7 @@ type monthDay struct {
 }
 
 func (d monthDay) Name() string {
-	return "monthday"
+	return "MonthDay"
 }
 
 func (d monthDay) HtmlName() string {

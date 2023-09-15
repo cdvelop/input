@@ -11,7 +11,7 @@ import (
 // title="permitido letras números - , :"
 // cols="2" default 1
 // rows="8" default 3
-func TextArea(options ...string) model.Input {
+func TextArea(options ...string) *model.Input {
 	permitted := []rune{' ', '%', '$', '+', '#', '-', '.', ',', ':', '(', ')', '\n'}
 	var min = 5
 	var max = 1000
@@ -45,7 +45,7 @@ func TextArea(options ...string) model.Input {
 	}
 	in.Set(options...)
 
-	return model.Input{
+	return &model.Input{
 		InputName: in.Name(),
 		Minimum:   min,
 		Maximum:   max,
@@ -61,7 +61,7 @@ type textArea struct {
 }
 
 func (t textArea) Name() string {
-	return t.HtmlName()
+	return "TextArea"
 }
 
 func (t textArea) HtmlName() string {

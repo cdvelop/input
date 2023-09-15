@@ -3,12 +3,12 @@ package input
 import "github.com/cdvelop/model"
 
 // SourceData() map[string]string
-func DataList(data model.SourceData) model.Input {
+func DataList(data model.SourceData) *model.Input {
 	in := datalist{
 		Data: data,
 	}
 
-	return model.Input{
+	return &model.Input{
 		InputName: in.Name(),
 		Tag:       &in,
 		Validate:  &in,
@@ -21,7 +21,7 @@ type datalist struct {
 }
 
 func (d datalist) Name() string {
-	return d.HtmlName()
+	return "DataList"
 }
 
 func (datalist) HtmlName() string {

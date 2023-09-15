@@ -10,7 +10,7 @@ import (
 // hidden, el campo se mantendrá oculto
 // title="xxx"
 // for phone ej: `min="7"`, `max="11"`
-func Number(options ...string) model.Input {
+func Number(options ...string) *model.Input {
 
 	in := number{
 		attributes: attributes{
@@ -33,17 +33,15 @@ func Number(options ...string) model.Input {
 		in.Maximum, _ = strconv.Atoi(in.Max)
 	}
 
-	out := model.Input{
+	return &model.Input{
 		InputName: in.Name(),
 		Tag:       &in,
 		Validate:  &in,
 		TestData:  &in,
 	}
-
-	return out
 }
 
-func Phone() model.Input {
+func Phone() *model.Input {
 	// Phone `pattern="^[0-9]{7,11}$"`
 	return Number(`min="7"`, `max="11"`)
 }
@@ -54,7 +52,7 @@ type number struct {
 }
 
 func (n number) Name() string {
-	return "number"
+	return "Number"
 }
 
 func (n number) HtmlName() string {

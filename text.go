@@ -10,7 +10,7 @@ import (
 // "hidden" si se vera oculto o no.
 // placeholder="Escriba Nombre y dos apellidos"
 // title="xxx"
-func Text(options ...string) model.Input {
+func Text(options ...string) *model.Input {
 	in := text{
 		attributes: attributes{
 			Title: `title="texto, punto,coma, paréntesis o números permitidos max. 100 caracteres"`,
@@ -33,7 +33,7 @@ func Text(options ...string) model.Input {
 		}
 	}
 
-	return model.Input{
+	return &model.Input{
 		InputName: in.Name(),
 		Tag:       &in,
 		Validate:  &in,
@@ -49,7 +49,7 @@ type text struct {
 }
 
 func (text) Name() string {
-	return "text"
+	return "Text"
 }
 
 func (t text) HtmlName() string {

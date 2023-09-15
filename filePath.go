@@ -11,7 +11,7 @@ import (
 // "multiple"
 // accept="image/*"
 // title="Imágenes jpg"
-func FilePath(options ...string) model.Input {
+func FilePath(options ...string) *model.Input {
 	in := filePath{
 		attributes: attributes{
 			// Pattern: `^(\.\/|\.\?\\|\/)?([\w\s.-]+[\\\/]?)*$`,
@@ -27,7 +27,7 @@ func FilePath(options ...string) model.Input {
 	}
 	in.Set(options...)
 
-	return model.Input{
+	return &model.Input{
 		InputName: in.Name(),
 		Tag:       &in,
 		Validate:  &in,
@@ -41,7 +41,7 @@ type filePath struct {
 }
 
 func (f filePath) Name() string {
-	return "filePath"
+	return "FilePath"
 }
 
 func (f filePath) HtmlName() string {

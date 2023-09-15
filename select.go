@@ -3,12 +3,12 @@ package input
 import "github.com/cdvelop/model"
 
 // SourceData() map[string]string
-func SelecTag(data model.SourceData) model.Input {
+func SelecTag(data model.SourceData) *model.Input {
 	in := selecTag{
 		Data: data,
 	}
 
-	return model.Input{
+	return &model.Input{
 		InputName: in.Name(),
 		Tag:       &in,
 		Validate:  &in,
@@ -21,7 +21,7 @@ type selecTag struct {
 }
 
 func (s selecTag) Name() string {
-	return "selecTag"
+	return "SelecTag"
 }
 
 func (s selecTag) HtmlName() string {

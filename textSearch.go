@@ -4,7 +4,7 @@ import (
 	"github.com/cdvelop/model"
 )
 
-func TextSearch() model.Input {
+func TextSearch() *model.Input {
 	in := textSearch{
 		attributes: attributes{
 			// Pattern: `^[a-zA-ZÑñ0-9- ]{2,20}$`,
@@ -20,7 +20,7 @@ func TextSearch() model.Input {
 		},
 	}
 
-	return model.Input{
+	return &model.Input{
 		InputName: in.Name(),
 		Tag:       &in,
 		Validate:  &in,
@@ -34,7 +34,7 @@ type textSearch struct {
 }
 
 func (t textSearch) Name() string {
-	return "textsearch"
+	return "TextSearch"
 }
 
 func (t textSearch) HtmlName() string {

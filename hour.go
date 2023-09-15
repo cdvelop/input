@@ -6,7 +6,7 @@ import (
 
 // formato 08:00
 // options: min="08:00", max="17:00"
-func Hour(options ...string) model.Input {
+func Hour(options ...string) *model.Input {
 	in := hour{
 		attributes: attributes{
 			Title: `title="formato hora: HH:MM"`,
@@ -21,7 +21,7 @@ func Hour(options ...string) model.Input {
 	}
 	in.Set(options...)
 
-	return model.Input{
+	return &model.Input{
 		InputName: in.Name(),
 		Tag:       &in,
 		Validate:  &in,
@@ -35,7 +35,7 @@ type hour struct {
 }
 
 func (h hour) Name() string {
-	return "hour"
+	return "Hour"
 }
 
 func (h hour) HtmlName() string {

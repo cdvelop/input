@@ -1,5 +1,5 @@
 function changeDniType(e) {
-    const input_dni = e.closest('.run-type').querySelector('input[type="text"][data-name="rut_dni"]');
+    const input_dni = e.closest('.run-type').querySelector('input[type="text"][data-name="RutDni"]');
 
     if (e.value === "ch") {
         input_dni.setAttribute("maxlength", 10);

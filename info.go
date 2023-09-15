@@ -2,12 +2,12 @@ package input
 
 import "github.com/cdvelop/model"
 
-func Info(value string) model.Input {
+func Info(value string) *model.Input {
 	in := info{
 		Value: value,
 	}
 
-	return model.Input{
+	return &model.Input{
 		InputName: in.Name(),
 		Tag:       in,
 		Validate:  nil,
@@ -21,7 +21,7 @@ type info struct {
 }
 
 func (i info) Name() string {
-	return "info"
+	return "Info"
 }
 
 func (i info) HtmlName() string {

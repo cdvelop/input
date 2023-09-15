@@ -14,7 +14,7 @@ type rut struct {
 // parámetro opcionales:
 // hide-typing: ocultar información  al escribir
 // dni-mode: acepta documentos extranjeros
-func Rut(options ...string) model.Input {
+func Rut(options ...string) *model.Input {
 	in := rut{
 		attributes: attributes{
 			Autocomplete: `autocomplete="off"`,
@@ -51,7 +51,7 @@ func Rut(options ...string) model.Input {
 		// in.Pattern = `^[0-9]+-[0-9kK]{1}$`
 	}
 
-	return model.Input{
+	return &model.Input{
 		InputName: in.Name(),
 		Tag:       &in,
 		Validate:  &in,
@@ -61,10 +61,10 @@ func Rut(options ...string) model.Input {
 
 func (r rut) Name() string {
 	if r.dni_mode {
-		return "rut_dni"
+		return "RutDni"
 	}
 
-	return "rut"
+	return "Rut"
 }
 
 func (r rut) HtmlName() string {

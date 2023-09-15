@@ -8,7 +8,7 @@ import (
 
 // SourceData() map[string]string
 // options ej: "internal" = only internal contend
-func CheckBox(data model.SourceData, options ...string) model.Input {
+func CheckBox(data model.SourceData, options ...string) *model.Input {
 	in := check{
 		Data: data,
 	}
@@ -19,7 +19,7 @@ func CheckBox(data model.SourceData, options ...string) model.Input {
 		}
 	}
 
-	return model.Input{
+	return &model.Input{
 		InputName: in.Name(),
 		Tag:       &in,
 		Validate:  &in,
@@ -34,7 +34,7 @@ type check struct {
 }
 
 func (c check) Name() string {
-	return c.HtmlName()
+	return "CheckBox"
 }
 
 func (check) HtmlName() string {

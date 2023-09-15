@@ -4,7 +4,7 @@ import (
 	"github.com/cdvelop/model"
 )
 
-func TextNum() model.Input {
+func TextNum() *model.Input {
 	in := textNum{
 		attributes: attributes{
 			// Pattern: `^[A-Za-z0-9_]{5,20}$`,
@@ -19,7 +19,7 @@ func TextNum() model.Input {
 		},
 	}
 
-	return model.Input{
+	return &model.Input{
 		InputName: in.Name(),
 		Tag:       &in,
 		Validate:  &in,
@@ -34,7 +34,7 @@ type textNum struct {
 }
 
 func (t textNum) Name() string {
-	return "textnum"
+	return "TextNum"
 }
 
 func (t textNum) HtmlName() string {

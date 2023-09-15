@@ -6,7 +6,7 @@ import (
 	"github.com/cdvelop/model"
 )
 
-func Mail() model.Input {
+func Mail() *model.Input {
 	in := mail{
 		attributes: attributes{
 			PlaceHolder: `placeHolder="ej: mi.correo@mail.com"`,
@@ -21,7 +21,7 @@ func Mail() model.Input {
 		},
 	}
 
-	return model.Input{
+	return &model.Input{
 		InputName: in.Name(),
 		Tag:       &in,
 		Validate:  &in,
@@ -39,7 +39,7 @@ func (m mail) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 }
 
 func (mail) Name() string {
-	return "mail"
+	return "Mail"
 }
 
 func (mail) HtmlName() string {

@@ -7,7 +7,7 @@ import (
 )
 
 // dirección ip valida campos separados por puntos
-func Ip() model.Input {
+func Ip() *model.Input {
 	in := ip{
 		attributes: attributes{
 			Title: `title="dirección ip valida campos separados por puntos ej 192.168.0.8"`,
@@ -22,7 +22,7 @@ func Ip() model.Input {
 		},
 	}
 
-	return model.Input{
+	return &model.Input{
 		InputName: in.Name(),
 		Tag:       &in,
 		Validate:  &in,
@@ -36,7 +36,7 @@ type ip struct {
 }
 
 func (i ip) Name() string {
-	return "ip"
+	return "Ip"
 }
 
 func (i ip) HtmlName() string {

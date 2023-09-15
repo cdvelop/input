@@ -12,7 +12,7 @@ import (
 // max máximo de caracteres permitidos ej: 20 50 ... max default 50
 // Pattern_start="^[A-Za-zÑñ 0-9:.-]{"
 // Pattern_end="}$"
-func Password(options ...string) model.Input {
+func Password(options ...string) *model.Input {
 	in := password{
 		attributes: attributes{},
 		Permitted: Permitted{
@@ -34,7 +34,7 @@ func Password(options ...string) model.Input {
 		in.Maximum, _ = strconv.Atoi(in.Max)
 	}
 
-	return model.Input{
+	return &model.Input{
 		InputName: in.Name(),
 		Tag:       &in,
 		Validate:  &in,
@@ -50,7 +50,7 @@ type password struct {
 }
 
 func (p password) Name() string {
-	return p.HtmlName()
+	return "Password"
 }
 
 func (p password) HtmlName() string {

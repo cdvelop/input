@@ -6,7 +6,7 @@ import (
 
 // formato fecha: DD-MM-YYYY
 // options: `title="xxx"`
-func DateAge(options ...string) model.Input {
+func DateAge(options ...string) *model.Input {
 	in := dateAge{
 		attributes: attributes{
 			Title: `title="formato fecha: DD-MM-YYYY"`,
@@ -17,7 +17,7 @@ func DateAge(options ...string) model.Input {
 	}
 	in.Set(options...)
 
-	return model.Input{
+	return &model.Input{
 		InputName: in.Name(),
 		Tag:       &in,
 		Validate:  &in,
@@ -30,7 +30,7 @@ type dateAge struct {
 }
 
 func (d dateAge) Name() string {
-	return "dateage"
+	return "DateAge"
 }
 
 func (d dateAge) HtmlName() string {

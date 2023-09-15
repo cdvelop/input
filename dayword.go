@@ -6,7 +6,7 @@ import (
 
 // formato dia DD como palabra ej. Lunes 24 Diciembre
 // options: title="xxx"
-func DayWord(options ...string) model.Input {
+func DayWord(options ...string) *model.Input {
 	in := dayWord{
 		attributes: attributes{
 			DataSet: `data-spanish=""`,
@@ -17,11 +17,11 @@ func DayWord(options ...string) model.Input {
 
 	month_day := MonthDay()
 
-	return model.Input{
+	return &model.Input{
 		InputName: in.Name(),
-		Tag:       &in,
-		Validate:  &month_day,
-		TestData:  &month_day,
+		Tag:       in,
+		Validate:  month_day,
+		TestData:  month_day,
 	}
 }
 
@@ -30,7 +30,7 @@ type dayWord struct {
 }
 
 func (d dayWord) Name() string {
-	return "dayword"
+	return "DayWord"
 }
 
 func (d dayWord) HtmlName() string {

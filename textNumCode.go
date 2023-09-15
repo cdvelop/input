@@ -4,7 +4,7 @@ import (
 	"github.com/cdvelop/model"
 )
 
-func TextNumCode() model.Input {
+func TextNumCode() *model.Input {
 	in := textNumCode{
 		attributes: attributes{
 			// Pattern: `^[A-Za-z0-9-_]{2,15}$`,
@@ -19,7 +19,7 @@ func TextNumCode() model.Input {
 		},
 	}
 
-	return model.Input{
+	return &model.Input{
 		InputName: in.Name(),
 		Tag:       &in,
 		Validate:  &in,
@@ -34,7 +34,7 @@ type textNumCode struct {
 }
 
 func (t textNumCode) Name() string {
-	return "textnumcode"
+	return "TextNumCode"
 }
 
 func (t textNumCode) HtmlName() string {

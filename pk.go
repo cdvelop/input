@@ -5,7 +5,7 @@ import "github.com/cdvelop/model"
 // Primary key
 // parámetro opcional:
 // "show": el campo se mostrara el usuario por defecto estará oculto
-func Pk(options ...string) model.Input {
+func Pk(options ...string) *model.Input {
 
 	in := pk{
 		Number:     Number(),
@@ -19,22 +19,22 @@ func Pk(options ...string) model.Input {
 		}
 	}
 
-	return model.Input{
+	return &model.Input{
 		InputName: in.Name(),
-		Tag:       &in,
-		Validate:  &in.Number,
-		TestData:  &in.Number,
+		Tag:       in,
+		Validate:  in.Number,
+		TestData:  in.Number,
 	}
 }
 
 type pk struct {
-	Number model.Input
+	Number *model.Input
 	show   bool
 	attributes
 }
 
 func (p pk) Name() string {
-	return "pk"
+	return "Pk"
 }
 
 func (p pk) HtmlName() string {
