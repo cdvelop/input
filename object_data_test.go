@@ -28,12 +28,12 @@ func Test_GetDataTestObject(t *testing.T) {
 	}
 
 	// 2 prueba saltándose el id
-	all_data, err = Object1().TestData(required, true, false)
+	all_data2, err := Object1().TestData(required, true, false)
 
 	expected := len(Object1().Fields) - 1
-	for _, data := range all_data {
+	for _, data := range all_data2 {
 		if len(data) != expected {
-			log.Fatal("se esperaban ", len(Object1().Fields), " campos pero se obtuvo: ", expected)
+			log.Fatal("(test 2) se esperaban ", len(Object1().Fields), " campos pero se obtuvo: ", expected)
 		}
 	}
 
