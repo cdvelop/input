@@ -1,10 +1,8 @@
 package input
 
 import (
-	"strconv"
-	"strings"
-
 	"github.com/cdvelop/model"
+	"github.com/cdvelop/timetools"
 )
 
 func Date() *model.Input {
@@ -43,42 +41,8 @@ func (d date) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 // validación con datos de entrada
 func (d date) ValidateField(data_in string, skip_validation bool, options ...string) error {
 	if !skip_validation {
-		return validateDate(data_in)
+		return timetools.CheckDateExists(data_in)
 	}
-	return nil
-}
-
-func validateDate(data_in string) error {
-
-	if data_in == "0000-00-00" {
-		return model.Error("fecha ejemplo no válida")
-	}
-	// Dividir la cadena en partes separadas por "-"
-	parts := strings.Split(data_in, "-")
-
-	// Verificar si hay tres partes (año, mes y día)
-	if len(parts) != 3 {
-		return model.Error("formato fecha no válido")
-	}
-
-	// Verificar si cada parte es un número válido
-	for _, part := range parts {
-		// Intentar convertir la parte en un número entero
-		num, err := strconv.Atoi(part)
-		if err != nil {
-			return model.Error("No es un número válido")
-		}
-
-		// Verificar los rangos para año, mes y día
-		if part == parts[0] && (num < 1000 || num > 9999) {
-			return model.Error("Año no válido")
-		} else if part == parts[1] && (num < 1 || num > 12) {
-			return model.Error("Mes no válido")
-		} else if part == parts[2] && (num < 1 || num > 31) {
-			return model.Error("Día no válido")
-		}
-	}
-
 	return nil
 }
 

@@ -11,24 +11,26 @@ var (
 	modelDate = input.Date()
 
 	dataDate = map[string]struct {
-		inputData       string
-		skip_validation bool
-		expected        string
+		inputData string
+		expected  string
 	}{
-		"correcto ":                   {"2002-12-03", false, ""},
-		"carácter de mas incorrecto ": {"2002-12-03-", false, "formato fecha no válido"},
-		"formato incorrecto ":         {"21/12/1998", false, "formato fecha no válido"},
-		"fecha incorrecta ":           {"2020-31-01", false, "Mes no válido"},
-		"fecha recortada sin año ok?": {"31-01", false, "formato fecha no válido"},
-		"data incorrecta ":            {"0000-00-00", false, "fecha ejemplo no válida"},
-		"toda la data correcta?":      {"", false, "formato fecha no válido"},
+		"correcto ":                      {"2002-12-03", ""},
+		"dia 29 febrero año bisiesto":    {"2020-02-29", ""},
+		"dia 29 febrero año no bisiesto": {"2023-02-29", "Febrero no contiene 29 días. año 2023 no es bisiesto."},
+		"junio no tiene 31 días":         {"2023-06-31", "Junio no contiene 31 días."},
+		"carácter de mas incorrecto ":    {"2002-12-03-", "formato de fecha ingresado incorrecto ej: 2006-01-02"},
+		"formato incorrecto ":            {"21/12/1998", "formato de fecha ingresado incorrecto ej: 2006-01-02"},
+		"fecha incorrecta ":              {"2020-31-01", "mes fuera de rango"},
+		"fecha recortada sin año ok?":    {"31-01", "formato de fecha ingresado incorrecto ej: 2006-01-02"},
+		"data incorrecta ":               {"0000-00-00", "año fuera de rango"},
+		"toda la data correcta?":         {"", "formato de fecha ingresado incorrecto ej: 2006-01-02"},
 	}
 )
 
 func Test_InputDate(t *testing.T) {
 	for prueba, data := range dataDate {
 		t.Run((prueba + data.inputData), func(t *testing.T) {
-			err := modelDate.Validate.ValidateField(data.inputData, data.skip_validation)
+			err := modelDate.Validate.ValidateField(data.inputData, false)
 			var resp string
 			if err != nil {
 				resp = err.Error()

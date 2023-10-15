@@ -2,6 +2,7 @@ package input
 
 import (
 	"github.com/cdvelop/model"
+	"github.com/cdvelop/timetools"
 )
 
 // formato fecha: DD-MM-YYYY
@@ -52,7 +53,7 @@ func (d dateAge) HtmlTag(id, field_name string, allow_skip_completed bool) strin
 
 func (d dateAge) ValidateField(data_in string, skip_validation bool, options ...string) error { //en realidad es YYYY-MM-DD
 	if !skip_validation {
-		return validateDate(data_in)
+		return timetools.CheckDateExists(data_in)
 
 	}
 	return nil
