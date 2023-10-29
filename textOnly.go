@@ -25,7 +25,7 @@ func TextOnly(options ...string) *model.Input {
 	}
 
 	return &model.Input{
-		InputName: in.Name(),
+		InputName: "TextOnly",
 		Tag:       &in,
 		Validate:  &in,
 		TestData:  &in,
@@ -38,10 +38,6 @@ type textOnly struct {
 	Permitted
 }
 
-func (t textOnly) Name() string {
-	return "TextOnly"
-}
-
 func (t textOnly) HtmlName() string {
 	if t.hidden {
 		return "hidden"
@@ -50,7 +46,7 @@ func (t textOnly) HtmlName() string {
 }
 
 func (t textOnly) HtmlTag(id, field_name string, allow_skip_completed bool) string {
-	return t.BuildHtmlTag(t.HtmlName(), t.Name(), id, field_name, allow_skip_completed)
+	return t.BuildHtmlTag(t.HtmlName(), "TextOnly", id, field_name, allow_skip_completed)
 }
 
 func (t textOnly) GoodTestData() (out []string) {

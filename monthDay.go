@@ -20,7 +20,7 @@ func MonthDay(options ...string) *model.Input {
 	in.Set(options...)
 
 	return &model.Input{
-		InputName: in.Name(),
+		InputName: "MonthDay",
 		Tag:       &in,
 		Validate:  &in,
 		TestData:  &in,
@@ -33,16 +33,12 @@ type monthDay struct {
 	Permitted
 }
 
-func (d monthDay) Name() string {
-	return "MonthDay"
-}
-
 func (d monthDay) HtmlName() string {
 	return "text"
 }
 
 func (m monthDay) HtmlTag(id, field_name string, allow_skip_completed bool) string {
-	return m.BuildHtmlTag(m.HtmlName(), m.Name(), id, field_name, allow_skip_completed)
+	return m.BuildHtmlTag(m.HtmlName(), "MonthDay", id, field_name, allow_skip_completed)
 }
 
 func (m monthDay) GoodTestData() (out []string) {

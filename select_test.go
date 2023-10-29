@@ -14,7 +14,7 @@ func (data) SourceData() map[string]string {
 }
 
 var (
-	modelSelect = input.SelecTag(data{})
+	modelSelect = input.SelecTag("UserType", data{})
 
 	dataSelect = map[string]struct {
 		inputData       string

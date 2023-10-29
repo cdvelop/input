@@ -19,7 +19,7 @@ func DateAge(options ...string) *model.Input {
 	in.Set(options...)
 
 	return &model.Input{
-		InputName: in.Name(),
+		InputName: "DateAge",
 		Tag:       &in,
 		Validate:  &in,
 		TestData:  &in,
@@ -28,10 +28,6 @@ func DateAge(options ...string) *model.Input {
 
 type dateAge struct {
 	attributes
-}
-
-func (d dateAge) Name() string {
-	return "DateAge"
 }
 
 func (d dateAge) HtmlName() string {
@@ -44,7 +40,7 @@ func (d dateAge) HtmlTag(id, field_name string, allow_skip_completed bool) strin
 
 	tag += `<label class="age-date">`
 
-	tag += d.BuildHtmlTag(d.HtmlName(), d.Name(), id, field_name, allow_skip_completed)
+	tag += d.BuildHtmlTag(d.HtmlName(), "DateAge", id, field_name, allow_skip_completed)
 
 	tag += `</label>`
 

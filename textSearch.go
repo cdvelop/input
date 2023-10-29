@@ -21,7 +21,7 @@ func TextSearch() *model.Input {
 	}
 
 	return &model.Input{
-		InputName: in.Name(),
+		InputName: "TextSearch",
 		Tag:       &in,
 		Validate:  &in,
 		TestData:  &in,
@@ -33,16 +33,12 @@ type textSearch struct {
 	Permitted
 }
 
-func (t textSearch) Name() string {
-	return "TextSearch"
-}
-
 func (t textSearch) HtmlName() string {
 	return "search"
 }
 
 func (t textSearch) HtmlTag(id, field_name string, allow_skip_completed bool) string {
-	return t.BuildHtmlTag(t.HtmlName(), t.Name(), id, field_name, allow_skip_completed)
+	return t.BuildHtmlTag(t.HtmlName(), "TextSearch", id, field_name, allow_skip_completed)
 
 }
 

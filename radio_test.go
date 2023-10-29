@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	modelRadio = input.Radio(radio{})
+	modelRadio = input.Radio("TestRadio", radio{})
 	// modelRadio =  input_radio.radio{VALUES: }
 
 	TestData = map[string]struct {
@@ -59,7 +59,7 @@ func Test_RadioButton(t *testing.T) {
 
 func Test_RadioGender(t *testing.T) {
 
-	modelGenderRadio := input.Radio(nil, "gender")
+	modelGenderRadio := input.RadioGender()
 
 	genderData := map[string]struct {
 		inputData       string

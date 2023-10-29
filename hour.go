@@ -22,7 +22,7 @@ func Hour(options ...string) *model.Input {
 	in.Set(options...)
 
 	return &model.Input{
-		InputName: in.Name(),
+		InputName: "Hour",
 		Tag:       &in,
 		Validate:  &in,
 		TestData:  &in,
@@ -34,16 +34,12 @@ type hour struct {
 	per Permitted
 }
 
-func (h hour) Name() string {
-	return "Hour"
-}
-
 func (h hour) HtmlName() string {
 	return "time"
 }
 
 func (h hour) HtmlTag(id, field_name string, allow_skip_completed bool) string {
-	return h.BuildHtmlTag(h.HtmlName(), h.Name(), id, field_name, allow_skip_completed)
+	return h.BuildHtmlTag(h.HtmlName(), "Hour", id, field_name, allow_skip_completed)
 }
 
 func (h hour) ValidateField(data_in string, skip_validation bool, options ...string) error {

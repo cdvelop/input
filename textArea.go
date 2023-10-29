@@ -46,7 +46,7 @@ func TextArea(options ...string) *model.Input {
 	in.Set(options...)
 
 	return &model.Input{
-		InputName: in.Name(),
+		InputName: "TextArea",
 		Minimum:   min,
 		Maximum:   max,
 		Tag:       &in,
@@ -60,14 +60,10 @@ type textArea struct {
 	Permitted
 }
 
-func (t textArea) Name() string {
-	return "TextArea"
-}
-
 func (t textArea) HtmlName() string {
 	return "textarea"
 }
 
 func (t textArea) HtmlTag(id, field_name string, allow_skip_completed bool) string {
-	return t.BuildHtmlTag(t.HtmlName(), t.Name(), id, field_name, allow_skip_completed)
+	return t.BuildHtmlTag(t.HtmlName(), "TextArea", id, field_name, allow_skip_completed)
 }

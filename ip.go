@@ -23,7 +23,7 @@ func Ip() *model.Input {
 	}
 
 	return &model.Input{
-		InputName: in.Name(),
+		InputName: "Ip",
 		Tag:       &in,
 		Validate:  &in,
 		TestData:  &in,
@@ -35,16 +35,12 @@ type ip struct {
 	per Permitted
 }
 
-func (i ip) Name() string {
-	return "Ip"
-}
-
 func (i ip) HtmlName() string {
 	return "text"
 }
 
 func (i ip) HtmlTag(id, field_name string, allow_skip_completed bool) string {
-	return i.BuildHtmlTag(i.HtmlName(), i.Name(), id, field_name, allow_skip_completed)
+	return i.BuildHtmlTag(i.HtmlName(), "Ip", id, field_name, allow_skip_completed)
 
 }
 

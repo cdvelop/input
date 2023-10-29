@@ -39,7 +39,7 @@ func (r radio) HtmlTag(id, field_name string, allow_skip_completed bool) string 
 
 		r.Value = `value="` + value + `"`
 
-		tags += r.BuildHtmlTag(r.HtmlName(), r.Name(), id3, field_name, allow_skip_completed)
+		tags += r.BuildHtmlTag(r.HtmlName(), r.name, id3, field_name, allow_skip_completed)
 
 		tags += `<span>` + r.Data.SourceData()[value] + `</span>`
 		tags += `</label>`

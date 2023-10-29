@@ -6,9 +6,10 @@ import (
 	"github.com/cdvelop/model"
 )
 
+// name ej: TypeUser
 // SourceData() map[string]string
 // options ej: "internal" = only internal contend
-func CheckBox(data model.SourceData, options ...string) *model.Input {
+func CheckBox(name string, data model.SourceData, options ...string) *model.Input {
 	in := check{
 		Data: data,
 	}
@@ -20,7 +21,7 @@ func CheckBox(data model.SourceData, options ...string) *model.Input {
 	}
 
 	return &model.Input{
-		InputName: in.Name(),
+		InputName: name,
 		Tag:       &in,
 		Validate:  &in,
 		TestData:  &in,
@@ -29,12 +30,9 @@ func CheckBox(data model.SourceData, options ...string) *model.Input {
 
 // check Box id y valor
 type check struct {
+	name                  string
 	Data                  model.SourceData
 	only_internal_contend bool
-}
-
-func (c check) Name() string {
-	return "CheckBox"
 }
 
 func (check) HtmlName() string {

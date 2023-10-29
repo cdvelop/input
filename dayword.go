@@ -18,7 +18,7 @@ func DayWord(options ...string) *model.Input {
 	month_day := MonthDay()
 
 	return &model.Input{
-		InputName: in.Name(),
+		InputName: "DayWord",
 		Tag:       in,
 		Validate:  month_day,
 		TestData:  month_day,
@@ -29,17 +29,13 @@ type dayWord struct {
 	attributes
 }
 
-func (d dayWord) Name() string {
-	return "DayWord"
-}
-
 func (d dayWord) HtmlName() string {
 	return "text"
 }
 
 func (d dayWord) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 	tag := `<label class="date-spanish">`
-	tag += d.BuildHtmlTag(d.HtmlName(), d.Name(), id, field_name, allow_skip_completed)
+	tag += d.BuildHtmlTag(d.HtmlName(), "DayWord", id, field_name, allow_skip_completed)
 	tag += `</label>`
 	return tag
 }

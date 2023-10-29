@@ -14,7 +14,7 @@ func (dataDataList) SourceData() map[string]string {
 }
 
 var (
-	modelDataList = input.DataList(dataDataList{})
+	modelDataList = input.DataList("UserType", dataDataList{})
 
 	dataList = map[string]struct {
 		inputData       string

@@ -2,14 +2,16 @@ package input
 
 import "github.com/cdvelop/model"
 
+// name ej: InputOptions
 // SourceData() map[string]string
-func DataList(data model.SourceData) *model.Input {
+func DataList(name string, data model.SourceData) *model.Input {
 	in := datalist{
+		name: name,
 		Data: data,
 	}
 
 	return &model.Input{
-		InputName: in.Name(),
+		InputName: name,
 		Tag:       &in,
 		Validate:  &in,
 		TestData:  &in,
@@ -17,11 +19,8 @@ func DataList(data model.SourceData) *model.Input {
 }
 
 type datalist struct {
+	name string
 	Data model.SourceData
-}
-
-func (d datalist) Name() string {
-	return "DataList"
 }
 
 func (datalist) HtmlName() string {

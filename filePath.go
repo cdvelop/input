@@ -28,7 +28,7 @@ func FilePath(options ...string) *model.Input {
 	in.Set(options...)
 
 	return &model.Input{
-		InputName: in.Name(),
+		InputName: "FilePath",
 		Tag:       &in,
 		Validate:  &in,
 		TestData:  &in,
@@ -40,16 +40,12 @@ type filePath struct {
 	per Permitted
 }
 
-func (f filePath) Name() string {
-	return "FilePath"
-}
-
 func (f filePath) HtmlName() string {
 	return "file"
 }
 
 func (f filePath) HtmlTag(id, field_name string, allow_skip_completed bool) (tags string) {
-	return f.BuildHtmlTag(f.HtmlName(), f.Name(), id, field_name, allow_skip_completed)
+	return f.BuildHtmlTag(f.HtmlName(), "FilePath", id, field_name, allow_skip_completed)
 }
 
 // validación con datos de entrada

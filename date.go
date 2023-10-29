@@ -14,7 +14,7 @@ func Date() *model.Input {
 	}
 
 	return &model.Input{
-		InputName: in.Name(),
+		InputName: "Date",
 		Tag:       &in,
 		Validate:  &in,
 		TestData:  &in,
@@ -26,16 +26,12 @@ type date struct {
 	attributes
 }
 
-func (d date) Name() string {
-	return "Date"
-}
-
 func (d date) HtmlName() string {
 	return "date"
 }
 
 func (d date) HtmlTag(id, field_name string, allow_skip_completed bool) string {
-	return d.BuildHtmlTag(d.HtmlName(), d.Name(), id, field_name, allow_skip_completed)
+	return d.BuildHtmlTag(d.HtmlName(), "Date", id, field_name, allow_skip_completed)
 }
 
 // validación con datos de entrada

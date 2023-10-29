@@ -5,6 +5,7 @@ import (
 )
 
 type rut struct {
+	name        string
 	hide_typing bool
 	dni_mode    bool
 	attributes
@@ -16,6 +17,7 @@ type rut struct {
 // dni-mode: acepta documentos extranjeros
 func Rut(options ...string) *model.Input {
 	in := rut{
+		name: "Rut",
 		attributes: attributes{
 			Autocomplete: `autocomplete="off"`,
 			Class:        `class="rut"`,
@@ -39,6 +41,7 @@ func Rut(options ...string) *model.Input {
 	}
 
 	if in.dni_mode {
+		in.name = "RutDni"
 		in.Title = `title="Documento Chileno (ch) o Extranjero (ex)"`
 		in.PlaceHolder = `placeholder="ej: (ch) 11222333-k  /  (ex) 1b2334"`
 		// in.Pattern = `^[A-Za-z0-9]{9,15}$`
@@ -52,19 +55,11 @@ func Rut(options ...string) *model.Input {
 	}
 
 	return &model.Input{
-		InputName: in.Name(),
+		InputName: in.name,
 		Tag:       &in,
 		Validate:  &in,
 		TestData:  &in,
 	}
-}
-
-func (r rut) Name() string {
-	if r.dni_mode {
-		return "RutDni"
-	}
-
-	return "Rut"
 }
 
 func (r rut) HtmlName() string {
@@ -80,7 +75,7 @@ func (r rut) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 
 		tag := `<div class="run-type">`
 
-		tag += r.BuildHtmlTag(r.HtmlName(), r.Name(), id, field_name, allow_skip_completed)
+		tag += r.BuildHtmlTag(r.HtmlName(), r.name, id, field_name, allow_skip_completed)
 
 		tag += `<div class="rut-label-container"><label class="rut-radio-label">
 			<input type="radio" name="type-dni" data-name="dni-ch" value="ch" checked="checked" onchange="changeDniType(this)">
@@ -97,6 +92,6 @@ func (r rut) HtmlTag(id, field_name string, allow_skip_completed bool) string {
 		return tag
 
 	} else {
-		return r.BuildHtmlTag(r.HtmlName(), r.Name(), id, field_name, allow_skip_completed)
+		return r.BuildHtmlTag(r.HtmlName(), r.name, id, field_name, allow_skip_completed)
 	}
 }

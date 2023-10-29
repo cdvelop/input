@@ -35,7 +35,7 @@ func Password(options ...string) *model.Input {
 	}
 
 	return &model.Input{
-		InputName: in.Name(),
+		InputName: "Password",
 		Tag:       &in,
 		Validate:  &in,
 		TestData:  &in,
@@ -49,16 +49,12 @@ type password struct {
 	Permitted
 }
 
-func (p password) Name() string {
-	return "Password"
-}
-
 func (p password) HtmlName() string {
 	return "password"
 }
 
 func (p password) HtmlTag(id, field_name string, allow_skip_completed bool) string {
-	return p.BuildHtmlTag(p.HtmlName(), p.Name(), id, field_name, allow_skip_completed)
+	return p.BuildHtmlTag(p.HtmlName(), "Password", id, field_name, allow_skip_completed)
 }
 
 func (p password) GoodTestData() (out []string) {

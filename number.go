@@ -34,7 +34,7 @@ func Number(options ...string) *model.Input {
 	}
 
 	return &model.Input{
-		InputName: in.Name(),
+		InputName: "Number",
 		Tag:       &in,
 		Validate:  &in,
 		TestData:  &in,
@@ -51,16 +51,12 @@ type number struct {
 	Permitted
 }
 
-func (n number) Name() string {
-	return "Number"
-}
-
 func (n number) HtmlName() string {
 	return "number"
 }
 
 func (n number) HtmlTag(id, field_name string, allow_skip_completed bool) string {
-	return n.BuildHtmlTag(n.HtmlName(), n.Name(), id, field_name, allow_skip_completed)
+	return n.BuildHtmlTag(n.HtmlName(), "Number", id, field_name, allow_skip_completed)
 
 }
 

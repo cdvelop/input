@@ -8,7 +8,7 @@ func Info(value string) *model.Input {
 	}
 
 	return &model.Input{
-		InputName: in.Name(),
+		InputName: "Info",
 		Tag:       in,
 		Validate:  nil,
 		TestData:  nil,
@@ -18,10 +18,6 @@ func Info(value string) *model.Input {
 // input de carácter informativo
 type info struct {
 	Value string //valor a mostrar
-}
-
-func (i info) Name() string {
-	return "Info"
 }
 
 func (i info) HtmlName() string {

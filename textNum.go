@@ -20,7 +20,7 @@ func TextNum() *model.Input {
 	}
 
 	return &model.Input{
-		InputName: in.Name(),
+		InputName: "TextNum",
 		Tag:       &in,
 		Validate:  &in,
 		TestData:  &in,
@@ -33,16 +33,12 @@ type textNum struct {
 	Permitted
 }
 
-func (t textNum) Name() string {
-	return "TextNum"
-}
-
 func (t textNum) HtmlName() string {
 	return "text"
 }
 
 func (t textNum) HtmlTag(id, field_name string, allow_skip_completed bool) string {
-	return t.BuildHtmlTag(t.HtmlName(), t.Name(), id, field_name, allow_skip_completed)
+	return t.BuildHtmlTag(t.HtmlName(), "TextNum", id, field_name, allow_skip_completed)
 }
 
 func (t textNum) GoodTestData() (out []string) {
