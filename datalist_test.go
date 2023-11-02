@@ -50,7 +50,7 @@ func Test_DataList(t *testing.T) {
 }
 
 func Test_TagDataList(t *testing.T) {
-	tag := modelDataList.Tag.HtmlTag("1", "name", true)
+	tag := modelDataList.Tag.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}

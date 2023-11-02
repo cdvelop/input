@@ -52,7 +52,7 @@ func Test_InputTextNumCode(t *testing.T) {
 	}
 }
 func Test_TagTextNumCode(t *testing.T) {
-	tag := modelTextNumCode.Tag.HtmlTag("1", "name", true)
+	tag := modelTextNumCode.Tag.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}

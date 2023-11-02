@@ -55,7 +55,7 @@ func (t text) HtmlName() string {
 	return "text"
 }
 
-func (t text) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+func (t text) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
 	return t.attributes.BuildHtmlTag(t.HtmlName(), "Text", id, field_name, allow_skip_completed)
 }
 

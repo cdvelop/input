@@ -24,6 +24,6 @@ func (i info) HtmlName() string {
 	return "text"
 }
 
-func (i info) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+func (i info) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
 	return i.Value
 }

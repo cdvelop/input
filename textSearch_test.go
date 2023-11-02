@@ -26,7 +26,7 @@ var (
 )
 
 func Test_TagTextSearch(t *testing.T) {
-	tag := modelTextSearch.Tag.HtmlTag("1", "name", true)
+	tag := modelTextSearch.Tag.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}

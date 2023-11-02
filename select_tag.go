@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-func (s selecTag) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+func (s selecTag) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
 	var req string
 	if !allow_skip_completed {
 		req = ` required`

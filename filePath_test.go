@@ -49,7 +49,7 @@ func Test_Check(t *testing.T) {
 }
 
 // func Test_TagFilePath(t *testing.T) {
-// 	tag := input.FilePath().Tag.HtmlTag("1", "name", true)
+// 	tag := input.FilePath().Tag.BuildContainerView("1", "name", true)
 // 	if tag == "" {
 // 		log.Fatalln("ERROR NO TAG RENDERING ")
 // 	}

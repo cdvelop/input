@@ -34,7 +34,7 @@ type mail struct {
 	per Permitted
 }
 
-func (m mail) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+func (m mail) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
 	return m.BuildHtmlTag(m.HtmlName(), "Mail", id, field_name, allow_skip_completed)
 }
 

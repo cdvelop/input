@@ -38,7 +38,7 @@ func (h hour) HtmlName() string {
 	return "time"
 }
 
-func (h hour) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+func (h hour) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
 	return h.BuildHtmlTag(h.HtmlName(), "Hour", id, field_name, allow_skip_completed)
 }
 

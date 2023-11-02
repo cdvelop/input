@@ -46,7 +46,7 @@ func Test_InputDate(t *testing.T) {
 }
 
 func Test_TagDate(t *testing.T) {
-	tag := modelDate.Tag.HtmlTag("1", "name", true)
+	tag := modelDate.Tag.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}

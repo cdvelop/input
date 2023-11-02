@@ -43,7 +43,7 @@ func Test_InputPassword(t *testing.T) {
 }
 
 func Test_TagPassword(t *testing.T) {
-	tag := modelPassword.Tag.HtmlTag("1", "name", true)
+	tag := modelPassword.Tag.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}

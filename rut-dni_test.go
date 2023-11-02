@@ -32,7 +32,7 @@ var (
 )
 
 func Test_TagDNI(t *testing.T) {
-	tag := modelDNI.Tag.HtmlTag("1", "name", true)
+	tag := modelDNI.Tag.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}

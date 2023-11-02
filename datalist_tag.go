@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-func (d datalist) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+func (d datalist) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
 	var req string
 	if !allow_skip_completed {
 		req = ` required`

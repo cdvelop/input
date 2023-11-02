@@ -34,7 +34,7 @@ func (d dateAge) HtmlName() string {
 	return "date"
 }
 
-func (d dateAge) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+func (d dateAge) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
 
 	tag := `<label class="age-number"><input data-name="age-number" type="number" min="0" max="150" oninput="AgeInputChange(this)" title="Campo Informativo"></label>`
 

@@ -33,7 +33,7 @@ func (d dayWord) HtmlName() string {
 	return "text"
 }
 
-func (d dayWord) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+func (d dayWord) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
 	tag := `<label class="date-spanish">`
 	tag += d.BuildHtmlTag(d.HtmlName(), "DayWord", id, field_name, allow_skip_completed)
 	tag += `</label>`

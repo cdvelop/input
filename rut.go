@@ -69,7 +69,7 @@ func (r rut) HtmlName() string {
 	return "text"
 }
 
-func (r rut) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+func (r rut) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
 
 	if r.dni_mode {
 

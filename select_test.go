@@ -32,7 +32,7 @@ var (
 )
 
 func Test_TagSelect(t *testing.T) {
-	tag := modelSelect.Tag.HtmlTag("1", "name", true)
+	tag := modelSelect.Tag.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}

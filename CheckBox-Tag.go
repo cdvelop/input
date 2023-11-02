@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-func (c check) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+func (c check) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
 
 	keys := make([]string, 0, len(c.Data.SourceData()))
 	for k := range c.Data.SourceData() {

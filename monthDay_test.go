@@ -45,7 +45,7 @@ func Test_InputMonthDay(t *testing.T) {
 }
 
 func Test_TagMonthDay(t *testing.T) {
-	tag := modelMonthDay.Tag.HtmlTag("1", "name", true)
+	tag := modelMonthDay.Tag.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}

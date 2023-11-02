@@ -49,7 +49,7 @@ func Test_InputRut(t *testing.T) {
 }
 
 func Test_TagRut(t *testing.T) {
-	tag := modelRut.Tag.HtmlTag("1", "name", true)
+	tag := modelRut.Tag.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}

@@ -45,7 +45,7 @@ func (t textOnly) HtmlName() string {
 	return "text"
 }
 
-func (t textOnly) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+func (t textOnly) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
 	return t.BuildHtmlTag(t.HtmlName(), "TextOnly", id, field_name, allow_skip_completed)
 }
 

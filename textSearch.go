@@ -37,7 +37,7 @@ func (t textSearch) HtmlName() string {
 	return "search"
 }
 
-func (t textSearch) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+func (t textSearch) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
 	return t.BuildHtmlTag(t.HtmlName(), "TextSearch", id, field_name, allow_skip_completed)
 
 }

@@ -44,7 +44,7 @@ func (f filePath) HtmlName() string {
 	return "file"
 }
 
-func (f filePath) HtmlTag(id, field_name string, allow_skip_completed bool) (tags string) {
+func (f filePath) BuildContainerView(id, field_name string, allow_skip_completed bool) (tags string) {
 	return f.BuildHtmlTag(f.HtmlName(), "FilePath", id, field_name, allow_skip_completed)
 }
 

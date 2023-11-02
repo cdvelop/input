@@ -34,7 +34,7 @@ func (radio) SourceData() map[string]string {
 }
 
 func Test_TagRadio(t *testing.T) {
-	tag := modelRadio.Tag.HtmlTag("1", "name", true)
+	tag := modelRadio.Tag.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}

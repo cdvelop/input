@@ -53,7 +53,7 @@ func (p password) HtmlName() string {
 	return "password"
 }
 
-func (p password) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+func (p password) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
 	return p.BuildHtmlTag(p.HtmlName(), "Password", id, field_name, allow_skip_completed)
 }
 

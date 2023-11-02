@@ -37,7 +37,7 @@ func (t textNum) HtmlName() string {
 	return "text"
 }
 
-func (t textNum) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+func (t textNum) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
 	return t.BuildHtmlTag(t.HtmlName(), "TextNum", id, field_name, allow_skip_completed)
 }
 

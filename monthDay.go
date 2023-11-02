@@ -37,7 +37,7 @@ func (d monthDay) HtmlName() string {
 	return "text"
 }
 
-func (m monthDay) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+func (m monthDay) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
 	return m.BuildHtmlTag(m.HtmlName(), "MonthDay", id, field_name, allow_skip_completed)
 }
 

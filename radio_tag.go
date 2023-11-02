@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-func (r radio) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+func (r radio) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
 	var id3 string
 
 	keys := make([]string, 0, len(r.Data.SourceData()))

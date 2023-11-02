@@ -39,7 +39,7 @@ func Test_InputIp(t *testing.T) {
 }
 
 func Test_TagIp(t *testing.T) {
-	tag := input.Ip().Tag.HtmlTag("1", "name", true)
+	tag := input.Ip().Tag.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}

@@ -55,7 +55,7 @@ func (n number) HtmlName() string {
 	return "number"
 }
 
-func (n number) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+func (n number) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
 	return n.BuildHtmlTag(n.HtmlName(), "Number", id, field_name, allow_skip_completed)
 
 }

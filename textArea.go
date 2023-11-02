@@ -64,6 +64,6 @@ func (t textArea) HtmlName() string {
 	return "textarea"
 }
 
-func (t textArea) HtmlTag(id, field_name string, allow_skip_completed bool) string {
+func (t textArea) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
 	return t.BuildHtmlTag(t.HtmlName(), "TextArea", id, field_name, allow_skip_completed)
 }

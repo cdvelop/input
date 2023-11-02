@@ -43,7 +43,7 @@ func Test_InputHour(t *testing.T) {
 }
 
 func Test_TagHour(t *testing.T) {
-	tag := modelHour.Tag.HtmlTag("1", "name", true)
+	tag := modelHour.Tag.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}

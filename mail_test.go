@@ -21,7 +21,7 @@ var (
 )
 
 func Test_TagMail(t *testing.T) {
-	tag := modelMail.Tag.HtmlTag("1", "name", true)
+	tag := modelMail.Tag.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}
