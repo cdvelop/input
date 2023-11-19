@@ -3,9 +3,11 @@ module github.com/cdvelop/input
 go 1.20
 
 require (
-	github.com/cdvelop/model v0.0.68
+	github.com/cdvelop/model v0.0.69
 	github.com/cdvelop/timetools v0.0.4
 )
+
+require github.com/cdvelop/strings v0.0.7 // indirect
 
 replace github.com/cdvelop/model => ../model
 
