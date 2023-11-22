@@ -3,8 +3,8 @@ module github.com/cdvelop/input
 go 1.20
 
 require (
-	github.com/cdvelop/model v0.0.69
-	github.com/cdvelop/timetools v0.0.4
+	github.com/cdvelop/model v0.0.70
+	github.com/cdvelop/timetools v0.0.19
 )
 
 require github.com/cdvelop/strings v0.0.7 // indirect
@@ -12,3 +12,5 @@ require github.com/cdvelop/strings v0.0.7 // indirect
 replace github.com/cdvelop/model => ../model
 
 replace github.com/cdvelop/timetools => ../timetools
+
+replace github.com/cdvelop/strings => ../strings
