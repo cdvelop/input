@@ -28,17 +28,17 @@ func (datalist) HtmlName() string {
 }
 
 //  validación con datos de entrada
-func (d datalist) ValidateField(data_in string, skip_validation bool, options ...string) error {
+func (d datalist) ValidateField(data_in string, skip_validation bool, options ...string) (err string) {
 	if !skip_validation {
 		if _, exists := d.Data.SourceData()[data_in]; !exists {
 
 			if data_in != "" {
-				return model.Error("valor", data_in, "no permitido en datalist")
+				return "valor " + data_in + " no permitido en datalist"
 			} else {
-				return model.Error("selección requerida")
+				return "selección requerida"
 
 			}
 		}
 	}
-	return nil
+	return ""
 }

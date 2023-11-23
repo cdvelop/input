@@ -3,12 +3,10 @@ package input
 import (
 	"strconv"
 	"strings"
-
-	"github.com/cdvelop/model"
 )
 
 // validación con datos de entrada
-func (r rut) ValidateField(data_in string, skip_validation bool, options ...string) error {
+func (r rut) ValidateField(data_in string, skip_validation bool, options ...string) (err string) {
 	if !skip_validation {
 
 		for _, doc := range options {
@@ -29,19 +27,19 @@ func (r rut) ValidateField(data_in string, skip_validation bool, options ...stri
 
 	}
 
-	return nil
+	return ""
 }
 
 // RUT validate formato "7863697-1"
-func (r rut) runValidate(rin string) error {
+func (r rut) runValidate(rin string) (err string) {
 	data, onlyRun, err := RunData(rin)
-	if err != nil {
+	if err != "" {
 		return err
 	}
 	// log.Printf("DATA: [%v] RUN:[%v] TAMAÑO DATA: [%v]\n", data, onlyRun, len(data))
 
 	if data[0][0:1] == "0" {
-		return model.Error("primer dígito no puede ser 0")
+		return "primer dígito no puede ser 0"
 	}
 
 	dv := DvRut(onlyRun)
@@ -49,11 +47,11 @@ func (r rut) runValidate(rin string) error {
 	// log.Printf("DÍGITO: %v DV DATA: %v\n", dv, strings.ToLower(data[1]))
 
 	if dv != strings.ToLower(data[1]) {
-		return model.Error("dígito verificador", data[1], "inválido")
+		return "dígito verificador " + data[1] + " inválido"
 
 	}
 
-	return nil
+	return ""
 }
 
 // DvRut retorna dígito verificador de un run
@@ -78,22 +76,22 @@ func DvRut(rut int) string {
 	}
 }
 
-func RunData(runIn string) (data []string, onlyRun int, err error) {
+func RunData(runIn string) (data []string, onlyRun int, err string) {
 
 	if runIn == "" || runIn == " " {
-		return nil, 0, model.Error("rut sin información")
+		return nil, 0, "rut sin información"
 	}
 
 	if !strings.Contains(runIn, "-") {
-		return nil, 0, model.Error("rut incorrecto")
+		return nil, 0, "rut incorrecto"
 	}
 
 	data = strings.Split(string(runIn), "-")
 	// fmt.Println("TAMAÑO", len(data), "RUT DATA -:", data)
-
-	onlyRun, err = strconv.Atoi(data[0])
-	if err != nil {
-		err = model.Error("caracteres no permitidos")
+	var e error
+	onlyRun, e = strconv.Atoi(data[0])
+	if e != nil {
+		err = "caracteres no permitidos"
 	}
 
 	return

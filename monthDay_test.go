@@ -31,14 +31,10 @@ func Test_InputMonthDay(t *testing.T) {
 	for prueba, data := range dataMonthDay {
 		t.Run((prueba + data.inputData), func(t *testing.T) {
 			err := modelMonthDay.Validate.ValidateField(data.inputData, data.skip_validation)
-			var resp string
-			if err != nil {
-				resp = err.Error()
-			}
 
-			if resp != data.expected {
+			if err != data.expected {
 				log.Println(prueba)
-				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", resp, data.expected, data.inputData)
+				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", err, data.expected, data.inputData)
 			}
 		})
 	}
@@ -54,7 +50,7 @@ func Test_TagMonthDay(t *testing.T) {
 func Test_GoodInputMonthDay(t *testing.T) {
 	for _, data := range modelMonthDay.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelMonthDay.Validate.ValidateField(data, false); ok != nil {
+			if ok := modelMonthDay.Validate.ValidateField(data, false); ok != "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -64,7 +60,7 @@ func Test_GoodInputMonthDay(t *testing.T) {
 func Test_WrongInputMonthDay(t *testing.T) {
 	for _, data := range modelMonthDay.TestData.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelMonthDay.Validate.ValidateField(data, false); ok == nil {
+			if ok := modelMonthDay.Validate.ValidateField(data, false); ok == "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

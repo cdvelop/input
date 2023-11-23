@@ -35,11 +35,11 @@ func (d date) BuildContainerView(id, field_name string, allow_skip_completed boo
 }
 
 // validación con datos de entrada
-func (d date) ValidateField(data_in string, skip_validation bool, options ...string) error {
+func (d date) ValidateField(data_in string, skip_validation bool, options ...string) (err string) {
 	if !skip_validation {
 		return timetools.CheckDateExists(data_in)
 	}
-	return nil
+	return ""
 }
 
 func (d date) GoodTestData() (out []string) {

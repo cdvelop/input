@@ -33,12 +33,8 @@ func Test_Valid(t *testing.T) {
 	for prueba, data := range validTestData {
 		t.Run((prueba + " " + data.text), func(t *testing.T) {
 			err := data.Validate(data.text)
-			var resp string
-			if err != nil {
-				resp = err.Error()
-			}
 
-			if resp != data.expected {
+			if err != data.expected {
 				log.Println(prueba)
 				log.Fatalf("expectativa [%v] resultado [%v]\n%v", data.expected, err, data.text)
 			}

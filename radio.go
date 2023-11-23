@@ -36,19 +36,19 @@ func (radio) HtmlName() string {
 }
 
 // validación con datos de entrada
-func (r radio) ValidateField(data_in string, skip_validation bool, options ...string) error {
+func (r radio) ValidateField(data_in string, skip_validation bool, options ...string) (err string) {
 	if !skip_validation {
 		if _, exists := r.Data.SourceData()[data_in]; !exists {
 
 			if data_in != "" {
-				return model.Error("valor", data_in, "no corresponde a botón radio")
+				return "valor " + data_in + " no corresponde a botón radio"
 
 			} else {
-				return model.Error("selección requerida")
+				return "selección requerida"
 			}
 		}
 	}
-	return nil
+	return ""
 }
 
 func (r radio) GoodTestData() (out []string) {

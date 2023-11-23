@@ -35,14 +35,10 @@ func Test_InputNumber(t *testing.T) {
 	for prueba, data := range dataNumber {
 		t.Run((prueba), func(t *testing.T) {
 			err := modelNumber.Validate.ValidateField(data.inputData, data.skip_validation)
-			var resp string
-			if err != nil {
-				resp = err.Error()
-			}
 
-			if resp != data.expected {
+			if err != data.expected {
 				log.Println(prueba)
-				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", resp, data.expected, data.inputData)
+				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", err, data.expected, data.inputData)
 			}
 		})
 	}
@@ -78,14 +74,10 @@ func Test_InputPhoneNumber(t *testing.T) {
 	for prueba, data := range dataPhoneNumber {
 		t.Run((prueba), func(t *testing.T) {
 			err := input.Phone().ValidateField(data.inputData, data.skip_validation)
-			var resp string
-			if err != nil {
-				resp = err.Error()
-			}
 
-			if resp != data.expected {
+			if err != data.expected {
 				log.Println(prueba)
-				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", resp, data.expected, data.inputData)
+				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", err, data.expected, data.inputData)
 			}
 		})
 	}
@@ -94,7 +86,7 @@ func Test_InputPhoneNumber(t *testing.T) {
 func Test_GoodInputPhoneNumber(t *testing.T) {
 	for _, data := range input.Phone().GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := input.Phone().ValidateField(data, false); ok != nil {
+			if ok := input.Phone().ValidateField(data, false); ok != "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -104,7 +96,7 @@ func Test_GoodInputPhoneNumber(t *testing.T) {
 func Test_GoodInputNumber(t *testing.T) {
 	for _, data := range modelNumber.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelNumber.Validate.ValidateField(data, false); ok != nil {
+			if ok := modelNumber.Validate.ValidateField(data, false); ok != "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -114,7 +106,7 @@ func Test_GoodInputNumber(t *testing.T) {
 func Test_WrongInputNumber(t *testing.T) {
 	for _, data := range modelNumber.TestData.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelNumber.Validate.ValidateField(data, false); ok == nil {
+			if ok := modelNumber.Validate.ValidateField(data, false); ok == "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

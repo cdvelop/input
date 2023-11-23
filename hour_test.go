@@ -29,14 +29,10 @@ func Test_InputHour(t *testing.T) {
 	for prueba, data := range dataHour {
 		t.Run((prueba + " " + data.inputData), func(t *testing.T) {
 			err := modelHour.Validate.ValidateField(data.inputData, data.skip_validation)
-			var resp string
-			if err != nil {
-				resp = err.Error()
-			}
 
-			if resp != data.expected {
+			if err != data.expected {
 				log.Println(prueba)
-				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", resp, data.expected, data.inputData)
+				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", err, data.expected, data.inputData)
 			}
 		})
 	}
@@ -52,7 +48,7 @@ func Test_TagHour(t *testing.T) {
 func Test_GoodInputHour(t *testing.T) {
 	for _, data := range modelHour.TestData.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelHour.Validate.ValidateField(data, false); ok != nil {
+			if ok := modelHour.Validate.ValidateField(data, false); ok != "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -62,7 +58,7 @@ func Test_GoodInputHour(t *testing.T) {
 func Test_WrongInputHour(t *testing.T) {
 	for _, data := range modelHour.TestData.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelHour.Validate.ValidateField(data, false); ok == nil {
+			if ok := modelHour.Validate.ValidateField(data, false); ok == "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

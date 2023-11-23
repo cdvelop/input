@@ -2,8 +2,6 @@ package input
 
 import (
 	"strconv"
-
-	"github.com/cdvelop/model"
 )
 
 type Permitted struct {
@@ -15,17 +13,17 @@ type Permitted struct {
 	Maximum    int    //caracteres max ej 1 "l" ok default 0 no defined
 }
 
-func (p Permitted) Validate(text string) (err error) {
+func (p Permitted) Validate(text string) (err string) {
 
 	if p.Minimum != 0 {
 		if len(text) < p.Minimum {
-			return model.Error("tamaño mínimo", strconv.Itoa(p.Minimum), "caracteres")
+			return "tamaño mínimo " + strconv.Itoa(p.Minimum) + " caracteres"
 		}
 	}
 
 	if p.Maximum != 0 {
 		if len(text) > p.Maximum {
-			return model.Error("tamaño máximo", strconv.Itoa(p.Maximum), "caracteres")
+			return "tamaño máximo " + strconv.Itoa(p.Maximum) + " caracteres"
 		}
 	}
 
@@ -34,18 +32,18 @@ func (p Permitted) Validate(text string) (err error) {
 		if p.Letters {
 			// fmt.Printf("Letters [%c]\n", char)
 			if !valid_letters[char] {
-				err = model.Error(string(char), "no es una letra")
+				err = string(char) + " no es una letra"
 			} else {
-				err = nil
+				err = ""
 				continue
 			}
 		}
 
 		if p.Tilde {
 			if !valid_tilde[char] {
-				err = model.Error("tilde", string(char), "no soportada")
+				err = "tilde " + string(char) + " no soportada"
 			} else {
-				err = nil
+				err = ""
 				continue
 			}
 		}
@@ -54,13 +52,13 @@ func (p Permitted) Validate(text string) (err error) {
 			// fmt.Printf("Number [%c]\n", char)
 			if !valid_number[char] {
 				if char == ' ' {
-					err = model.Error("espacios en blanco no permitidos")
+					err = "espacios en blanco no permitidos"
 				} else {
-					err = model.Error(string(char), "no es un numero")
+					err = string(char) + " no es un numero"
 				}
 
 			} else {
-				err = nil
+				err = ""
 				continue
 			}
 		}
@@ -76,21 +74,21 @@ func (p Permitted) Validate(text string) (err error) {
 
 			if found {
 				// fmt.Printf("Character ok: [%c]\n", char)
-				err = nil
+				err = ""
 				continue
 			} else {
 
 				if char == ' ' {
-					return model.Error("espacios en blanco no permitidos")
+					return "espacios en blanco no permitidos"
 				} else if valid_tilde[char] {
-					return model.Error(string(char), "con tilde no permitida")
+					return string(char) + " con tilde no permitida"
 				}
 
-				return model.Error("carácter", string(char), "no permitido")
+				return "carácter " + string(char) + " no permitido"
 			}
 		}
 
-		if err != nil {
+		if err != "" {
 			return
 		}
 	}
@@ -119,9 +117,9 @@ var valid_number = map[rune]bool{
 	'0': true, '1': true, '2': true, '3': true, '4': true, '5': true, '6': true, '7': true, '8': true, '9': true,
 }
 
-func (p Permitted) ValidateField(data_in string, skip_validation bool, options ...string) error {
+func (p Permitted) ValidateField(data_in string, skip_validation bool, options ...string) (err string) {
 	if !skip_validation {
 		return p.Validate(data_in)
 	}
-	return nil
+	return ""
 }

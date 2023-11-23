@@ -43,23 +43,23 @@ func (mail) HtmlName() string {
 }
 
 // validación con datos de entrada
-func (m mail) ValidateField(data_in string, skip_validation bool, options ...string) error {
+func (m mail) ValidateField(data_in string, skip_validation bool, options ...string) (err string) {
 	if !skip_validation {
 
 		if strings.Contains(data_in, "example") {
-			return model.Error(data_in, "es un correo de ejemplo")
+			return data_in + " es un correo de ejemplo"
 		}
 
 		parts := strings.Split(data_in, "@")
 		if len(parts) != 2 {
-			return model.Error("error en @ del correo", data_in)
+			return "error en @ del correo " + data_in
 		}
 
 		return m.per.Validate(data_in)
 
 	}
 
-	return nil
+	return ""
 }
 
 func (mail) GoodTestData() (out []string) {

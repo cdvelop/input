@@ -41,7 +41,7 @@ func (t textNumCode) BuildContainerView(id, field_name string, allow_skip_comple
 	return t.BuildHtmlTag(t.HtmlName(), "TextNumCode", id, field_name, allow_skip_completed)
 }
 
-func (t textNumCode) ValidateField(data_in string, skip_validation bool, options ...string) error {
+func (t textNumCode) ValidateField(data_in string, skip_validation bool, options ...string) (err string) {
 	if !skip_validation {
 
 		if len(data_in) >= 1 {
@@ -57,13 +57,13 @@ func (t textNumCode) ValidateField(data_in string, skip_validation bool, options
 			}
 
 			if !ok {
-				return model.Error("no se puede comenzar con", string(char))
+				return "no se puede comenzar con " + string(char)
 			}
 		}
 
 		return t.per.Validate(data_in)
 	}
-	return nil
+	return ""
 }
 
 func (t textNumCode) GoodTestData() (out []string) {

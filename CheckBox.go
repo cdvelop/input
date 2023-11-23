@@ -40,23 +40,23 @@ func (check) HtmlName() string {
 }
 
 // validación con datos de entrada
-func (c check) ValidateField(data_in string, skip_validation bool, options ...string) error {
+func (c check) ValidateField(data_in string, skip_validation bool, options ...string) (err string) {
 	if !skip_validation {
 		dataInArray := strings.Split(data_in, ",")
 		for _, idkeyIn := range dataInArray {
 			if _, exists := (c.Data.SourceData())[idkeyIn]; !exists {
 
 				if idkeyIn != "" {
-					return model.Error("valor", idkeyIn, "no corresponde al checkbox")
+					return "valor " + idkeyIn + " no corresponde al checkbox"
 
 				} else {
-					return model.Error("selección requerida")
+					return "selección requerida"
 				}
 			}
 		}
 
 	}
-	return nil
+	return ""
 }
 
 func (c check) GoodTestData() (out []string) {

@@ -45,11 +45,11 @@ func (i ip) BuildContainerView(id, field_name string, allow_skip_completed bool)
 }
 
 // validación con datos de entrada
-func (i ip) ValidateField(data_in string, skip_validation bool, options ...string) error {
+func (i ip) ValidateField(data_in string, skip_validation bool, options ...string) (err string) {
 	if !skip_validation {
 
 		if data_in == "0.0.0.0" {
-			return model.Error("ip de ejemplo no valida")
+			return "ip de ejemplo no valida"
 		}
 
 		var ipV string
@@ -61,23 +61,23 @@ func (i ip) ValidateField(data_in string, skip_validation bool, options ...strin
 		}
 
 		if ipV == "" {
-			return model.Error("version IPv4 o 6 no encontrada")
+			return "version IPv4 o 6 no encontrada"
 		}
 
 		part := strings.Split(data_in, ipV)
 
 		if ipV == "." && len(part) != 4 {
-			return model.Error("formato IPv4 no valida")
+			return "formato IPv4 no valida"
 		}
 
 		if ipV == ":" && len(part) != 8 {
-			return model.Error("formato IPv6 no valida")
+			return "formato IPv6 no valida"
 		}
 
 		return i.per.Validate(data_in)
 	}
 
-	return nil
+	return ""
 }
 
 func (i ip) GoodTestData() (out []string) {
