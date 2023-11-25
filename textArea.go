@@ -31,7 +31,7 @@ func TextArea(options ...string) *model.Input {
 			Title: `title="` + info + `"`,
 			// PlaceHolder: `placeHolder="` + info + `"`,
 			// Pattern: `^[A-Za-zÑñáéíóú 0-9:$%.,+-/\\()|\n/g]{2,1000}$`,
-			Oninput: `oninput="TextAreaAutoGrow(this)"`,
+			Oninput: `oninput="TexAreaOninput(this)"`,
 			// Onchange: `onchange="` + DefaultValidateFunction + `"`,
 		},
 		Permitted: Permitted{
