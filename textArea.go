@@ -51,13 +51,25 @@ func TextArea(options ...string) *model.Input {
 		Maximum:   max,
 		Tag:       &in,
 		Validate:  &in,
-		TestData:  &in,
+		ResetParameters: &model.ResetParameters{
+			CallJsFunWithParameters: model.CallJsFunWithParameters{
+				FuncNameCall: "ResetTextArea",
+				Enable:       true,
+				AddParams:    map[string]any{},
+			},
+		},
+		TestData: &in,
 	}
 }
 
 type textArea struct {
 	attributes
 	Permitted
+}
+
+func (t textArea) ResetInputView() (err string) {
+
+	return
 }
 
 func (t textArea) HtmlName() string {

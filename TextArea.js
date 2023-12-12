@@ -9,3 +9,10 @@ function TextAreaAutoGrow(input) {
 };
 
 
+
+
+function ResetTextArea(p) {
+    
+    console.log("ResetTextAreaState:",p)
+
+}
