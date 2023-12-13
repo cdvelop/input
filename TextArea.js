@@ -9,10 +9,7 @@ function TextAreaAutoGrow(input) {
 };
 
 
-
-
 function ResetTextArea(p) {
-    
-    console.log("ResetTextAreaState:",p)
-
+    const input = p.form.querySelector('[name="'+p.field_name+'"]')
+    TextAreaAutoGrow(input)
 }
