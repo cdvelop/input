@@ -52,10 +52,10 @@ func TextArea(options ...string) *model.Input {
 		Tag:       &in,
 		Validate:  &in,
 		ResetParameters: &model.ResetParameters{
-			CallJsFunWithParameters: model.CallJsFunWithParameters{
-				FuncNameCall: "ResetTextArea",
-				Enable:       true,
-				AddParams:    map[string]any{},
+			CallJsOptions: model.CallJsOptions{
+				NameJsFunc: "ResetTextArea",
+				Enable:     true,
+				Params:     map[string]any{},
 			},
 		},
 		TestData: &in,

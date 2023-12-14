@@ -1,4 +1,4 @@
-github.com/cdvelop/model v0.0.89 h1:VgX3fjwQLNZUHcsSp7fDy/cVjP/H5HEE69U1K5W5srs=
-github.com/cdvelop/model v0.0.89/go.mod h1:cYJNxbv1WV/aDgiVPV9VXs8LrbF8+0nU+X+KfSevyzw=
-github.com/cdvelop/timetools v0.0.28 h1:deG3CoMbItderXCsR77aQK4t7beBocLQvollpoeZ32s=
-github.com/cdvelop/timetools v0.0.28/go.mod h1:pldiqgD86bayORZC0wlEqAT8A+WxJIHvhrY899yP1e0=
+github.com/cdvelop/model v0.0.90 h1:PYtdbd+TAedQjnlwaGtYY11dw6aZGzM/wDIjGN2Cgpc=
+github.com/cdvelop/model v0.0.90/go.mod h1:cYJNxbv1WV/aDgiVPV9VXs8LrbF8+0nU+X+KfSevyzw=
+github.com/cdvelop/timetools v0.0.29 h1:UNX2B2b5nLFIKhqceB/kkQ11ixVJCd3El92ZmyF9Yf0=
+github.com/cdvelop/timetools v0.0.29/go.mod h1:DrlKn5sZzSA+57VlDpW3/xriINWfPt+zCMYBejsxars=
