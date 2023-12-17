@@ -12,7 +12,7 @@ import (
 // cols="2" default 1
 // rows="8" default 3
 func TextArea(options ...string) *model.Input {
-	permitted := []rune{' ', '%', '$', '+', '#', '-', '.', ',', ':', '(', ')', '\n'}
+	permitted := []rune{'%', '$', '+', '#', '-', '.', ',', ':', '(', ')'}
 	var min = 5
 	var max = 1000
 
@@ -35,12 +35,15 @@ func TextArea(options ...string) *model.Input {
 			// Onchange: `onchange="` + DefaultValidateFunction + `"`,
 		},
 		Permitted: Permitted{
-			Letters:    true,
-			Tilde:      true,
-			Numbers:    true,
-			Characters: permitted,
-			Minimum:    min,
-			Maximum:    max,
+			Letters:     true,
+			Tilde:       true,
+			Numbers:     true,
+			BreakLine:   true,
+			WhiteSpaces: true,
+			Tabulation:  true,
+			Characters:  permitted,
+			Minimum:     min,
+			Maximum:     max,
 		},
 	}
 	in.Set(options...)

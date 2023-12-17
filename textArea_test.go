@@ -12,45 +12,47 @@ var (
 	modelTextArea = input.TextArea()
 
 	dataTextArea = map[string]struct {
-		inputData       string
-		skip_validation bool
-		expected        string
+		inputData string
+		expected  string
 	}{
-		"todo los caracteres permitidos?":   {"hola: esto, es. la - prueba 10", false, ""},
-		"salto de linea permitido? y guion": {"hola:\n esto, es. la - \nprueba 10", false, ""},
-		"letra ñ permitida? paréntesis y $": {"soy ñato o Ñato (aqui) costo $10000.", false, ""},
-		"solo texto y espacio?":             {"hola esto es una prueba", false, ""},
-		"texto y puntuación?":               {"hola: esto es una prueba", false, ""},
-		"texto y puntuación y coma?":        {"hola: esto,true, es una prueba", false, ""},
-		"5 caracteres?":                     {", .s5", false, ""},
-		"sin data permitido?":               {"", false, "tamaño mínimo " + strconv.Itoa(modelTextArea.Minimum) + " caracteres"},
-		"# permitido?":                      {"# son", false, ""},
-		"¿ ? permitido?":                    {" ¿ si ?", false, "carácter ¿ no permitido"},
-		"tildes si?":                        {" mí tílde", false, ""},
-		"1 carácter?":                       {"1", false, "tamaño mínimo " + strconv.Itoa(modelTextArea.Minimum) + " caracteres"},
-		"nombre correcto?":                  {"Dr. Pato Gomez", false, ""},
-		"solo espacio en blanco?":           {" ", false, "tamaño mínimo " + strconv.Itoa(modelTextArea.Minimum) + " caracteres"},
-		"texto largo correcto?":             {`IRRITACION EN PIEL DE ROSTRO. ALERGIAS NO. CIRUGIAS NO. ACTUAL TTO CON ISOTRETINOINA 10MG - ENERO 2022. EN TTO ACTUAL CON VIT D. EXAMEN DE LAB 20-12-2022. SIN OTROS ANTECEDENTES`, false, ""},
+		"todo los caracteres permitidos?":   {"hola: esto, es. la - prueba 10", ""},
+		"salto de linea permitido? y guion": {"hola:\n esto, es. la - \nprueba 10", ""},
+		"letra ñ permitida? paréntesis y $": {"soy ñato o Ñato (aqui) costo $10000.", ""},
+		"solo texto y espacio?":             {"hola esto es una prueba", ""},
+		"texto y puntuación?":               {"hola: esto es una prueba", ""},
+		"texto y puntuación y coma?":        {"hola: esto,true, es una prueba", ""},
+		"5 caracteres?":                     {", .s5", ""},
+		"sin data permitido?":               {"", "tamaño mínimo " + strconv.Itoa(modelTextArea.Minimum) + " caracteres"},
+		"# permitido?":                      {"# son", ""},
+		"¿ ? permitido?":                    {" ¿ si ?", "carácter ¿ no permitido"},
+		"tildes si?":                        {" mí tílde", ""},
+		"1 carácter?":                       {"1", "tamaño mínimo " + strconv.Itoa(modelTextArea.Minimum) + " caracteres"},
+		"nombre correcto?":                  {"Dr. Pato Gomez", ""},
+		"solo espacio en blanco?":           {" ", "tamaño mínimo " + strconv.Itoa(modelTextArea.Minimum) + " caracteres"},
+		"texto largo correcto?":             {`IRRITACION EN PIEL DE ROSTRO. ALERGIAS NO. CIRUGIAS NO. ACTUAL TTO CON ISOTRETINOINA 10MG - ENERO 2022. EN TTO ACTUAL CON VIT D. EXAMEN DE LAB 20-12-2022. SIN OTROS ANTECEDENTES`, ""},
+		"texto con salto de lineas ok": {`HOY......Referido por        : dr. ........
+		Motivo                    : ........
+		Premedicacion  : ........`, ""},
 	}
 )
-
-func Test_TagTextArea(t *testing.T) {
-	tag := modelTextArea.Tag.BuildContainerView("1", "name", true)
-	if tag == "" {
-		log.Fatalln("ERROR NO TAG RENDERING ")
-	}
-}
 
 func Test_InputTextArea(t *testing.T) {
 	for prueba, data := range dataTextArea {
 		t.Run((prueba + data.inputData), func(t *testing.T) {
-			err := modelTextArea.Validate.ValidateField(data.inputData, data.skip_validation)
+			err := modelTextArea.Validate.ValidateField(data.inputData, false)
 
 			if err != data.expected {
 				log.Println(prueba)
 				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", err, data.expected, data.inputData)
 			}
 		})
+	}
+}
+
+func Test_TagTextArea(t *testing.T) {
+	tag := modelTextArea.Tag.BuildContainerView("1", "name", true)
+	if tag == "" {
+		log.Fatalln("ERROR NO TAG RENDERING ")
 	}
 }
 func Test_GoodInputTextArea(t *testing.T) {

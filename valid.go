@@ -5,13 +5,21 @@ import (
 )
 
 type Permitted struct {
-	Letters    bool
-	Tilde      bool
-	Numbers    bool
-	Characters []rune //ej: '\','/','@'
-	Minimum    int    //caracteres min ej 2 "lo" ok default 0 no defined
-	Maximum    int    //caracteres max ej 1 "l" ok default 0 no defined
+	Letters     bool
+	Tilde       bool
+	Numbers     bool
+	BreakLine   bool   // saltos de linea permitidos
+	WhiteSpaces bool   // permitidos espacios en blanco
+	Tabulation  bool   // permitido tabular
+	Characters  []rune // otros caracteres especiales ej: '\','/','@'
+	Minimum     int    //caracteres min ej 2 "lo" ok default 0 no defined
+	Maximum     int    //caracteres max ej 1 "l" ok default 0 no defined
 }
+
+const tabulation = '	'
+const white_space = ' '
+const break_line = '\n'
+const carriage_return = '\r'
 
 func (p Permitted) Validate(text string) (err string) {
 
@@ -28,6 +36,21 @@ func (p Permitted) Validate(text string) (err string) {
 	}
 
 	for _, char := range text {
+
+		// if char ==  {
+		// 	fmt.Printf("\nSALTO DE CARRO [%v]", char)
+		// }
+		if char == tabulation && p.Tabulation {
+			continue
+		}
+
+		if char == white_space && p.WhiteSpaces {
+			continue
+		}
+
+		if char == break_line && p.BreakLine {
+			continue
+		}
 
 		if p.Letters {
 			// fmt.Printf("Letters [%c]\n", char)
@@ -73,17 +96,20 @@ func (p Permitted) Validate(text string) (err string) {
 			}
 
 			if found {
-				// fmt.Printf("Character ok: [%c]\n", char)
 				err = ""
 				continue
 			} else {
 
-				if char == ' ' {
+				if char == white_space {
 					return "espacios en blanco no permitidos"
 				} else if valid_tilde[char] {
 					return string(char) + " con tilde no permitida"
+				} else if char == tabulation {
+					return "tabulation de texto no permitida"
+				} else if char == break_line {
+					return "salto de linea no permitido"
 				}
-
+				// fmt.Printf("Character : [%c]\n", char)
 				return "carácter " + string(char) + " no permitido"
 			}
 		}
