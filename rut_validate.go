@@ -7,27 +7,45 @@ import (
 
 // validación con datos de entrada
 func (r rut) ValidateField(data_in string, skip_validation bool, options ...string) (err string) {
-	if !skip_validation {
-
-		for _, doc := range options {
-			if doc == "ex" {
-				return r.dni.Validate(data_in)
-			} else {
-				return r.runValidate(data_in)
-			}
-		}
-
-		if r.dni_mode {
-			if !strings.Contains(data_in, `-`) {
-				return r.dni.Validate(data_in)
-			}
-		}
-
-		return r.runValidate(data_in)
-
+	if skip_validation {
+		return ""
 	}
 
-	return ""
+	const hidden_err = "campo invalido"
+
+	for _, doc := range options {
+		if doc == "ex" {
+			err = r.dni.Validate(data_in)
+			if err != "" && r.hide_typing {
+				return hidden_err
+			}
+			return
+		} else {
+			err = r.runValidate(data_in)
+			if err != "" && r.hide_typing {
+				return hidden_err
+			}
+			return
+		}
+	}
+
+	if r.dni_mode {
+		if !strings.Contains(data_in, `-`) {
+			err = r.dni.Validate(data_in)
+			if err != "" && r.hide_typing {
+				return hidden_err
+			}
+			return
+		}
+	}
+
+	err = r.runValidate(data_in)
+	if err != "" && r.hide_typing {
+		return hidden_err
+	}
+
+	return
+
 }
 
 // RUT validate formato "7863697-1"
