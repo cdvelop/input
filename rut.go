@@ -43,12 +43,17 @@ func Rut(options ...string) *model.Input {
 	if in.dni_mode {
 		in.name = "RutDni"
 		in.Title = `title="Documento Chileno (ch) o Extranjero (ex)"`
-		in.PlaceHolder = `placeholder="ej: (ch) 11222333-k  /  (ex) 1b2334"`
+		if !in.hide_typing {
+			in.PlaceHolder = `placeholder="ej: (ch) 11222333-k  /  (ex) 1b2334"`
+		}
+
 		// in.Pattern = `^[A-Za-z0-9]{9,15}$`
 		in.Maxlength = `maxlength="15"`
 	} else {
 		in.Title = `title="rut sin puntos y con guion ejem.: 11222333-4"`
-		in.PlaceHolder = `placeholder="ej: 11222333-4"`
+		if !in.hide_typing {
+			in.PlaceHolder = `placeholder="ej: 11222333-4"`
+		}
 		in.Maxlength = `maxlength="10"`
 
 		// in.Pattern = `^[0-9]+-[0-9kK]{1}$`

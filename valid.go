@@ -19,7 +19,8 @@ type Permitted struct {
 const tabulation = '	'
 const white_space = ' '
 const break_line = '\n'
-const carriage_return = '\r'
+
+// const carriage_return = '\r'
 
 func (p Permitted) Validate(text string) (err string) {
 
