@@ -3,8 +3,8 @@ module github.com/cdvelop/input
 go 1.20
 
 require (
-	github.com/cdvelop/model v0.0.107
-	github.com/cdvelop/timetools v0.0.33
+	github.com/cdvelop/model v0.0.108
+	github.com/cdvelop/timetools v0.0.34
 )
 
 require github.com/cdvelop/strings v0.0.9 // indirect
