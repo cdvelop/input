@@ -21,7 +21,7 @@ var (
 		skip_validation bool
 		expected        string
 	}{
-		"una credencial ok?":         {modelCheck.TestData.GoodTestData()[0], false, ""},
+		"una credencial ok?":         {modelCheck.GoodTestData()[0], false, ""},
 		"editor y admin ok?":         {"1,2", false, ""},
 		"todas las credenciales ok?": {`1,3`, false, ""},
 		"0 existe?":                  {"0", false, "valor 0 no corresponde al checkbox"},
@@ -35,7 +35,7 @@ var (
 func Test_check(t *testing.T) {
 	for prueba, data := range datacheck {
 		t.Run((prueba + " " + data.inputData), func(t *testing.T) {
-			err := modelCheck.Validate.ValidateField(data.inputData, data.skip_validation)
+			err := modelCheck.ValidateField(data.inputData, data.skip_validation)
 
 			if err != data.expected {
 				log.Println(prueba)
@@ -47,16 +47,16 @@ func Test_check(t *testing.T) {
 }
 
 func Test_TagCheck(t *testing.T) {
-	tag := modelCheck.Tag.BuildContainerView("1", "name", true)
+	tag := modelCheck.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}
 }
 
 func Test_GoodInputCheck(t *testing.T) {
-	for _, data := range modelCheck.TestData.GoodTestData() {
+	for _, data := range modelCheck.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelCheck.Validate.ValidateField(data, false); ok != "" {
+			if ok := modelCheck.ValidateField(data, false); ok != "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -64,9 +64,9 @@ func Test_GoodInputCheck(t *testing.T) {
 }
 
 func Test_WrongInputCheck(t *testing.T) {
-	for _, data := range modelCheck.TestData.WrongTestData() {
+	for _, data := range modelCheck.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelCheck.Validate.ValidateField(data, false); ok == "" {
+			if ok := modelCheck.ValidateField(data, false); ok == "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

@@ -1,11 +1,9 @@
 package input
 
-import "strings"
-
-// add ej: `min="` only send: "min" in delete
+// add ej: `min="` only send: "min" new delete
 func (a *attributes) add(option, delete string) string {
-	out := strings.Replace(option, delete+`="`, "", 1)
-	out = strings.TrimSuffix(out, `"`)
+	out := String().Replace(option, delete+`="`, "")
+	out = String().TrimSuffix(out, `"`)
 	return out
 }
 
@@ -14,48 +12,48 @@ func (a *attributes) Set(options ...string) {
 	for _, option := range options {
 		switch {
 
-		case strings.Contains(option, "min="):
+		case String().Contains(option, "min=") != 0:
 			a.Min = a.add(option, "min")
 
-		case strings.Contains(option, "max="):
+		case String().Contains(option, "max=") != 0:
 			a.Max = a.add(option, "max")
 
-		case strings.Contains(option, "maxlength="):
+		case String().Contains(option, "maxlength=") != 0:
 			a.Maxlength = option
 
-		case strings.Contains(option, "data-"):
+		case String().Contains(option, "data-") != 0:
 			a.DataSet = option
 
-		case strings.Contains(option, "class="):
+		case String().Contains(option, "class=") != 0:
 			a.Class = option
 
-		case strings.Contains(option, "placeholder="):
+		case String().Contains(option, "placeholder=") != 0:
 			a.PlaceHolder = option
 
-		case strings.Contains(option, "title="):
+		case String().Contains(option, "title=") != 0:
 			a.Title = option
 
-		case strings.Contains(option, "autocomplete="):
+		case String().Contains(option, "autocomplete=") != 0:
 			a.Autocomplete = option
 
-		case strings.Contains(option, "rows="):
+		case String().Contains(option, "rows=") != 0:
 			a.Rows = option
-		case strings.Contains(option, "cols="):
+		case String().Contains(option, "cols=") != 0:
 			a.Cols = option
 
-		case strings.Contains(option, "step="):
+		case String().Contains(option, "step=") != 0:
 			a.Step = option
 
-		case strings.Contains(option, "oninput="):
+		case String().Contains(option, "oninput=") != 0:
 			a.Oninput = option
 
-		case strings.Contains(option, "onkeyup="):
+		case String().Contains(option, "onkeyup=") != 0:
 			a.Onkeyup = option
 
-		case strings.Contains(option, "onchange="):
+		case String().Contains(option, "onchange=") != 0:
 			a.Onchange = option
 
-		case strings.Contains(option, "accept="):
+		case String().Contains(option, "accept=") != 0:
 			a.Accept = option
 
 		case option == "multiple":

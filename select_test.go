@@ -32,7 +32,7 @@ var (
 )
 
 func Test_TagSelect(t *testing.T) {
-	tag := modelSelect.Tag.BuildContainerView("1", "name", true)
+	tag := modelSelect.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}
@@ -41,7 +41,7 @@ func Test_TagSelect(t *testing.T) {
 func Test_Select(t *testing.T) {
 	for prueba, data := range dataSelect {
 		t.Run((prueba + " " + data.inputData), func(t *testing.T) {
-			err := modelSelect.Validate.ValidateField(data.inputData, data.skip_validation)
+			err := modelSelect.ValidateField(data.inputData, data.skip_validation)
 
 			if err != data.expected {
 				log.Println(prueba)
@@ -51,9 +51,9 @@ func Test_Select(t *testing.T) {
 	}
 }
 func Test_GoodInputSelect(t *testing.T) {
-	for _, data := range modelSelect.TestData.GoodTestData() {
+	for _, data := range modelSelect.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelSelect.Validate.ValidateField(data, false); ok != "" {
+			if ok := modelSelect.ValidateField(data, false); ok != "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -61,9 +61,9 @@ func Test_GoodInputSelect(t *testing.T) {
 }
 
 func Test_WrongInputSelect(t *testing.T) {
-	for _, data := range modelSelect.TestData.WrongTestData() {
+	for _, data := range modelSelect.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelSelect.Validate.ValidateField(data, false); ok == "" {
+			if ok := modelSelect.ValidateField(data, false); ok == "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

@@ -36,7 +36,7 @@ var (
 )
 
 func Test_TagTextOnly(t *testing.T) {
-	tag := modelTextOnly.Tag.BuildContainerView("1", "name", true)
+	tag := modelTextOnly.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}
@@ -45,7 +45,7 @@ func Test_TagTextOnly(t *testing.T) {
 func Test_InputTextOnly(t *testing.T) {
 	for prueba, data := range dataTextOnly {
 		t.Run((prueba + data.inputData), func(t *testing.T) {
-			err := modelTextOnly.Validate.ValidateField(data.inputData, data.skip_validation)
+			err := modelTextOnly.ValidateField(data.inputData, data.skip_validation)
 
 			if err != data.expected {
 				log.Println(prueba)
@@ -56,9 +56,9 @@ func Test_InputTextOnly(t *testing.T) {
 }
 
 func Test_GoodInputTextOnly(t *testing.T) {
-	for _, data := range modelTextOnly.TestData.GoodTestData() {
+	for _, data := range modelTextOnly.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelTextOnly.Validate.ValidateField(data, false); ok != "" {
+			if ok := modelTextOnly.ValidateField(data, false); ok != "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -66,9 +66,9 @@ func Test_GoodInputTextOnly(t *testing.T) {
 }
 
 func Test_WrongInputTextOnly(t *testing.T) {
-	for _, data := range modelTextOnly.TestData.WrongTestData() {
+	for _, data := range modelTextOnly.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelTextOnly.Validate.ValidateField(data, false); ok == "" {
+			if ok := modelTextOnly.ValidateField(data, false); ok == "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

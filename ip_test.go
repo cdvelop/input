@@ -24,7 +24,7 @@ var (
 func Test_InputIp(t *testing.T) {
 	for prueba, data := range dataIp {
 		t.Run((prueba + data.inputData), func(t *testing.T) {
-			err := input.Ip().Validate.ValidateField(data.inputData, data.skip_validation)
+			err := input.Ip().ValidateField(data.inputData, data.skip_validation)
 
 			if err != data.expected {
 				log.Println(prueba)
@@ -35,16 +35,16 @@ func Test_InputIp(t *testing.T) {
 }
 
 func Test_TagIp(t *testing.T) {
-	tag := input.Ip().Tag.BuildContainerView("1", "name", true)
+	tag := input.Ip().BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}
 }
 
 func Test_GoodInputIp(t *testing.T) {
-	for _, data := range input.Ip().TestData.GoodTestData() {
+	for _, data := range input.Ip().GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := input.Ip().Validate.ValidateField(data, false); ok != "" {
+			if ok := input.Ip().ValidateField(data, false); ok != "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -52,9 +52,9 @@ func Test_GoodInputIp(t *testing.T) {
 }
 
 func Test_WrongInputIp(t *testing.T) {
-	for _, data := range input.Ip().TestData.WrongTestData() {
+	for _, data := range input.Ip().WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := input.Ip().Validate.ValidateField(data, false); ok == "" {
+			if ok := input.Ip().ValidateField(data, false); ok == "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

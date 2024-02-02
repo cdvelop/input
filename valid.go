@@ -21,6 +21,7 @@ const white_space = ' '
 const break_line = '\n'
 
 // const carriage_return = '\r'
+const errorWhiteSpace = "espacios en blanco no permitidos"
 
 func (p Permitted) Validate(text string) (err string) {
 
@@ -76,7 +77,7 @@ func (p Permitted) Validate(text string) (err string) {
 			// fmt.Printf("Number [%c]\n", char)
 			if !valid_number[char] {
 				if char == ' ' {
-					err = "espacios en blanco no permitidos"
+					err = errorWhiteSpace
 				} else {
 					err = string(char) + " no es un numero"
 				}

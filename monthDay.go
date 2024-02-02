@@ -1,12 +1,8 @@
 package input
 
-import (
-	"github.com/cdvelop/model"
-)
-
 // options: "hidden": campo oculto para el usuario
-func MonthDay(options ...string) *model.Input {
-	in := monthDay{
+func MonthDay(options ...string) *monthDay {
+	new := &monthDay{
 		attributes: attributes{
 			// Pattern: `^[0-9]{2,2}$`,
 		},
@@ -17,14 +13,9 @@ func MonthDay(options ...string) *model.Input {
 			Maximum:    2,
 		},
 	}
-	in.Set(options...)
+	new.Set(options...)
 
-	return &model.Input{
-		InputName: "MonthDay",
-		Tag:       &in,
-		Validate:  &in,
-		TestData:  &in,
-	}
+	return new
 }
 
 // formato fecha: DD-MM
@@ -33,7 +24,11 @@ type monthDay struct {
 	Permitted
 }
 
-func (d monthDay) HtmlName() string {
+func (monthDay) InputName() string {
+	return "MonthDay"
+}
+
+func (monthDay) HtmlName() string {
 	return "text"
 }
 

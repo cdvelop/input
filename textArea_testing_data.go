@@ -1,23 +1,21 @@
 package input
 
-import "strings"
-
 // option prescription,
 func (t textArea) GoodTestData() (out []string) {
 	phrase := []string{"hola: esto, es. la - prueba 10",
 		"soy ñato o Ñato (aqui)", "son dos examenes", "costo total es de $23.230. pesos",
 	}
 
-	placeholder := strings.ToLower(t.PlaceHolder)
+	placeholder := String().ToLowerCase(t.PlaceHolder)
 
 	switch {
-	case strings.Contains(placeholder, "nombre y apellido"):
+	case String().Contains(placeholder, "nombre y apellido") != 0:
 		return phrase
 
-	case strings.Contains(placeholder, "diagnostic"):
+	case String().Contains(placeholder, "diagnostic") != 0:
 		return permutation(discomforts, prepositions, body_parts)
 
-	case strings.Contains(placeholder, "prescription"):
+	case String().Contains(placeholder, "prescription") != 0:
 		return permutation(prescription, prepositions, body_parts)
 
 	default:

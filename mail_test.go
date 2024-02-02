@@ -21,7 +21,7 @@ var (
 )
 
 func Test_TagMail(t *testing.T) {
-	tag := modelMail.Tag.BuildContainerView("1", "name", true)
+	tag := modelMail.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}
@@ -30,7 +30,7 @@ func Test_TagMail(t *testing.T) {
 func Test_InputMail(t *testing.T) {
 	for prueba, data := range dataMail {
 		t.Run((prueba + data.inputData), func(t *testing.T) {
-			err := modelMail.Validate.ValidateField(data.inputData, data.skip_validation)
+			err := modelMail.ValidateField(data.inputData, data.skip_validation)
 
 			if err != data.expected {
 				log.Println(prueba)
@@ -41,9 +41,9 @@ func Test_InputMail(t *testing.T) {
 }
 
 func Test_GoodInputMail(t *testing.T) {
-	for _, data := range modelMail.TestData.GoodTestData() {
+	for _, data := range modelMail.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelMail.Validate.ValidateField(data, false); ok != "" {
+			if ok := modelMail.ValidateField(data, false); ok != "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -51,9 +51,9 @@ func Test_GoodInputMail(t *testing.T) {
 }
 
 func Test_WrongInputMail(t *testing.T) {
-	for _, data := range modelMail.TestData.WrongTestData() {
+	for _, data := range modelMail.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelMail.Validate.ValidateField(data, false); ok == "" {
+			if ok := modelMail.ValidateField(data, false); ok == "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

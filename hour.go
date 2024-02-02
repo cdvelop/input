@@ -1,13 +1,9 @@
 package input
 
-import (
-	"github.com/cdvelop/model"
-)
-
 // formato 08:00
 // options: min="08:00", max="17:00"
-func Hour(options ...string) *model.Input {
-	in := hour{
+func Hour(options ...string) *hour {
+	new := &hour{
 		attributes: attributes{
 			Title: `title="formato hora: HH:MM"`,
 			// Pattern: `^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$`,
@@ -19,14 +15,9 @@ func Hour(options ...string) *model.Input {
 			Maximum:    5,
 		},
 	}
-	in.Set(options...)
+	new.Set(options...)
 
-	return &model.Input{
-		InputName: "Hour",
-		Tag:       &in,
-		Validate:  &in,
-		TestData:  &in,
-	}
+	return new
 }
 
 type hour struct {
@@ -34,7 +25,11 @@ type hour struct {
 	per Permitted
 }
 
-func (h hour) HtmlName() string {
+func (hour) InputName() string {
+	return "Hour"
+}
+
+func (hour) HtmlName() string {
 	return "time"
 }
 

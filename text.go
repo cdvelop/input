@@ -1,17 +1,11 @@
 package input
 
-import (
-	"strings"
-
-	"github.com/cdvelop/model"
-)
-
 // parámetros opcionales:
 // "hidden" si se vera oculto o no.
 // placeholder="Escriba Nombre y dos apellidos"
 // title="xxx"
-func Text(options ...string) *model.Input {
-	in := text{
+func Text(options ...string) *text {
+	new := &text{
 		attributes: attributes{
 			Title: `title="texto, punto,coma, paréntesis o números permitidos max. 100 caracteres"`,
 			// Pattern: `^[a-zA-ZÑñ]{2,100}[a-zA-ZÑñ0-9()., ]*$`,
@@ -25,20 +19,15 @@ func Text(options ...string) *model.Input {
 			Maximum:    100,
 		},
 	}
-	in.Set(options...)
+	new.Set(options...)
 
 	for _, opt := range options {
 		if opt == "hidden" {
-			in.hidden = true
+			new.hidden = true
 		}
 	}
 
-	return &model.Input{
-		InputName: "Text",
-		Tag:       &in,
-		Validate:  &in,
-		TestData:  &in,
-	}
+	return new
 }
 
 // texto,punto,coma, paréntesis o números permitidos
@@ -46,6 +35,10 @@ type text struct {
 	hidden bool
 	attributes
 	Permitted
+}
+
+func (text) InputName() string {
+	return "Text"
 }
 
 func (t text) HtmlName() string {
@@ -68,16 +61,16 @@ func (t text) GoodTestData() (out []string) {
 
 	phrase := []string{"Dr. Maria Jose Diaz Cadiz", "son 4 (4 bidones)", "pc dental (1)", "equipo (4)"}
 
-	placeholder := strings.ToLower(t.PlaceHolder)
+	placeholder := String().ToLowerCase(t.PlaceHolder)
 
 	switch {
-	case strings.Contains(placeholder, "nombre y apellido"):
+	case String().Contains(placeholder, "nombre y apellido") != 0:
 
 		return permutation(first_name, last_name)
-	case strings.Contains(placeholder, "nombre"):
+	case String().Contains(placeholder, "nombre") != 0:
 		return first_name
 
-	case strings.Contains(placeholder, "apellido"):
+	case String().Contains(placeholder, "apellido") != 0:
 		return last_name
 
 	default:

@@ -27,7 +27,7 @@ var (
 )
 
 func Test_TagTextNum(t *testing.T) {
-	tag := modelTextNum.Tag.BuildContainerView("1", "name", true)
+	tag := modelTextNum.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}
@@ -36,7 +36,7 @@ func Test_TagTextNum(t *testing.T) {
 func Test_InputTextNum(t *testing.T) {
 	for prueba, data := range dataTextNum {
 		t.Run((prueba + data.inputData), func(t *testing.T) {
-			err := modelTextNum.Validate.ValidateField(data.inputData, data.skip_validation)
+			err := modelTextNum.ValidateField(data.inputData, data.skip_validation)
 
 			if err != data.expected {
 				log.Println(prueba)
@@ -47,9 +47,9 @@ func Test_InputTextNum(t *testing.T) {
 }
 
 func Test_GoodInputTextNum(t *testing.T) {
-	for _, data := range modelTextNum.TestData.GoodTestData() {
+	for _, data := range modelTextNum.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelTextNum.Validate.ValidateField(data, false); ok != "" {
+			if ok := modelTextNum.ValidateField(data, false); ok != "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -57,9 +57,9 @@ func Test_GoodInputTextNum(t *testing.T) {
 }
 
 func Test_WrongInputTextNum(t *testing.T) {
-	for _, data := range modelTextNum.TestData.WrongTestData() {
+	for _, data := range modelTextNum.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelTextNum.Validate.ValidateField(data, false); ok == "" {
+			if ok := modelTextNum.ValidateField(data, false); ok == "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

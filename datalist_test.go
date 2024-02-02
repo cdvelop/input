@@ -34,7 +34,7 @@ var (
 func Test_DataList(t *testing.T) {
 	for prueba, data := range dataList {
 		t.Run((prueba + " " + data.inputData), func(t *testing.T) {
-			err := modelDataList.Validate.ValidateField(data.inputData, data.skip_validation)
+			err := modelDataList.ValidateField(data.inputData, data.skip_validation)
 
 			if err != data.expected {
 				log.Println(prueba)
@@ -46,16 +46,16 @@ func Test_DataList(t *testing.T) {
 }
 
 func Test_TagDataList(t *testing.T) {
-	tag := modelDataList.Tag.BuildContainerView("1", "name", true)
+	tag := modelDataList.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}
 }
 
 func Test_GoodInputDataList(t *testing.T) {
-	for _, data := range modelDataList.TestData.GoodTestData() {
+	for _, data := range modelDataList.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelDataList.Validate.ValidateField(data, false); ok != "" {
+			if ok := modelDataList.ValidateField(data, false); ok != "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -63,9 +63,9 @@ func Test_GoodInputDataList(t *testing.T) {
 }
 
 func Test_WrongInputDataList(t *testing.T) {
-	for _, data := range modelDataList.TestData.WrongTestData() {
+	for _, data := range modelDataList.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelDataList.Validate.ValidateField(data, false); ok == "" {
+			if ok := modelDataList.ValidateField(data, false); ok == "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

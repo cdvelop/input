@@ -1,38 +1,25 @@
 package input
 
-import (
-	"strings"
-
-	"github.com/cdvelop/model"
-)
-
 // name ej: TypeUser
-// SourceData() map[string]string
-// options ej: "internal" = only internal contend
-func CheckBox(name string, data model.SourceData, options ...string) *model.Input {
-	in := check{
+// sourceData() map[string]string
+func CheckBox(name string, data sourceData) *check {
+	new := &check{
+		name: name,
 		Data: data,
 	}
 
-	for _, opt := range options {
-		if opt == "internal" {
-			in.only_internal_contend = true
-		}
-	}
-
-	return &model.Input{
-		InputName: name,
-		Tag:       &in,
-		Validate:  &in,
-		TestData:  &in,
-	}
+	return new
 }
 
 // check Box id y valor
 type check struct {
 	name                  string
-	Data                  model.SourceData
+	Data                  sourceData
 	only_internal_contend bool
+}
+
+func (c check) InputName() string {
+	return c.name
 }
 
 func (check) HtmlName() string {
@@ -42,7 +29,7 @@ func (check) HtmlName() string {
 // validación con datos de entrada
 func (c check) ValidateField(data_in string, skip_validation bool, options ...string) (err string) {
 	if !skip_validation {
-		dataInArray := strings.Split(data_in, ",")
+		dataInArray := String().Split(data_in, ",")
 		for _, idkeyIn := range dataInArray {
 			if _, exists := (c.Data.SourceData())[idkeyIn]; !exists {
 

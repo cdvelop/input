@@ -1,23 +1,20 @@
 package input
 
-import "github.com/cdvelop/model"
+//value = valor a mostrar
+func Info(value string) *info {
 
-func Info(value string) *model.Input {
-	in := info{
+	return &info{
 		Value: value,
-	}
-
-	return &model.Input{
-		InputName: "Info",
-		Tag:       in,
-		Validate:  nil,
-		TestData:  nil,
 	}
 }
 
 // input de carácter informativo
 type info struct {
 	Value string //valor a mostrar
+}
+
+func (info) InputName() string {
+	return "Info"
 }
 
 func (i info) HtmlName() string {

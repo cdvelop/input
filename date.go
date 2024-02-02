@@ -1,29 +1,22 @@
 package input
 
-import (
-	"github.com/cdvelop/model"
-	"github.com/cdvelop/timetools"
-)
+func Date() *date {
 
-func Date() *model.Input {
-	in := date{
+	return &date{
 		attributes: attributes{
 			Title: `title="formato fecha: DD-MM-YYYY"`,
 			// Pattern: `[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])`,
 		},
-	}
-
-	return &model.Input{
-		InputName: "Date",
-		Tag:       &in,
-		Validate:  &in,
-		TestData:  &in,
 	}
 }
 
 // formato fecha: DD-MM-YYYY
 type date struct {
 	attributes
+}
+
+func (date) InputName() string {
+	return "Date"
 }
 
 func (d date) HtmlName() string {
@@ -37,7 +30,7 @@ func (d date) BuildContainerView(id, field_name string, allow_skip_completed boo
 // validación con datos de entrada
 func (d date) ValidateField(data_in string, skip_validation bool, options ...string) (err string) {
 	if !skip_validation {
-		return timetools.CheckDateExists(data_in)
+		return d.CheckDateExists(data_in)
 	}
 	return ""
 }

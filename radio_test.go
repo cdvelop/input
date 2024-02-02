@@ -34,7 +34,7 @@ func (radio) SourceData() map[string]string {
 }
 
 func Test_TagRadio(t *testing.T) {
-	tag := modelRadio.Tag.BuildContainerView("1", "name", true)
+	tag := modelRadio.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}
@@ -43,7 +43,7 @@ func Test_TagRadio(t *testing.T) {
 func Test_RadioButton(t *testing.T) {
 	for prueba, data := range TestData {
 		t.Run((prueba), func(t *testing.T) {
-			err := modelRadio.Validate.ValidateField(data.inputData, data.skip_validation)
+			err := modelRadio.ValidateField(data.inputData, data.skip_validation)
 
 			if err != data.expected {
 				log.Println(prueba)
@@ -74,7 +74,7 @@ func Test_RadioGender(t *testing.T) {
 
 	for prueba, data := range genderData {
 		t.Run((prueba), func(t *testing.T) {
-			err := modelGenderRadio.Validate.ValidateField(data.inputData, data.skip_validation)
+			err := modelGenderRadio.ValidateField(data.inputData, data.skip_validation)
 
 			if err != data.expected {
 				log.Println(prueba)
@@ -85,9 +85,9 @@ func Test_RadioGender(t *testing.T) {
 }
 
 func Test_GoodInputRadio(t *testing.T) {
-	for _, data := range modelRadio.TestData.GoodTestData() {
+	for _, data := range modelRadio.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelRadio.Validate.ValidateField(data, false); ok != "" {
+			if ok := modelRadio.ValidateField(data, false); ok != "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -95,9 +95,9 @@ func Test_GoodInputRadio(t *testing.T) {
 }
 
 func Test_WrongInputRadio(t *testing.T) {
-	for _, data := range modelRadio.TestData.WrongTestData() {
+	for _, data := range modelRadio.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelRadio.Validate.ValidateField(data, false); ok == "" {
+			if ok := modelRadio.ValidateField(data, false); ok == "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

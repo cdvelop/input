@@ -1,11 +1,7 @@
 package input
 
-import (
-	"github.com/cdvelop/model"
-)
-
-func TextNum() *model.Input {
-	in := textNum{
+func TextNum() *textNum {
+	new := &textNum{
 		attributes: attributes{
 			// Pattern: `^[A-Za-z0-9_]{5,20}$`,
 			Title: `title="texto, numero y guion bajo 5 a 20 caracteres"`,
@@ -19,18 +15,17 @@ func TextNum() *model.Input {
 		},
 	}
 
-	return &model.Input{
-		InputName: "TextNum",
-		Tag:       &in,
-		Validate:  &in,
-		TestData:  &in,
-	}
+	return new
 }
 
 // texto, numero y guion bajo 5 a 15 caracteres
 type textNum struct {
 	attributes
 	Permitted
+}
+
+func (textNum) InputName() string {
+	return "TextNum"
 }
 
 func (t textNum) HtmlName() string {

@@ -2,16 +2,13 @@ package input
 
 import (
 	"strconv"
-
-	"github.com/cdvelop/model"
 )
 
 // options:
-// pattern="`^[a-zA-Z 0-9\:\.\,\+\-]{0,30}$`"
 // title="permitido letras números - , :"
 // cols="2" default 1
 // rows="8" default 3
-func TextArea(options ...string) *model.Input {
+func TextArea(options ...string) *textArea {
 	permitted := []rune{'%', '$', '+', '#', '-', '.', ',', ':', '(', ')'}
 	var min = 5
 	var max = 1000
@@ -24,7 +21,7 @@ func TextArea(options ...string) *model.Input {
 
 	info += ` permitidos min ` + strconv.Itoa(min) + ` max ` + strconv.Itoa(max) + ` caracteres`
 
-	in := textArea{
+	new := &textArea{
 		attributes: attributes{
 			Rows:  `rows="3"`,
 			Cols:  `cols="1"`,
@@ -46,23 +43,9 @@ func TextArea(options ...string) *model.Input {
 			Maximum:     max,
 		},
 	}
-	in.Set(options...)
+	new.Set(options...)
 
-	return &model.Input{
-		InputName: "TextArea",
-		Minimum:   min,
-		Maximum:   max,
-		Tag:       &in,
-		Validate:  &in,
-		ResetParameters: &model.ResetParameters{
-			CallJsOptions: model.CallJsOptions{
-				NameJsFunc: "ResetTextArea",
-				Enable:     true,
-				Params:     map[string]any{},
-			},
-		},
-		TestData: &in,
-	}
+	return new
 }
 
 type textArea struct {
@@ -70,9 +53,21 @@ type textArea struct {
 	Permitted
 }
 
-func (t textArea) ResetInputView() (err string) {
+func (textArea) InputName() string {
+	return "TextArea"
+}
 
-	return
+func (t textArea) ResetParameters() any {
+
+	return &struct {
+		ResetJsFuncName    string
+		Enable             bool
+		NotSendQueryObject bool
+		Params             map[string]any
+	}{
+		ResetJsFuncName: "ResetTextArea",
+		Enable:          true,
+	}
 }
 
 func (t textArea) HtmlName() string {

@@ -1,9 +1,5 @@
 package input
 
-import (
-	"github.com/cdvelop/model"
-)
-
 type rut struct {
 	name        string
 	hide_typing bool
@@ -15,8 +11,8 @@ type rut struct {
 // parámetro opcionales:
 // hide-typing: ocultar información  al escribir
 // dni-mode: acepta documentos extranjeros
-func Rut(options ...string) *model.Input {
-	in := rut{
+func Rut(options ...string) *rut {
+	new := rut{
 		name: "Rut",
 		attributes: attributes{
 			Autocomplete: `autocomplete="off"`,
@@ -34,37 +30,36 @@ func Rut(options ...string) *model.Input {
 	for _, opt := range options {
 		switch opt {
 		case "hide-typing":
-			in.hide_typing = true
+			new.hide_typing = true
 		case "dni-mode":
-			in.dni_mode = true
+			new.dni_mode = true
 		}
 	}
 
-	if in.dni_mode {
-		in.name = "RutDni"
-		in.Title = `title="Documento Chileno (ch) o Extranjero (ex)"`
-		if !in.hide_typing {
-			in.PlaceHolder = `placeholder="ej: (ch) 11222333-k  /  (ex) 1b2334"`
+	if new.dni_mode {
+		new.name = "RutDni"
+		new.Title = `title="Documento Chileno (ch) o Extranjero (ex)"`
+		if !new.hide_typing {
+			new.PlaceHolder = `placeholder="ej: (ch) 11222333-k  /  (ex) 1b2334"`
 		}
 
-		// in.Pattern = `^[A-Za-z0-9]{9,15}$`
-		in.Maxlength = `maxlength="15"`
+		// new.Pattern = `^[A-Za-z0-9]{9,15}$`
+		new.Maxlength = `maxlength="15"`
 	} else {
-		in.Title = `title="rut sin puntos y con guion ejem.: 11222333-4"`
-		if !in.hide_typing {
-			in.PlaceHolder = `placeholder="ej: 11222333-4"`
+		new.Title = `title="rut sin puntos y con guion ejem.: 11222333-4"`
+		if !new.hide_typing {
+			new.PlaceHolder = `placeholder="ej: 11222333-4"`
 		}
-		in.Maxlength = `maxlength="10"`
+		new.Maxlength = `maxlength="10"`
 
-		// in.Pattern = `^[0-9]+-[0-9kK]{1}$`
+		// new.Pattern = `^[0-9]+-[0-9kK]{1}$`
 	}
 
-	return &model.Input{
-		InputName: in.name,
-		Tag:       &in,
-		Validate:  &in,
-		TestData:  &in,
-	}
+	return &new
+}
+
+func (r rut) InputName() string {
+	return r.name
 }
 
 func (r rut) HtmlName() string {

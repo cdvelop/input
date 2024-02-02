@@ -34,7 +34,7 @@ var (
 func Test_InputNumber(t *testing.T) {
 	for prueba, data := range dataNumber {
 		t.Run((prueba), func(t *testing.T) {
-			err := modelNumber.Validate.ValidateField(data.inputData, data.skip_validation)
+			err := modelNumber.ValidateField(data.inputData, data.skip_validation)
 
 			if err != data.expected {
 				log.Println(prueba)
@@ -45,7 +45,7 @@ func Test_InputNumber(t *testing.T) {
 }
 
 func Test_TagNumber(t *testing.T) {
-	tag := modelNumber.Tag.BuildContainerView("1", "name", true)
+	tag := modelNumber.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}
@@ -94,9 +94,9 @@ func Test_GoodInputPhoneNumber(t *testing.T) {
 }
 
 func Test_GoodInputNumber(t *testing.T) {
-	for _, data := range modelNumber.TestData.GoodTestData() {
+	for _, data := range modelNumber.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelNumber.Validate.ValidateField(data, false); ok != "" {
+			if ok := modelNumber.ValidateField(data, false); ok != "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -104,9 +104,9 @@ func Test_GoodInputNumber(t *testing.T) {
 }
 
 func Test_WrongInputNumber(t *testing.T) {
-	for _, data := range modelNumber.TestData.WrongTestData() {
+	for _, data := range modelNumber.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelNumber.Validate.ValidateField(data, false); ok == "" {
+			if ok := modelNumber.ValidateField(data, false); ok == "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

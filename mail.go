@@ -1,13 +1,7 @@
 package input
 
-import (
-	"strings"
-
-	"github.com/cdvelop/model"
-)
-
-func Mail() *model.Input {
-	in := mail{
+func Mail() *mail {
+	new := &mail{
 		attributes: attributes{
 			PlaceHolder: `placeHolder="ej: mi.correo@mail.com"`,
 			// Pattern:     `[a-zA-Z0-9!#$%&'*_+-]([\.]?[a-zA-Z0-9!#$%&'*_+-])+@[a-zA-Z0-9]([^@&%$\/()=?¿!.,:;]|\d)+[a-zA-Z0-9][\.][a-zA-Z]{2,4}([\.][a-zA-Z]{2})?`,
@@ -21,12 +15,7 @@ func Mail() *model.Input {
 		},
 	}
 
-	return &model.Input{
-		InputName: "Mail",
-		Tag:       &in,
-		Validate:  &in,
-		TestData:  &in,
-	}
+	return new
 }
 
 type mail struct {
@@ -38,6 +27,10 @@ func (m mail) BuildContainerView(id, field_name string, allow_skip_completed boo
 	return m.BuildHtmlTag(m.HtmlName(), "Mail", id, field_name, allow_skip_completed)
 }
 
+func (mail) InputName() string {
+	return "Mail"
+}
+
 func (mail) HtmlName() string {
 	return "mail"
 }
@@ -46,11 +39,11 @@ func (mail) HtmlName() string {
 func (m mail) ValidateField(data_in string, skip_validation bool, options ...string) (err string) {
 	if !skip_validation {
 
-		if strings.Contains(data_in, "example") {
+		if String().Contains(data_in, "example") != 0 {
 			return data_in + " es un correo de ejemplo"
 		}
 
-		parts := strings.Split(data_in, "@")
+		parts := String().Split(data_in, "@")
 		if len(parts) != 2 {
 			return "error en @ del correo " + data_in
 		}

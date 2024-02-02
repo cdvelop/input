@@ -1,14 +1,8 @@
 package input
 
-import (
-	"strings"
-
-	"github.com/cdvelop/model"
-)
-
 // dirección ip valida campos separados por puntos
-func Ip() *model.Input {
-	in := ip{
+func Ip() *ip {
+	new := &ip{
 		attributes: attributes{
 			Title: `title="dirección ip valida campos separados por puntos ej 192.168.0.8"`,
 			// Pattern: `^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$`,
@@ -22,17 +16,16 @@ func Ip() *model.Input {
 		},
 	}
 
-	return &model.Input{
-		InputName: "Ip",
-		Tag:       &in,
-		Validate:  &in,
-		TestData:  &in,
-	}
+	return new
 }
 
 type ip struct {
 	attributes
 	per Permitted
+}
+
+func (ip) InputName() string {
+	return "Ip"
 }
 
 func (i ip) HtmlName() string {
@@ -54,9 +47,9 @@ func (i ip) ValidateField(data_in string, skip_validation bool, options ...strin
 
 		var ipV string
 
-		if strings.Contains(data_in, ":") { //IPv6
+		if String().Contains(data_in, ":") != 0 { //IPv6
 			ipV = ":"
-		} else if strings.Contains(data_in, ".") { //IPv4
+		} else if String().Contains(data_in, ".") != 0 { //IPv4
 			ipV = "."
 		}
 
@@ -64,7 +57,7 @@ func (i ip) ValidateField(data_in string, skip_validation bool, options ...strin
 			return "version IPv4 o 6 no encontrada"
 		}
 
-		part := strings.Split(data_in, ipV)
+		part := String().Split(data_in, ipV)
 
 		if ipV == "." && len(part) != 4 {
 			return "formato IPv4 no valida"

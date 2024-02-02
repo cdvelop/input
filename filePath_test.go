@@ -1,32 +1,30 @@
-package input_test
+package input
 
 import (
 	"log"
 	"testing"
-
-	"github.com/cdvelop/input"
 )
 
 var (
 	filePathTestData = map[string]struct {
-		inputData       string
-		skip_validation bool
-		expected        string
+		inputData string
+		expected  string
 	}{
-		// "dirección correcta": {".\\files\\1234\\", false, ""},
-		// "dirección correcta sin punto inicio?": {"\\files\\1234\\", false, "false"},
-		// "ruta relativa con directorios":                    {".\\files\\1234\\", false, ""},
-		// "tres rutas separadas por comas":                   {`.\\files\\1234\\,.\\files\\5678\\,.\\images\\ok\\`, false, "false"},
-		// "ruta relativa sin punto de inicio":                {"\\files\\1234\\", false, "false"},
-		// "ruta absoluta en Linux":                           {"/home/user/files/", false, ""},
-		// "ruta absoluta sin punto de inicio":                {"/files/1234/", false, ""},
-		// "ruta relativa sin directorios ok?": {".\\", false, "false"},
-		// "ruta relativa sin barra final":                    {"./files/1234", false, ""},
-		// "ruta relativa con barra final":                    {"./files/1234/", false, ""},
-		// "ruta con nombre de archivo":                       {".\\files\\1234\\archivo.txt", false, ""},
-		// "ruta con nombres de directorio con guiones bajos": {".\\mi_directorio\\sub_directorio\\", false, ""},
-		// "un numero es una ruta valida?":                    {"5", false, ""},
-		// "una sola palabra es una ruta valida?":             {"ruta", false, ""},
+		// "tres rutas separadas por comas":       {`.\\files\\1234\\,.\\files\\5678\\,.\\images\\ok\\`, "false"},
+		"dirección correcta":                               {".\\files\\1234\\", ""},
+		"dirección correcta sin punto inicio?":             {"\\files\\1234\\", errPath},
+		"ruta relativa con directorios":                    {".\\files\\1234\\", ""},
+		"ruta relativa sin punto de inicio":                {"\\files\\1234\\", errPath},
+		"ruta absoluta en Linux":                           {"/home/user/files/", ""},
+		"ruta absoluta sin punto de inicio":                {"/files/1234/", ""},
+		"ruta relativa sin directorios ok?":                {".\\", ""},
+		"ruta relativa sin barra final":                    {"./files/1234", ""},
+		"ruta relativa con barra final":                    {"./files/1234/", ""},
+		"ruta con nombre de archivo":                       {".\\files\\1234\\archivo.txt", ""},
+		"ruta con nombres de directorio con guiones bajos": {".\\mi_directorio\\sub_directorio\\", ""},
+		"un numero es una ruta valida?":                    {"5", ""},
+		"una sola palabra es una ruta valida?":             {"ruta", ""},
+		"espacios en blanco permitidos?":                   {".\\ruta con espacio en blanco\\", errorWhiteSpace},
 	}
 )
 
@@ -34,7 +32,7 @@ func Test_Check(t *testing.T) {
 
 	for prueba, data := range filePathTestData {
 		t.Run((prueba + " " + data.inputData), func(t *testing.T) {
-			err := input.FilePath().Validate.ValidateField(data.inputData, data.skip_validation)
+			err := FilePath().ValidateField(data.inputData, false)
 
 			if err != data.expected {
 				log.Println(prueba)
@@ -45,7 +43,7 @@ func Test_Check(t *testing.T) {
 }
 
 // func Test_TagFilePath(t *testing.T) {
-// 	tag := input.FilePath().Tag.BuildContainerView("1", "name", true)
+// 	tag := input.FilePath().BuildContainerView("1", "name", true)
 // 	if tag == "" {
 // 		log.Fatalln("ERROR NO TAG RENDERING ")
 // 	}
@@ -54,7 +52,7 @@ func Test_Check(t *testing.T) {
 // func Test_GoodInputFilePath(t *testing.T) {
 // 	for _, data := range input.FilePath().GoodTestData() {
 // 		t.Run((data), func(t *testing.T) {
-// 			if ok := input.FilePath().Validate.ValidateField(data, false); ok != "" {
+// 			if ok := input.FilePath().ValidateField(data, false); ok != "" {
 // 				log.Fatalf("resultado [%v] [%v]", ok, data)
 // 			}
 // 		})
@@ -64,7 +62,7 @@ func Test_Check(t *testing.T) {
 // func Test_WrongInputFilePath(t *testing.T) {
 // 	for _, data := range input.FilePath().WrongTestData() {
 // 		t.Run((data), func(t *testing.T) {
-// 			if ok := input.FilePath().Validate.ValidateField(data, false); ok == "" {
+// 			if ok := input.FilePath().ValidateField(data, false); ok == "" {
 // 				log.Fatalf("resultado [%v] [%v]", ok, data)
 // 			}
 // 		})

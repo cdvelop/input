@@ -30,7 +30,7 @@ var (
 func Test_InputDate(t *testing.T) {
 	for prueba, data := range dataDate {
 		t.Run((prueba + data.inputData), func(t *testing.T) {
-			err := modelDate.Validate.ValidateField(data.inputData, false)
+			err := modelDate.ValidateField(data.inputData, false)
 
 			if err != data.expected {
 				log.Println(prueba)
@@ -42,16 +42,16 @@ func Test_InputDate(t *testing.T) {
 }
 
 func Test_TagDate(t *testing.T) {
-	tag := modelDate.Tag.BuildContainerView("1", "name", true)
+	tag := modelDate.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}
 }
 
 func Test_GoodInputDate(t *testing.T) {
-	for _, data := range modelDate.TestData.GoodTestData() {
+	for _, data := range modelDate.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelDate.Validate.ValidateField(data, false); ok != "" {
+			if ok := modelDate.ValidateField(data, false); ok != "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -59,9 +59,9 @@ func Test_GoodInputDate(t *testing.T) {
 }
 
 func Test_WrongInputDate(t *testing.T) {
-	for _, data := range modelDate.TestData.WrongTestData() {
+	for _, data := range modelDate.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelDate.Validate.ValidateField(data, false); ok == "" {
+			if ok := modelDate.ValidateField(data, false); ok == "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

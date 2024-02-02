@@ -1,13 +1,9 @@
 package input
 
-import (
-	"github.com/cdvelop/model"
-)
-
 // parámetros opcionales:
 // "hidden" si se vera oculto o no.
-func TextOnly(options ...string) *model.Input {
-	in := textOnly{
+func TextOnly(options ...string) *textOnly {
+	new := &textOnly{
 		attributes: attributes{
 			PlaceHolder: `PlaceHolder="Solo texto permitido min 3 max 50 caracteres"`,
 		},
@@ -20,22 +16,21 @@ func TextOnly(options ...string) *model.Input {
 	}
 	for _, opt := range options {
 		if opt == "hidden" {
-			in.hidden = true
+			new.hidden = true
 		}
 	}
 
-	return &model.Input{
-		InputName: "TextOnly",
-		Tag:       &in,
-		Validate:  &in,
-		TestData:  &in,
-	}
+	return new
 }
 
 type textOnly struct {
 	attributes
 	hidden bool
 	Permitted
+}
+
+func (textOnly) InputName() string {
+	return "TextOnly"
 }
 
 func (t textOnly) HtmlName() string {

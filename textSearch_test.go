@@ -26,7 +26,7 @@ var (
 )
 
 func Test_TagTextSearch(t *testing.T) {
-	tag := modelTextSearch.Tag.BuildContainerView("1", "name", true)
+	tag := modelTextSearch.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}
@@ -35,7 +35,7 @@ func Test_TagTextSearch(t *testing.T) {
 func Test_InputTextSearch(t *testing.T) {
 	for prueba, data := range dataTextSearch {
 		t.Run((prueba + data.inputData), func(t *testing.T) {
-			err := modelTextSearch.Validate.ValidateField(data.inputData, data.skip_validation)
+			err := modelTextSearch.ValidateField(data.inputData, data.skip_validation)
 
 			if err != data.expected {
 				log.Println(prueba)
@@ -46,9 +46,9 @@ func Test_InputTextSearch(t *testing.T) {
 }
 
 func Test_GoodInputTextSearch(t *testing.T) {
-	for _, data := range modelTextSearch.TestData.GoodTestData() {
+	for _, data := range modelTextSearch.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelTextSearch.Validate.ValidateField(data, false); ok != "" {
+			if ok := modelTextSearch.ValidateField(data, false); ok != "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -56,9 +56,9 @@ func Test_GoodInputTextSearch(t *testing.T) {
 }
 
 func Test_WrongInputTextSearch(t *testing.T) {
-	for _, data := range modelTextSearch.TestData.WrongTestData() {
+	for _, data := range modelTextSearch.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelTextSearch.Validate.ValidateField(data, false); ok == "" {
+			if ok := modelTextSearch.ValidateField(data, false); ok == "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

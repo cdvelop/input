@@ -1,11 +1,9 @@
 package input
 
-import "github.com/cdvelop/model"
-
 type gender struct{}
 
 // ej: {"f": "Femenino", "m": "Masculino"}.
-func RadioGender() *model.Input {
+func RadioGender() *radio {
 	return Radio("RadioGender", gender{})
 }
 

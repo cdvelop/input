@@ -2,8 +2,6 @@ package input
 
 import (
 	"strconv"
-
-	"github.com/cdvelop/model"
 )
 
 // options:
@@ -12,8 +10,8 @@ import (
 // max máximo de caracteres permitidos ej: 20 50 ... max default 50
 // Pattern_start="^[A-Za-zÑñ 0-9:.-]{"
 // Pattern_end="}$"
-func Password(options ...string) *model.Input {
-	in := password{
+func Password(options ...string) *password {
+	new := &password{
 		attributes: attributes{},
 		Permitted: Permitted{
 			Letters:    true,
@@ -24,22 +22,17 @@ func Password(options ...string) *model.Input {
 			Maximum:    50,
 		},
 	}
-	in.Set(options...)
+	new.Set(options...)
 
-	if in.Min != "" {
-		in.Minimum, _ = strconv.Atoi(in.Min)
+	if new.Min != "" {
+		new.Minimum, _ = strconv.Atoi(new.Min)
 	}
 
-	if in.Max != "" {
-		in.Maximum, _ = strconv.Atoi(in.Max)
+	if new.Max != "" {
+		new.Maximum, _ = strconv.Atoi(new.Max)
 	}
 
-	return &model.Input{
-		InputName: "Password",
-		Tag:       &in,
-		Validate:  &in,
-		TestData:  &in,
-	}
+	return new
 }
 
 // Solo letras (en cualquier caso), números, guiones, guiones bajos y puntos.
@@ -47,6 +40,10 @@ func Password(options ...string) *model.Input {
 type password struct {
 	attributes
 	Permitted
+}
+
+func (password) InputName() string {
+	return "Password"
 }
 
 func (p password) HtmlName() string {

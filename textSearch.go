@@ -1,11 +1,8 @@
 package input
 
-import (
-	"github.com/cdvelop/model"
-)
+func TextSearch() *textSearch {
 
-func TextSearch() *model.Input {
-	in := textSearch{
+	return &textSearch{
 		attributes: attributes{
 			// Pattern: `^[a-zA-ZÑñ0-9- ]{2,20}$`,
 			Title: `title="letras números y guion - permitido. max 20 caracteres"`,
@@ -19,18 +16,15 @@ func TextSearch() *model.Input {
 			Maximum:    20,
 		},
 	}
-
-	return &model.Input{
-		InputName: "TextSearch",
-		Tag:       &in,
-		Validate:  &in,
-		TestData:  &in,
-	}
 }
 
 type textSearch struct {
 	attributes
 	Permitted
+}
+
+func (textSearch) InputName() string {
+	return "TextSearch"
 }
 
 func (t textSearch) HtmlName() string {

@@ -1,26 +1,22 @@
 package input
 
-import "github.com/cdvelop/model"
-
 // name ej: OptionUser
 // SourceData() map[string]string
-func SelecTag(name string, data model.SourceData) *model.Input {
-	in := selecTag{
+func SelecTag(name string, data sourceData) *selecTag {
+
+	return &selecTag{
 		name: name,
 		Data: data,
-	}
-
-	return &model.Input{
-		InputName: name,
-		Tag:       &in,
-		Validate:  &in,
-		TestData:  &in,
 	}
 }
 
 type selecTag struct {
 	name string
-	Data model.SourceData
+	Data sourceData
+}
+
+func (s selecTag) InputName() string {
+	return s.name
 }
 
 func (s selecTag) HtmlName() string {

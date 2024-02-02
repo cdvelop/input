@@ -2,7 +2,6 @@ package input
 
 import (
 	"strconv"
-	"strings"
 )
 
 // validación con datos de entrada
@@ -30,7 +29,7 @@ func (r rut) ValidateField(data_in string, skip_validation bool, options ...stri
 	}
 
 	if r.dni_mode {
-		if !strings.Contains(data_in, `-`) {
+		if String().Contains(data_in, `-`) == 0 {
 			err = r.dni.Validate(data_in)
 			if err != "" && r.hide_typing {
 				return hidden_err
@@ -48,6 +47,8 @@ func (r rut) ValidateField(data_in string, skip_validation bool, options ...stri
 
 }
 
+const errCeroRut = "primer dígito no puede ser 0"
+
 // RUT validate formato "7863697-1"
 func (r rut) runValidate(rin string) (err string) {
 	data, onlyRun, err := RunData(rin)
@@ -57,14 +58,14 @@ func (r rut) runValidate(rin string) (err string) {
 	// log.Printf("DATA: [%v] RUN:[%v] TAMAÑO DATA: [%v]\n", data, onlyRun, len(data))
 
 	if data[0][0:1] == "0" {
-		return "primer dígito no puede ser 0"
+		return errCeroRut
 	}
 
 	dv := DvRut(onlyRun)
 
 	// log.Printf("DÍGITO: %v DV DATA: %v\n", dv, strings.ToLower(data[1]))
 
-	if dv != strings.ToLower(data[1]) {
+	if dv != String().ToLowerCase(data[1]) {
 		return "dígito verificador " + data[1] + " inválido"
 
 	}
@@ -94,17 +95,20 @@ func DvRut(rut int) string {
 	}
 }
 
+const errRut01 = "datos ingresados insuficientes"
+const errGuionRut = "guion (-) dígito verificador inexistente"
+
 func RunData(runIn string) (data []string, onlyRun int, err string) {
 
-	if runIn == "" || runIn == " " {
-		return nil, 0, "rut sin información"
+	if len(runIn) < 3 {
+		return nil, 0, errRut01
 	}
 
-	if !strings.Contains(runIn, "-") {
-		return nil, 0, "rut incorrecto"
+	if String().Contains(runIn, "-") == 0 {
+		return nil, 0, errGuionRut
 	}
 
-	data = strings.Split(string(runIn), "-")
+	data = String().Split(string(runIn), "-")
 	// fmt.Println("TAMAÑO", len(data), "RUT DATA -:", data)
 	var e error
 	onlyRun, e = strconv.Atoi(data[0])

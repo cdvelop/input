@@ -28,7 +28,7 @@ var (
 func Test_InputHour(t *testing.T) {
 	for prueba, data := range dataHour {
 		t.Run((prueba + " " + data.inputData), func(t *testing.T) {
-			err := modelHour.Validate.ValidateField(data.inputData, data.skip_validation)
+			err := modelHour.ValidateField(data.inputData, data.skip_validation)
 
 			if err != data.expected {
 				log.Println(prueba)
@@ -39,16 +39,16 @@ func Test_InputHour(t *testing.T) {
 }
 
 func Test_TagHour(t *testing.T) {
-	tag := modelHour.Tag.BuildContainerView("1", "name", true)
+	tag := modelHour.BuildContainerView("1", "name", true)
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}
 }
 
 func Test_GoodInputHour(t *testing.T) {
-	for _, data := range modelHour.TestData.GoodTestData() {
+	for _, data := range modelHour.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelHour.Validate.ValidateField(data, false); ok != "" {
+			if ok := modelHour.ValidateField(data, false); ok != "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -56,9 +56,9 @@ func Test_GoodInputHour(t *testing.T) {
 }
 
 func Test_WrongInputHour(t *testing.T) {
-	for _, data := range modelHour.TestData.WrongTestData() {
+	for _, data := range modelHour.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelHour.Validate.ValidateField(data, false); ok == "" {
+			if ok := modelHour.ValidateField(data, false); ok == "" {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

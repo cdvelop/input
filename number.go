@@ -2,17 +2,15 @@ package input
 
 import (
 	"strconv"
-
-	"github.com/cdvelop/model"
 )
 
 // options ej: data-type, data-after=" Años"
 // hidden, el campo se mantendrá oculto
 // title="xxx"
 // for phone ej: `min="7"`, `max="11"`
-func Number(options ...string) *model.Input {
+func Number(options ...string) *number {
 
-	in := number{
+	new := &number{
 		attributes: attributes{
 			Title: `title="solo valores numéricos positivos >= 0 máximo 20 char 18446744073709551615"`,
 			// Pattern: `^[0-9]{1,20}$`,
@@ -23,32 +21,26 @@ func Number(options ...string) *model.Input {
 			Maximum: 20,
 		},
 	}
-	in.Set(options...)
+	new.Set(options...)
 
-	if in.Min != "" {
-		in.Minimum, _ = strconv.Atoi(in.Min)
+	if new.Min != "" {
+		new.Minimum, _ = strconv.Atoi(new.Min)
 	}
 
-	if in.Max != "" {
-		in.Maximum, _ = strconv.Atoi(in.Max)
+	if new.Max != "" {
+		new.Maximum, _ = strconv.Atoi(new.Max)
 	}
 
-	return &model.Input{
-		InputName: "Number",
-		Tag:       &in,
-		Validate:  &in,
-		TestData:  &in,
-	}
-}
-
-func Phone() *model.Input {
-	// Phone `pattern="^[0-9]{7,11}$"`
-	return Number(`min="7"`, `max="11"`)
+	return new
 }
 
 type number struct {
 	attributes
 	Permitted
+}
+
+func (number) InputName() string {
+	return "Number"
 }
 
 func (n number) HtmlName() string {

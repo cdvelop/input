@@ -1,11 +1,7 @@
 package input
 
-import (
-	"github.com/cdvelop/model"
-)
-
-func TextNumCode() *model.Input {
-	in := textNumCode{
+func TextNumCode() *textNumCode {
+	new := &textNumCode{
 		attributes: attributes{
 			// Pattern: `^[A-Za-z0-9-_]{2,15}$`,
 			Title: `title="ej: V235X, 2e-45 525_45w (texto,-_, numero 2 a 15 caracteres)"`,
@@ -19,18 +15,17 @@ func TextNumCode() *model.Input {
 		},
 	}
 
-	return &model.Input{
-		InputName: "TextNumCode",
-		Tag:       &in,
-		Validate:  &in,
-		TestData:  &in,
-	}
+	return new
 }
 
 // texto y numero para código ej: V234
 type textNumCode struct {
 	attributes
 	per Permitted
+}
+
+func (textNumCode) InputName() string {
+	return "TextNumCode"
 }
 
 func (t textNumCode) HtmlName() string {

@@ -1,17 +1,11 @@
 package input
 
-import (
-	"strings"
-
-	"github.com/cdvelop/model"
-)
-
 // options:
 // "multiple"
 // accept="image/*"
 // title="Imágenes jpg"
-func FilePath(options ...string) *model.Input {
-	in := filePath{
+func FilePath(options ...string) *filePath {
+	new := &filePath{
 		attributes: attributes{
 			// Pattern: `^(\.\/|\.\?\\|\/)?([\w\s.-]+[\\\/]?)*$`,
 		},
@@ -19,24 +13,23 @@ func FilePath(options ...string) *model.Input {
 			Letters:    true,
 			Tilde:      false,
 			Numbers:    true,
-			Characters: []rune{'\\', '/', '.'},
+			Characters: []rune{'\\', '/', '.', '_'},
 			Minimum:    1,
 			Maximum:    100,
 		},
 	}
-	in.Set(options...)
+	new.Set(options...)
 
-	return &model.Input{
-		InputName: "FilePath",
-		Tag:       &in,
-		Validate:  &in,
-		TestData:  &in,
-	}
+	return new
 }
 
 type filePath struct {
 	attributes
 	per Permitted
+}
+
+func (f filePath) InputName() string {
+	return "FilePath"
 }
 
 func (f filePath) HtmlName() string {
@@ -47,6 +40,8 @@ func (f filePath) BuildContainerView(id, field_name string, allow_skip_completed
 	return f.BuildHtmlTag(f.HtmlName(), "FilePath", id, field_name, allow_skip_completed)
 }
 
+const errPath = "La ruta no puede comenzar con \\ o / "
+
 // validación con datos de entrada
 func (f filePath) ValidateField(data_in string, skip_validation bool, options ...string) (err string) {
 	if !skip_validation {
@@ -55,19 +50,24 @@ func (f filePath) ValidateField(data_in string, skip_validation bool, options ..
 		}
 
 		if data_in[0] == '\\' {
-			return "La ruta no puede comenzar con \\ o / "
+			return errPath
 		}
 
+		// if data_in == ".\\" { // ruta valida
+		// 	return ""
+		// }
+
 		// Reemplazar las barras diagonales hacia adelante con barras diagonales hacia atrás.
-		data_in = strings.ReplaceAll(data_in, "/", "\\")
+		data_in = String().Replace(data_in, "/", "\\")
 
 		// fmt.Println("ENTRADA: ", data_in)
 
 		// Eliminar barras diagonales dobles al principio y al final de la cadena.
-		data_in = strings.Trim(data_in, "\\")
+		data_in = String().Replace(data_in, "\\", "")
+		// data_in = strings.Trim(data_in, "\\")
 
 		// Dividir la cadena en partes utilizando las barras diagonales como delimitadores.
-		parts := strings.Split(data_in, "\\")
+		parts := String().Split(data_in, "\\")
 
 		// fmt.Println("PARTES: ", parts)
 
