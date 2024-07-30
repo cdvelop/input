@@ -37,7 +37,12 @@ func Test_InputTextSearch(t *testing.T) {
 		t.Run((prueba + data.inputData), func(t *testing.T) {
 			err := modelTextSearch.ValidateField(data.inputData, data.skip_validation)
 
-			if err != data.expected {
+			var err_str string
+			if err != nil {
+				err_str = err.Error()
+			}
+
+			if err_str != data.expected {
 				log.Println(prueba)
 				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", err, data.expected, data.inputData)
 			}
@@ -48,7 +53,7 @@ func Test_InputTextSearch(t *testing.T) {
 func Test_GoodInputTextSearch(t *testing.T) {
 	for _, data := range modelTextSearch.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelTextSearch.ValidateField(data, false); ok != "" {
+			if ok := modelTextSearch.ValidateField(data, false); ok != nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -58,7 +63,7 @@ func Test_GoodInputTextSearch(t *testing.T) {
 func Test_WrongInputTextSearch(t *testing.T) {
 	for _, data := range modelTextSearch.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelTextSearch.ValidateField(data, false); ok == "" {
+			if ok := modelTextSearch.ValidateField(data, false); ok == nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

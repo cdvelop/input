@@ -36,7 +36,12 @@ func Test_InputRut(t *testing.T) {
 		t.Run((prueba), func(t *testing.T) {
 			err := modelRut.ValidateField(data.inputData, data.skip_validation)
 
-			if err != data.expected {
+			var err_str string
+			if err != nil {
+				err_str = err.Error()
+			}
+
+			if err_str != data.expected {
 				log.Println(prueba)
 				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", err, data.expected, data.inputData)
 			}
@@ -60,7 +65,7 @@ func Test_RutDigito(t *testing.T) {
 func Test_GoodInputRut(t *testing.T) {
 	for _, data := range modelRut.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelRut.ValidateField(data, false); ok != "" {
+			if ok := modelRut.ValidateField(data, false); ok != nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -70,7 +75,7 @@ func Test_GoodInputRut(t *testing.T) {
 func Test_WrongInputRut(t *testing.T) {
 	for _, data := range modelRut.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelRut.ValidateField(data, false); ok == "" {
+			if ok := modelRut.ValidateField(data, false); ok == nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

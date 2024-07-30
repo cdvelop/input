@@ -43,12 +43,12 @@ func (d dateAge) BuildContainerView(id, field_name string, allow_skip_completed 
 	return tag
 }
 
-func (d dateAge) ValidateField(data_in string, skip_validation bool, options ...string) (err string) { //en realidad es YYYY-MM-DD
+func (d dateAge) ValidateField(data_in string, skip_validation bool, options ...string) error { //en realidad es YYYY-MM-DD
 	if !skip_validation {
 		return d.day.CheckDateExists(data_in)
 
 	}
-	return ""
+	return nil
 }
 
 func (d dateAge) GoodTestData() (out []string) {

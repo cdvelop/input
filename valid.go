@@ -1,6 +1,7 @@
 package input
 
 import (
+	"errors"
 	"strconv"
 )
 
@@ -23,25 +24,22 @@ const break_line = '\n'
 // const carriage_return = '\r'
 const errorWhiteSpace = "espacios en blanco no permitidos"
 
-func (p Permitted) Validate(text string) (err string) {
+func (p Permitted) Validate(text string) error {
+	var err error
 
 	if p.Minimum != 0 {
 		if len(text) < p.Minimum {
-			return "tamaño mínimo " + strconv.Itoa(p.Minimum) + " caracteres"
+			return errors.New("tamaño mínimo " + strconv.Itoa(p.Minimum) + " caracteres")
 		}
 	}
 
 	if p.Maximum != 0 {
 		if len(text) > p.Maximum {
-			return "tamaño máximo " + strconv.Itoa(p.Maximum) + " caracteres"
+			return errors.New("tamaño máximo " + strconv.Itoa(p.Maximum) + " caracteres")
 		}
 	}
 
 	for _, char := range text {
-
-		// if char ==  {
-		// 	fmt.Printf("\nSALTO DE CARRO [%v]", char)
-		// }
 		if char == tabulation && p.Tabulation {
 			continue
 		}
@@ -55,35 +53,32 @@ func (p Permitted) Validate(text string) (err string) {
 		}
 
 		if p.Letters {
-			// fmt.Printf("Letters [%c]\n", char)
 			if !valid_letters[char] {
-				err = string(char) + " no es una letra"
+				err = errors.New(string(char) + " no es una letra")
 			} else {
-				err = ""
+				err = nil
 				continue
 			}
 		}
 
 		if p.Tilde {
 			if !valid_tilde[char] {
-				err = "tilde " + string(char) + " no soportada"
+				err = errors.New("tilde " + string(char) + " no soportada")
 			} else {
-				err = ""
+				err = nil
 				continue
 			}
 		}
 
 		if p.Numbers {
-			// fmt.Printf("Number [%c]\n", char)
 			if !valid_number[char] {
 				if char == ' ' {
-					err = errorWhiteSpace
+					err = errors.New(errorWhiteSpace)
 				} else {
-					err = string(char) + " no es un numero"
+					err = errors.New(string(char) + " no es un numero")
 				}
-
 			} else {
-				err = ""
+				err = nil
 				continue
 			}
 		}
@@ -98,26 +93,24 @@ func (p Permitted) Validate(text string) (err string) {
 			}
 
 			if found {
-				err = ""
+				err = nil
 				continue
 			} else {
-
 				if char == white_space {
-					return "espacios en blanco no permitidos"
+					return errors.New("espacios en blanco no permitidos")
 				} else if valid_tilde[char] {
-					return string(char) + " con tilde no permitida"
+					return errors.New(string(char) + " con tilde no permitida")
 				} else if char == tabulation {
-					return "tabulation de texto no permitida"
+					return errors.New("tabulation de texto no permitida")
 				} else if char == break_line {
-					return "salto de linea no permitido"
+					return errors.New("salto de linea no permitido")
 				}
-				// fmt.Printf("Character : [%c]\n", char)
-				return "carácter " + string(char) + " no permitido"
+				return errors.New("carácter " + string(char) + " no permitido")
 			}
 		}
 
-		if err != "" {
-			return
+		if err != nil {
+			return err
 		}
 	}
 
@@ -145,9 +138,9 @@ var valid_number = map[rune]bool{
 	'0': true, '1': true, '2': true, '3': true, '4': true, '5': true, '6': true, '7': true, '8': true, '9': true,
 }
 
-func (p Permitted) ValidateField(data_in string, skip_validation bool, options ...string) (err string) {
+func (p Permitted) ValidateField(data_in string, skip_validation bool, options ...string) error {
 	if !skip_validation {
 		return p.Validate(data_in)
 	}
-	return ""
+	return nil
 }

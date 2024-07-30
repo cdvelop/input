@@ -1,76 +1,72 @@
 package input
 
 import (
+	"errors"
 	"strconv"
 )
 
 // validación con datos de entrada
-func (r rut) ValidateField(data_in string, skip_validation bool, options ...string) (err string) {
+func (r rut) ValidateField(data_in string, skip_validation bool, options ...string) error {
 	if skip_validation {
-		return ""
+		return nil
 	}
 
 	const hidden_err = "campo invalido"
 
 	for _, doc := range options {
 		if doc == "ex" {
-			err = r.dni.Validate(data_in)
-			if err != "" && r.hide_typing {
-				return hidden_err
+			err := r.dni.Validate(data_in)
+			if err != nil && r.hide_typing {
+				return errors.New(hidden_err)
 			}
-			return
+			return err
 		} else {
-			err = r.runValidate(data_in)
-			if err != "" && r.hide_typing {
-				return hidden_err
+			err := r.runValidate(data_in)
+			if err != nil && r.hide_typing {
+				return errors.New(hidden_err)
 			}
-			return
+			return err
 		}
 	}
 
 	if r.dni_mode {
 		if String().Contains(data_in, `-`) == 0 {
-			err = r.dni.Validate(data_in)
-			if err != "" && r.hide_typing {
-				return hidden_err
+			err := r.dni.Validate(data_in)
+			if err != nil && r.hide_typing {
+				return errors.New(hidden_err)
 			}
-			return
+			return err
 		}
 	}
 
-	err = r.runValidate(data_in)
-	if err != "" && r.hide_typing {
-		return hidden_err
+	err := r.runValidate(data_in)
+	if err != nil && r.hide_typing {
+		return errors.New(hidden_err)
 	}
 
-	return
-
+	return err
 }
 
 const errCeroRut = "primer dígito no puede ser 0"
 
 // RUT validate formato "7863697-1"
-func (r rut) runValidate(rin string) (err string) {
+func (r rut) runValidate(rin string) error {
 	data, onlyRun, err := RunData(rin)
 	if err != "" {
-		return err
+		return errors.New(err)
 	}
-	// log.Printf("DATA: [%v] RUN:[%v] TAMAÑO DATA: [%v]\n", data, onlyRun, len(data))
 
 	if data[0][0:1] == "0" {
-		return errCeroRut
+		return errors.New(errCeroRut)
 	}
 
 	dv := DvRut(onlyRun)
 
-	// log.Printf("DÍGITO: %v DV DATA: %v\n", dv, strings.ToLower(data[1]))
-
 	if dv != String().ToLowerCase(data[1]) {
-		return "dígito verificador " + data[1] + " inválido"
-
+		return errors.New("dígito verificador " + data[1] + " inválido")
 	}
 
-	return ""
+	return nil
 }
 
 // DvRut retorna dígito verificador de un run

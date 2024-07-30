@@ -1,56 +1,57 @@
 package input
 
-import "strconv"
+import (
+	"errors"
+	"strconv"
+)
 
 // verifica formato 2006-01-02 y si los rangos de el año, mes y dia son validos
 // y si los Dias existen según año y mes bisiesto
-func (d date) CheckDateExists(date string) (err string) {
+
+func (d date) CheckDateExists(date string) error {
 	const this = "CheckDateExists "
-	err = d.CorrectFormatDate(date)
-	if err != "" {
-		return this + err
+	err := d.CorrectFormatDate(date)
+	if err != nil {
+		return errors.New(this + err.Error())
 	}
 
 	year, month, day, er := stringToDateNumberSeparate(date)
 	if er != "" {
-		err = this + er
-		return
+		return errors.New(this + er)
 	}
 
 	// Verificar los rangos para año, mes y día
 
 	if year < 1000 || year > 9999 {
-		return "año fuera de rango"
+		return errors.New("año fuera de rango")
 	}
 
 	if month < 1 || month > 12 {
-		return "mes fuera de rango"
+		return errors.New("mes fuera de rango")
 	}
 
 	month_days := d.MonthDays(year)[month]
 	if day < 1 {
-		return "día no puede ser cero"
+		return errors.New("día no puede ser cero")
 	}
 
 	if day > month_days {
-
-		err = d.SpanishMonth()[month] + " no contiene " + strconv.Itoa(day) + " días."
+		errMsg := d.SpanishMonth()[month] + " no contiene " + strconv.Itoa(day) + " días."
 
 		if !d.IsLeap(year) && month == 2 {
-			err += " año " + date[:4] + " no es bisiesto."
+			errMsg += " año " + date[:4] + " no es bisiesto."
 		}
 
-		return err
+		return errors.New(errMsg)
 	}
 
-	return ""
+	return nil
 }
 
 // verifica formato y valores numéricos en sus posiciones ej: "2006-01-02"
-func (d date) CorrectFormatDate(date string) (err string) {
-
+func (d date) CorrectFormatDate(date string) error {
 	if len(date) != 10 {
-		return "formato de fecha ingresado incorrecto ej: 2006-01-02"
+		return errors.New("formato de fecha ingresado incorrecto ej: 2006-01-02")
 	}
 
 	numMap := map[byte]bool{
@@ -62,16 +63,16 @@ func (d date) CorrectFormatDate(date string) (err string) {
 	for i, char := range date {
 		if i == 4 || i == 7 {
 			if char != '-' {
-				return "formato de fecha ingresado incorrecto ej: 2006-01-02"
+				return errors.New("formato de fecha ingresado incorrecto ej: 2006-01-02")
 			}
 		} else {
 			if !numMap[byte(char)] {
-				return "formato de fecha ingresado incorrecto ej: 2006-01-02"
+				return errors.New("formato de fecha ingresado incorrecto ej: 2006-01-02")
 			}
 		}
 	}
 
-	return ""
+	return nil
 }
 
 func (d date) SpanishMonth() map[int]string {

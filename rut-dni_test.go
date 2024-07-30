@@ -40,7 +40,12 @@ func Test_InputDNI(t *testing.T) {
 		t.Run((prueba), func(t *testing.T) {
 			err := modelDNI.ValidateField(data.inputData, false)
 
-			if err != data.expected {
+			var err_str string
+			if err != nil {
+				err_str = err.Error()
+			}
+
+			if err_str != data.expected {
 				log.Println(prueba)
 				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", err, data.expected, data.inputData)
 			}
@@ -51,7 +56,7 @@ func Test_InputDNI(t *testing.T) {
 func Test_GoodInputDNI(t *testing.T) {
 	for _, data := range modelDNI.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelDNI.ValidateField(data, false); ok != "" {
+			if ok := modelDNI.ValidateField(data, false); ok != nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -61,7 +66,7 @@ func Test_GoodInputDNI(t *testing.T) {
 func Test_WrongInputDNI(t *testing.T) {
 	for _, data := range modelDNI.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelDNI.ValidateField(data, false); ok == "" {
+			if ok := modelDNI.ValidateField(data, false); ok == nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

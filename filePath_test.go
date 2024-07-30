@@ -12,9 +12,9 @@ var (
 	}{
 		// "tres rutas separadas por comas":       {`.\\files\\1234\\,.\\files\\5678\\,.\\images\\ok\\`, "false"},
 		"dirección correcta":                               {".\\files\\1234\\", ""},
-		"dirección correcta sin punto inicio?":             {"\\files\\1234\\", errPath},
+		"dirección correcta sin punto inicio?":             {"\\files\\1234\\", errPath.Error()},
 		"ruta relativa con directorios":                    {".\\files\\1234\\", ""},
-		"ruta relativa sin punto de inicio":                {"\\files\\1234\\", errPath},
+		"ruta relativa sin punto de inicio":                {"\\files\\1234\\", errPath.Error()},
 		"ruta absoluta en Linux":                           {"/home/user/files/", ""},
 		"ruta absoluta sin punto de inicio":                {"/files/1234/", ""},
 		"ruta relativa sin directorios ok?":                {".\\", ""},
@@ -34,7 +34,12 @@ func Test_Check(t *testing.T) {
 		t.Run((prueba + " " + data.inputData), func(t *testing.T) {
 			err := FilePath().ValidateField(data.inputData, false)
 
-			if err != data.expected {
+			var err_str string
+			if err != nil {
+				err_str = err.Error()
+			}
+
+			if err_str != data.expected {
 				log.Println(prueba)
 				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", err, data.expected, data.inputData)
 			}
@@ -52,7 +57,7 @@ func Test_Check(t *testing.T) {
 // func Test_GoodInputFilePath(t *testing.T) {
 // 	for _, data := range input.FilePath().GoodTestData() {
 // 		t.Run((data), func(t *testing.T) {
-// 			if ok := input.FilePath().ValidateField(data, false); ok != "" {
+// 			if ok := input.FilePath().ValidateField(data, false); ok != nil {
 // 				log.Fatalf("resultado [%v] [%v]", ok, data)
 // 			}
 // 		})
@@ -62,7 +67,7 @@ func Test_Check(t *testing.T) {
 // func Test_WrongInputFilePath(t *testing.T) {
 // 	for _, data := range input.FilePath().WrongTestData() {
 // 		t.Run((data), func(t *testing.T) {
-// 			if ok := input.FilePath().ValidateField(data, false); ok == "" {
+// 			if ok := input.FilePath().ValidateField(data, false); ok == nil {
 // 				log.Fatalf("resultado [%v] [%v]", ok, data)
 // 			}
 // 		})

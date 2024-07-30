@@ -30,7 +30,12 @@ func Test_InputPassword(t *testing.T) {
 		t.Run((prueba + ": " + data.inputData), func(t *testing.T) {
 			err := modelPassword.ValidateField(data.inputData, data.skip_validation)
 
-			if err != data.expected {
+			var err_str string
+			if err != nil {
+				err_str = err.Error()
+			}
+
+			if err_str != data.expected {
 				log.Println(prueba)
 				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", err, data.expected, data.inputData)
 			}
@@ -48,7 +53,7 @@ func Test_TagPassword(t *testing.T) {
 func Test_GoodInputPassword(t *testing.T) {
 	for _, data := range modelPassword.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelPassword.ValidateField(data, false); ok != "" {
+			if ok := modelPassword.ValidateField(data, false); ok != nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -58,7 +63,7 @@ func Test_GoodInputPassword(t *testing.T) {
 func Test_WrongInputPassword(t *testing.T) {
 	for _, data := range modelPassword.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelPassword.ValidateField(data, false); ok == "" {
+			if ok := modelPassword.ValidateField(data, false); ok == nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -70,7 +75,7 @@ var modelPasswordMinimal = input.Password(`min="10"`, `max="30"`)
 func Test_GoodInputPasswordMinimal(t *testing.T) {
 	for _, data := range modelPasswordMinimal.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelPasswordMinimal.ValidateField(data, false); ok != "" {
+			if ok := modelPasswordMinimal.ValidateField(data, false); ok != nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -80,7 +85,7 @@ func Test_GoodInputPasswordMinimal(t *testing.T) {
 func Test_WrongInputPasswordMinimal(t *testing.T) {
 	for _, data := range modelPasswordMinimal.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelPasswordMinimal.ValidateField(data, false); ok == "" {
+			if ok := modelPasswordMinimal.ValidateField(data, false); ok == nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

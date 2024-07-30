@@ -45,7 +45,12 @@ func Test_RadioButton(t *testing.T) {
 		t.Run((prueba), func(t *testing.T) {
 			err := modelRadio.ValidateField(data.inputData, data.skip_validation)
 
-			if err != data.expected {
+			var err_str string
+			if err != nil {
+				err_str = err.Error()
+			}
+
+			if err_str != data.expected {
 				log.Println(prueba)
 				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", err, data.expected, data.inputData)
 			}
@@ -76,7 +81,12 @@ func Test_RadioGender(t *testing.T) {
 		t.Run((prueba), func(t *testing.T) {
 			err := modelGenderRadio.ValidateField(data.inputData, data.skip_validation)
 
-			if err != data.expected {
+			var err_str string
+			if err != nil {
+				err_str = err.Error()
+			}
+
+			if err_str != data.expected {
 				log.Println(prueba)
 				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", err, data.expected, data.inputData)
 			}
@@ -87,7 +97,7 @@ func Test_RadioGender(t *testing.T) {
 func Test_GoodInputRadio(t *testing.T) {
 	for _, data := range modelRadio.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelRadio.ValidateField(data, false); ok != "" {
+			if ok := modelRadio.ValidateField(data, false); ok != nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -97,7 +107,7 @@ func Test_GoodInputRadio(t *testing.T) {
 func Test_WrongInputRadio(t *testing.T) {
 	for _, data := range modelRadio.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelRadio.ValidateField(data, false); ok == "" {
+			if ok := modelRadio.ValidateField(data, false); ok == nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

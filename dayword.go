@@ -28,7 +28,7 @@ func (d dayWord) HtmlName() string {
 	return "text"
 }
 
-func (d dayWord) ValidateField(data_in string, skip_validation bool, options ...string) (err string) {
+func (d dayWord) ValidateField(data_in string, skip_validation bool, options ...string) error {
 	return d.month.ValidateField(data_in, skip_validation, options...)
 }
 

@@ -1,5 +1,7 @@
 package input
 
+import "errors"
+
 // name ej: TypeUser
 // sourceData() map[string]string
 func CheckBox(name string, data sourceData) *check {
@@ -27,25 +29,21 @@ func (check) HtmlName() string {
 }
 
 // validación con datos de entrada
-func (c check) ValidateField(data_in string, skip_validation bool, options ...string) (err string) {
+func (c check) ValidateField(data_in string, skip_validation bool, options ...string) error {
 	if !skip_validation {
 		dataInArray := String().Split(data_in, ",")
 		for _, idkeyIn := range dataInArray {
 			if _, exists := (c.Data.SourceData())[idkeyIn]; !exists {
-
 				if idkeyIn != "" {
-					return "valor " + idkeyIn + " no corresponde al checkbox"
-
+					return errors.New("valor " + idkeyIn + " no corresponde al checkbox")
 				} else {
-					return "selección requerida"
+					return errors.New("selección requerida")
 				}
 			}
 		}
-
 	}
-	return ""
+	return nil
 }
-
 func (c check) GoodTestData() (out []string) {
 	for k := range c.Data.SourceData() {
 		out = append(out, k)

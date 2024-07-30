@@ -34,7 +34,12 @@ func Test_Valid(t *testing.T) {
 		t.Run((prueba + " " + data.text), func(t *testing.T) {
 			err := data.Validate(data.text)
 
-			if err != data.expected {
+			var err_str string
+			if err != nil {
+				err_str = err.Error()
+			}
+
+			if err_str != data.expected {
 				log.Println(prueba)
 				log.Fatalf("expectativa [%v] resultado [%v]\n%v", data.expected, err, data.text)
 			}

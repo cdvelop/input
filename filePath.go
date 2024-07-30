@@ -1,5 +1,7 @@
 package input
 
+import "errors"
+
 // options:
 // "multiple"
 // accept="image/*"
@@ -40,47 +42,38 @@ func (f filePath) BuildContainerView(id, field_name string, allow_skip_completed
 	return f.BuildHtmlTag(f.HtmlName(), "FilePath", id, field_name, allow_skip_completed)
 }
 
-const errPath = "La ruta no puede comenzar con \\ o / "
+var errPath = errors.New("La ruta no puede comenzar con \\ o / ")
 
 // validación con datos de entrada
-func (f filePath) ValidateField(data_in string, skip_validation bool, options ...string) (err string) {
+func (f filePath) ValidateField(data_in string, skip_validation bool, options ...string) error {
 	if !skip_validation {
 		if data_in == "" {
-			return "La ruta no puede estar vacía"
+			return errors.New("La ruta no puede estar vacía")
 		}
 
 		if data_in[0] == '\\' {
 			return errPath
 		}
 
-		// if data_in == ".\\" { // ruta valida
-		// 	return ""
-		// }
-
 		// Reemplazar las barras diagonales hacia adelante con barras diagonales hacia atrás.
 		data_in = String().Replace(data_in, "/", "\\")
 
-		// fmt.Println("ENTRADA: ", data_in)
-
 		// Eliminar barras diagonales dobles al principio y al final de la cadena.
 		data_in = String().Replace(data_in, "\\", "")
-		// data_in = strings.Trim(data_in, "\\")
 
 		// Dividir la cadena en partes utilizando las barras diagonales como delimitadores.
 		parts := String().Split(data_in, "\\")
 
-		// fmt.Println("PARTES: ", parts)
-
 		for _, part := range parts {
 			err := f.per.Validate(part)
-			if err != "" {
+			if err != nil {
 				return err
 			}
 		}
 
 		// Verificar que la ruta sea válida para Linux y Windows
 	}
-	return ""
+	return nil
 }
 
 func (f filePath) GoodTestData() (out []string) {

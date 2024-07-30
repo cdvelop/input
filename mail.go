@@ -1,5 +1,7 @@
 package input
 
+import "errors"
+
 func Mail() *mail {
 	new := &mail{
 		attributes: attributes{
@@ -36,23 +38,23 @@ func (mail) HtmlName() string {
 }
 
 // validación con datos de entrada
-func (m mail) ValidateField(data_in string, skip_validation bool, options ...string) (err string) {
+func (m mail) ValidateField(data_in string, skip_validation bool, options ...string) error {
 	if !skip_validation {
 
 		if String().Contains(data_in, "example") != 0 {
-			return data_in + " es un correo de ejemplo"
+			return errors.New(data_in + " es un correo de ejemplo")
 		}
 
 		parts := String().Split(data_in, "@")
 		if len(parts) != 2 {
-			return "error en @ del correo " + data_in
+			return errors.New("error en @ del correo " + data_in)
 		}
 
 		return m.per.Validate(data_in)
 
 	}
 
-	return ""
+	return nil
 }
 
 func (mail) GoodTestData() (out []string) {

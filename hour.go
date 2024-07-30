@@ -1,5 +1,7 @@
 package input
 
+import "errors"
+
 // formato 08:00
 // options: min="08:00", max="17:00"
 func Hour(options ...string) *hour {
@@ -37,17 +39,17 @@ func (h hour) BuildContainerView(id, field_name string, allow_skip_completed boo
 	return h.BuildHtmlTag(h.HtmlName(), "Hour", id, field_name, allow_skip_completed)
 }
 
-func (h hour) ValidateField(data_in string, skip_validation bool, options ...string) (err string) {
+func (h hour) ValidateField(data_in string, skip_validation bool, options ...string) error {
 	if !skip_validation {
 
 		if len(data_in) >= 2 && data_in[0] == '2' && data_in[1] == '4' {
-			return "la hora 24 no existe"
+			return errors.New("la hora 24 no existe")
 		}
 
 		return h.per.Validate(data_in)
 
 	}
-	return ""
+	return nil
 }
 
 func (h hour) GoodTestData() (out []string) {

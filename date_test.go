@@ -32,7 +32,12 @@ func Test_InputDate(t *testing.T) {
 		t.Run((prueba + data.inputData), func(t *testing.T) {
 			err := modelDate.ValidateField(data.inputData, false)
 
-			if err != data.expected {
+			var err_str string
+			if err != nil {
+				err_str = err.Error()
+			}
+
+			if err_str != data.expected {
 				log.Println(prueba)
 				log.Fatalf("resultado: [%v] expectativa: [%v]\n%v", err, data.expected, data.inputData)
 			}
@@ -51,7 +56,7 @@ func Test_TagDate(t *testing.T) {
 func Test_GoodInputDate(t *testing.T) {
 	for _, data := range modelDate.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelDate.ValidateField(data, false); ok != "" {
+			if ok := modelDate.ValidateField(data, false); ok != nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -61,7 +66,7 @@ func Test_GoodInputDate(t *testing.T) {
 func Test_WrongInputDate(t *testing.T) {
 	for _, data := range modelDate.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelDate.ValidateField(data, false); ok == "" {
+			if ok := modelDate.ValidateField(data, false); ok == nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

@@ -1,5 +1,7 @@
 package input
 
+import "errors"
+
 // name ej: FileType,RadioGender...
 // SourceData() map[string]string default: {"1": "Opción 1", "2": "Opción 2"}
 func Radio(name string, data sourceData) *radio {
@@ -33,19 +35,17 @@ func (radio) HtmlName() string {
 }
 
 // validación con datos de entrada
-func (r radio) ValidateField(data_in string, skip_validation bool, options ...string) (err string) {
+func (r radio) ValidateField(data_in string, skip_validation bool, options ...string) error {
 	if !skip_validation {
 		if _, exists := r.Data.SourceData()[data_in]; !exists {
-
 			if data_in != "" {
-				return "valor " + data_in + " no corresponde a botón radio"
-
+				return errors.New("valor " + data_in + " no corresponde a botón radio")
 			} else {
-				return "selección requerida"
+				return errors.New("selección requerida")
 			}
 		}
 	}
-	return ""
+	return nil
 }
 
 func (r radio) GoodTestData() (out []string) {
