@@ -138,9 +138,6 @@ var valid_number = map[rune]bool{
 	'0': true, '1': true, '2': true, '3': true, '4': true, '5': true, '6': true, '7': true, '8': true, '9': true,
 }
 
-func (p Permitted) ValidateField(data_in string, skip_validation bool, options ...string) error {
-	if !skip_validation {
-		return p.Validate(data_in)
-	}
-	return nil
+func (p Permitted) ValidateInput(value string) error {
+	return p.Validate(value)
 }

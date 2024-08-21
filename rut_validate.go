@@ -6,32 +6,29 @@ import (
 )
 
 // validación con datos de entrada
-func (r rut) ValidateField(data_in string, skip_validation bool, options ...string) error {
-	if skip_validation {
-		return nil
-	}
+func (r rut) ValidateInput(value string) error {
 
 	const hidden_err = "campo invalido"
 
-	for _, doc := range options {
-		if doc == "ex" {
-			err := r.dni.Validate(data_in)
-			if err != nil && r.hide_typing {
-				return errors.New(hidden_err)
-			}
-			return err
-		} else {
-			err := r.runValidate(data_in)
-			if err != nil && r.hide_typing {
-				return errors.New(hidden_err)
-			}
-			return err
-		}
-	}
+	// for _, doc := range options {
+	// 	if doc == "ex" {
+	// 		err := r.dni.Validate(value)
+	// 		if err != nil && r.hide_typing {
+	// 			return errors.New(hidden_err)
+	// 		}
+	// 		return err
+	// 	} else {
+	// 		err := r.runValidate(value)
+	// 		if err != nil && r.hide_typing {
+	// 			return errors.New(hidden_err)
+	// 		}
+	// 		return err
+	// 	}
+	// }
 
 	if r.dni_mode {
-		if String().Contains(data_in, `-`) == 0 {
-			err := r.dni.Validate(data_in)
+		if String().Contains(value, `-`) == 0 {
+			err := r.dni.Validate(value)
 			if err != nil && r.hide_typing {
 				return errors.New(hidden_err)
 			}
@@ -39,7 +36,7 @@ func (r rut) ValidateField(data_in string, skip_validation bool, options ...stri
 		}
 	}
 
-	err := r.runValidate(data_in)
+	err := r.runValidate(value)
 	if err != nil && r.hide_typing {
 		return errors.New(hidden_err)
 	}

@@ -37,19 +37,23 @@ type text struct {
 	Permitted
 }
 
-func (text) InputName() string {
-	return "Text"
-}
-
-func (t text) HtmlName() string {
-	if t.hidden {
-		return "hidden"
+func (t text) InputName(customName, htmlName *string) {
+	if customName != nil {
+		*customName = "Text"
 	}
-	return "text"
+	if htmlName != nil {
+		if t.hidden {
+			*htmlName = "hidden"
+		} else {
+			*htmlName = "text"
+		}
+	}
 }
 
-func (t text) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
-	return t.attributes.BuildHtmlTag(t.HtmlName(), "Text", id, field_name, allow_skip_completed)
+func (t text) BuildInputHtml(id, fieldName string) string {
+	var htmlName string
+	t.InputName(nil, &htmlName)
+	return t.attributes.BuildHtmlTag(htmlName, "Text", id, fieldName)
 }
 
 // options: first_name,last_name, phrase

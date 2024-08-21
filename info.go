@@ -13,14 +13,15 @@ type info struct {
 	Value string //valor a mostrar
 }
 
-func (info) InputName() string {
-	return "Info"
+func (i info) InputName(customName, htmlName *string) {
+	if customName != nil {
+		*customName = "Info"
+	}
+	if htmlName != nil {
+		*htmlName = "text"
+	}
 }
 
-func (i info) HtmlName() string {
-	return "text"
-}
-
-func (i info) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
+func (i info) BuildInputHtml(id, fieldName string) string {
 	return i.Value
 }

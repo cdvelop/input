@@ -1,32 +1,32 @@
 package input
 
-func (c check) HtmlTagCrudResponseUiElement(rq_type, destiny_module_name, field_name, text_field, field_value string, required bool) (out string) {
+func (c check) HtmlTagCrudResponseUiElement(rq_type, destiny_module_name, fieldName, text_field, field_value string, required bool) (out string) {
 
 	// var tag string
 	// var id string
-	// var only_internal_contend bool
+	// var onlyInternalContend bool
 
 	// switch rq_type {
 
 	// case "create":
-	// 	id = fmt.Sprintf("form.%v.%v.%v", destiny_module_name, field_name, field_value)
+	// 	id = fmt.Sprintf("form.%v.%v.%v", destiny_module_name, fieldName, field_value)
 
 	// case "update":
-	// 	only_internal_contend = true
+	// 	onlyInternalContend = true
 
 	// case "delete":
 
 	// 	jsonOut, _ := json.Marshal(map[string]string{
-	// 		"name": field_name, "id": field_value,
+	// 		"name": fieldName, "id": field_value,
 	// 	})
 
 	// 	return string(jsonOut)
 	// }
 
-	// tag = c.newTag(id, field_name, field_value, text_field, only_internal_contend)
+	// tag = c.newTag(id, fieldName, field_value, text_field, onlyInternalContend)
 
 	// jsonOut, _ := json.Marshal(map[string]string{
-	// 	"name": field_name, "id": field_value, "tag": tag,
+	// 	"name": fieldName, "id": field_value, "tag": tag,
 	// })
 
 	// return string(jsonOut)

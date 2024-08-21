@@ -10,7 +10,7 @@ type rut struct {
 
 // parámetro opcionales:
 // hide-typing: ocultar información  al escribir
-// dni-mode: acepta documentos extranjeros
+// dni-mode: acepta otro documentos
 func Rut(options ...string) *rut {
 	new := rut{
 		name: "Rut",
@@ -58,24 +58,30 @@ func Rut(options ...string) *rut {
 	return &new
 }
 
-func (r rut) InputName() string {
-	return r.name
-}
-
-func (r rut) HtmlName() string {
-	if r.hide_typing {
-		return "password"
+func (r rut) InputName(customName, htmlName *string) {
+	if customName != nil {
+		*customName = r.name
 	}
-	return "text"
+
+	if htmlName != nil {
+		if r.hide_typing {
+			*htmlName = "password"
+		} else {
+			*htmlName = "text"
+		}
+	}
 }
 
-func (r rut) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
+func (r rut) BuildInputHtml(id, fieldName string) string {
+
+	var htmlName string
+	r.InputName(nil, &htmlName)
 
 	if r.dni_mode {
 
 		tag := `<div class="run-type">`
 
-		tag += r.BuildHtmlTag(r.HtmlName(), r.name, id, field_name, allow_skip_completed)
+		tag += r.BuildHtmlTag(htmlName, r.name, id, fieldName)
 
 		tag += `<div class="rut-label-container"><label class="rut-radio-label">
 			<input type="radio" name="type-dni" data-name="dni-ch" value="ch" checked="checked" onchange="changeDniType(this)">
@@ -92,6 +98,6 @@ func (r rut) BuildContainerView(id, field_name string, allow_skip_completed bool
 		return tag
 
 	} else {
-		return r.BuildHtmlTag(r.HtmlName(), r.name, id, field_name, allow_skip_completed)
+		return r.BuildHtmlTag(htmlName, r.name, id, fieldName)
 	}
 }

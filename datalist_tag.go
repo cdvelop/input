@@ -5,13 +5,13 @@ import (
 	"strconv"
 )
 
-func (d datalist) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
+func (d datalist) BuildInputHtml(id, fieldName string) string {
 	var req string
-	if !allow_skip_completed {
+	if !d.AllowSkipCompleted {
 		req = ` required`
 	}
 
-	tag := `<input list="` + field_name + `" name="` + field_name + `" id="` + id + `"` + req + ` oninput="` + DefaultValidateFunction + `">`
+	tag := `<input list="` + fieldName + `" name="` + fieldName + `" id="` + id + `"` + req + ` oninput="` + DefaultValidateFunction + `">`
 	tag += `<datalist id="` + id + `">`
 	tag += d.GetAllTagOption()
 	tag += `</datalist>`

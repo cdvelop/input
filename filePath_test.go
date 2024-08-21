@@ -32,7 +32,7 @@ func Test_Check(t *testing.T) {
 
 	for prueba, data := range filePathTestData {
 		t.Run((prueba + " " + data.inputData), func(t *testing.T) {
-			err := FilePath().ValidateField(data.inputData, false)
+			err := FilePath().ValidateInput(data.inputData)
 
 			var err_str string
 			if err != nil {
@@ -48,7 +48,7 @@ func Test_Check(t *testing.T) {
 }
 
 // func Test_TagFilePath(t *testing.T) {
-// 	tag := input.FilePath().BuildContainerView("1", "name", true)
+// 	tag := input.FilePath().BuildInputHtml("1", "name", true)
 // 	if tag == "" {
 // 		log.Fatalln("ERROR NO TAG RENDERING ")
 // 	}
@@ -57,7 +57,7 @@ func Test_Check(t *testing.T) {
 // func Test_GoodInputFilePath(t *testing.T) {
 // 	for _, data := range input.FilePath().GoodTestData() {
 // 		t.Run((data), func(t *testing.T) {
-// 			if ok := input.FilePath().ValidateField(data, false); ok != nil {
+// 			if ok := input.FilePath().ValidateInput(data, false); ok != nil {
 // 				log.Fatalf("resultado [%v] [%v]", ok, data)
 // 			}
 // 		})
@@ -67,7 +67,7 @@ func Test_Check(t *testing.T) {
 // func Test_WrongInputFilePath(t *testing.T) {
 // 	for _, data := range input.FilePath().WrongTestData() {
 // 		t.Run((data), func(t *testing.T) {
-// 			if ok := input.FilePath().ValidateField(data, false); ok == nil {
+// 			if ok := input.FilePath().ValidateInput(data, false); ok == nil {
 // 				log.Fatalf("resultado [%v] [%v]", ok, data)
 // 			}
 // 		})

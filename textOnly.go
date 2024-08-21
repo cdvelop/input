@@ -29,19 +29,25 @@ type textOnly struct {
 	Permitted
 }
 
-func (textOnly) InputName() string {
-	return "TextOnly"
-}
-
-func (t textOnly) HtmlName() string {
-	if t.hidden {
-		return "hidden"
+func (t textOnly) InputName(customName, htmlName *string) {
+	if customName != nil {
+		*customName = "TextOnly"
 	}
-	return "text"
+	if htmlName != nil {
+		if t.hidden {
+			*htmlName = "hidden"
+		} else {
+			*htmlName = "text"
+		}
+	}
 }
 
-func (t textOnly) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
-	return t.BuildHtmlTag(t.HtmlName(), "TextOnly", id, field_name, allow_skip_completed)
+func (t textOnly) BuildInputHtml(id, fieldName string) string {
+	htmlName := "text"
+	if t.hidden {
+		htmlName = "hidden"
+	}
+	return t.BuildHtmlTag(htmlName, "TextOnly", id, fieldName)
 }
 
 func (t textOnly) GoodTestData() (out []string) {

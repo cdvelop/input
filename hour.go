@@ -27,29 +27,27 @@ type hour struct {
 	per Permitted
 }
 
-func (hour) InputName() string {
-	return "Hour"
-}
-
-func (hour) HtmlName() string {
-	return "time"
-}
-
-func (h hour) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
-	return h.BuildHtmlTag(h.HtmlName(), "Hour", id, field_name, allow_skip_completed)
-}
-
-func (h hour) ValidateField(data_in string, skip_validation bool, options ...string) error {
-	if !skip_validation {
-
-		if len(data_in) >= 2 && data_in[0] == '2' && data_in[1] == '4' {
-			return errors.New("la hora 24 no existe")
-		}
-
-		return h.per.Validate(data_in)
-
+func (hour) InputName(customName, htmlName *string) {
+	if customName != nil {
+		*customName = "Hour"
 	}
-	return nil
+	if htmlName != nil {
+		*htmlName = "time"
+	}
+}
+
+func (h hour) BuildInputHtml(id, fieldName string) string {
+	return h.BuildHtmlTag("time", "Hour", id, fieldName)
+}
+
+func (h hour) ValidateInput(value string) error {
+
+	if len(value) >= 2 && value[0] == '2' && value[1] == '4' {
+		return errors.New("la hora 24 no existe")
+	}
+
+	return h.per.Validate(value)
+
 }
 
 func (h hour) GoodTestData() (out []string) {

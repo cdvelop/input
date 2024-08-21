@@ -11,24 +11,23 @@ var (
 	modelHour = input.Hour()
 
 	dataHour = map[string]struct {
-		inputData       string
-		skip_validation bool
-		expected        string
+		inputData string
+		expected  string
 	}{
-		"correcto":    {"23:59", false, ""},
-		"correcto 00": {"00:00", false, ""},
-		"correcto 12": {"12:00", false, ""},
+		"correcto":    {"23:59", ""},
+		"correcto 00": {"00:00", ""},
+		"correcto 12": {"12:00", ""},
 
-		"incorrecto 24":       {"24:00", false, "la hora 24 no existe"},
-		"incorrecto sin data": {"", false, "tamaño mínimo 5 caracteres"},
-		"incorrecto carácter": {"13-34", false, "carácter - no permitido"},
+		"incorrecto 24":       {"24:00", "la hora 24 no existe"},
+		"incorrecto sin data": {"", "tamaño mínimo 5 caracteres"},
+		"incorrecto carácter": {"13-34", "carácter - no permitido"},
 	}
 )
 
 func Test_InputHour(t *testing.T) {
 	for prueba, data := range dataHour {
 		t.Run((prueba + " " + data.inputData), func(t *testing.T) {
-			err := modelHour.ValidateField(data.inputData, data.skip_validation)
+			err := modelHour.ValidateInput(data.inputData)
 
 			var err_str string
 			if err != nil {
@@ -44,7 +43,7 @@ func Test_InputHour(t *testing.T) {
 }
 
 func Test_TagHour(t *testing.T) {
-	tag := modelHour.BuildContainerView("1", "name", true)
+	tag := modelHour.BuildInputHtml("1", "name")
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}
@@ -53,7 +52,7 @@ func Test_TagHour(t *testing.T) {
 func Test_GoodInputHour(t *testing.T) {
 	for _, data := range modelHour.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelHour.ValidateField(data, false); ok != nil {
+			if ok := modelHour.ValidateInput(data); ok != nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -63,7 +62,7 @@ func Test_GoodInputHour(t *testing.T) {
 func Test_WrongInputHour(t *testing.T) {
 	for _, data := range modelHour.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelHour.ValidateField(data, false); ok == nil {
+			if ok := modelHour.ValidateInput(data); ok == nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

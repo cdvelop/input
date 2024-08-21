@@ -39,25 +39,25 @@ type number struct {
 	Permitted
 }
 
-func (number) InputName() string {
-	return "Number"
+func (n number) InputName(customName, htmlName *string) {
+	if customName != nil {
+		*customName = "Number"
+	}
+	if htmlName != nil {
+		*htmlName = "number"
+	}
 }
 
-func (n number) HtmlName() string {
-	return "number"
+func (n number) BuildInputHtml(id, fieldName string) string {
+	return n.BuildHtmlTag("number", "Number", id, fieldName)
 }
 
-func (n number) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
-	return n.BuildHtmlTag(n.HtmlName(), "Number", id, field_name, allow_skip_completed)
-
-}
-
-// func (n number) FieldAddEventListener(field_name string) string {
-// 	return fmt.Sprintf(`input_%v.addEventListener("input", InputValidationWithPattern);`, field_name)
+// func (n number) FieldAddEventListener(fieldName string) string {
+// 	return fmt.Sprintf(`input_%v.addEventListener("input", InputValidationWithPattern);`, fieldName)
 // }
 
-// func (n number) FieldRemoveEventListener(field_name string) string {
-// 	return fmt.Sprintf(`input_%v.removeEventListener("input", InputValidationWithPattern);`, field_name)
+// func (n number) FieldRemoveEventListener(fieldName string) string {
+// 	return fmt.Sprintf(`input_%v.removeEventListener("input", InputValidationWithPattern);`, fieldName)
 // }
 
 func (n number) GoodTestData() (out []string) {

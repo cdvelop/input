@@ -17,25 +17,25 @@ var (
 	modelCheck = input.CheckBox("TypeUser", checkData{})
 
 	datacheck = map[string]struct {
-		inputData       string
-		skip_validation bool
-		expected        string
+		inputData string
+
+		expected string
 	}{
-		"una credencial ok?":         {modelCheck.GoodTestData()[0], false, ""},
-		"editor y admin ok?":         {"1,2", false, ""},
-		"todas las credenciales ok?": {`1,3`, false, ""},
-		"0 existe?":                  {"0", false, "valor 0 no corresponde al checkbox"},
-		"-1 valido?":                 {"-1", false, "valor -1 no corresponde al checkbox"},
-		"todas existentes?":          {"1,5", false, "valor 5 no corresponde al checkbox"},
-		"con data?":                  {"", false, "selección requerida"},
-		"sin espacios?":              {"luis ,true, 3", false, "valor luis  no corresponde al checkbox"},
+		"una credencial ok?":         {modelCheck.GoodTestData()[0], ""},
+		"editor y admin ok?":         {"1,2", ""},
+		"todas las credenciales ok?": {`1,3`, ""},
+		"0 existe?":                  {"0", "valor 0 no corresponde al checkbox"},
+		"-1 valido?":                 {"-1", "valor -1 no corresponde al checkbox"},
+		"todas existentes?":          {"1,5", "valor 5 no corresponde al checkbox"},
+		"con data?":                  {"", "selección requerida"},
+		"sin espacios?":              {"luis ,true, 3", "valor luis  no corresponde al checkbox"},
 	}
 )
 
 func Test_check(t *testing.T) {
 	for prueba, data := range datacheck {
 		t.Run((prueba + " " + data.inputData), func(t *testing.T) {
-			err := modelCheck.ValidateField(data.inputData, data.skip_validation)
+			err := modelCheck.ValidateInput(data.inputData)
 
 			var err_str string
 			if err != nil {
@@ -52,7 +52,7 @@ func Test_check(t *testing.T) {
 }
 
 func Test_TagCheck(t *testing.T) {
-	tag := modelCheck.BuildContainerView("1", "name", true)
+	tag := modelCheck.BuildInputHtml("1", "name")
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}
@@ -61,7 +61,7 @@ func Test_TagCheck(t *testing.T) {
 func Test_GoodInputCheck(t *testing.T) {
 	for _, data := range modelCheck.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelCheck.ValidateField(data, false); ok != nil {
+			if ok := modelCheck.ValidateInput(data); ok != nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -71,7 +71,7 @@ func Test_GoodInputCheck(t *testing.T) {
 func Test_WrongInputCheck(t *testing.T) {
 	for _, data := range modelCheck.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelCheck.ValidateField(data, false); ok == nil {
+			if ok := modelCheck.ValidateInput(data); ok == nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

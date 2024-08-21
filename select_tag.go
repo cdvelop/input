@@ -6,13 +6,13 @@ import (
 	"strconv"
 )
 
-func (s selecTag) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
+func (s selecTag) BuildInputHtml(id, fieldName string) string {
 	var req string
-	if !allow_skip_completed {
+	if !s.AllowSkipCompleted {
 		req = ` required`
 	}
 
-	tag := fmt.Sprintf(`<select name="%v" oninput="`+DefaultValidateFunction+`"%v>`, field_name, req)
+	tag := fmt.Sprintf(`<select name="%v" oninput="`+DefaultValidateFunction+`"%v>`, fieldName, req)
 	tag += `<option selected></option>`
 	tag += s.GetAllTagOption()
 	tag += `</select>`

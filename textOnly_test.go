@@ -11,32 +11,32 @@ var (
 	modelTextOnly = input.TextOnly()
 
 	dataTextOnly = map[string]struct {
-		inputData       string
-		skip_validation bool
-		expected        string
+		inputData string
+
+		expected string
 	}{
-		"nombre correcto con punto?":       {"Dr. Maria Jose Diaz Cadiz", false, "carácter . no permitido"},
-		"palabras con tilde?":              {"María Jose Diáz Cadíz", false, "í con tilde no permitida"},
-		"caracteres 47 ok?":                {"juan marcos antonio del rosario de las carmenes", false, ""},
-		"tilde ok ? ":                      {"peréz del rozal", false, "é con tilde no permitida"},
-		"texto con ñ?":                     {"Ñuñez perez", false, ""},
-		"texto correcto + 3 caracteres ":   {"juli", false, ""},
-		"texto correcto 3 caracteres ":     {"luz", false, ""},
-		"oración ok ":                      {"hola que tal", false, ""},
-		"Dato numérico 100 no permitido? ": {"100", false, "carácter 1 no permitido"},
-		"con caracteres y coma ?":          {"los,true, vengadores", false, "carácter , no permitido"},
-		"sin data ok":                      {"", false, "tamaño mínimo 3 caracteres"},
-		"un carácter numérico ?":           {"8", false, "tamaño mínimo 3 caracteres"},
-		"palabra mas numero permitido ?":   {"son 4 bidones", false, "carácter 4 no permitido"},
-		"con paréntesis y numero ?":        {"son {4 bidones}", false, "carácter { no permitido"},
-		"con solo paréntesis ?":            {"son (bidones)", false, "carácter ( no permitido"},
-		"palabras y numero ?":              {"apellido Actualizado 1", false, "carácter 1 no permitido"},
-		"un carácter ok?":                  {"!", false, "tamaño mínimo 3 caracteres"},
+		"nombre correcto con punto?":       {"Dr. Maria Jose Diaz Cadiz", "carácter . no permitido"},
+		"palabras con tilde?":              {"María Jose Diáz Cadíz", "í con tilde no permitida"},
+		"caracteres 47 ok?":                {"juan marcos antonio del rosario de las carmenes", ""},
+		"tilde ok ? ":                      {"peréz del rozal", "é con tilde no permitida"},
+		"texto con ñ?":                     {"Ñuñez perez", ""},
+		"texto correcto + 3 caracteres ":   {"juli", ""},
+		"texto correcto 3 caracteres ":     {"luz", ""},
+		"oración ok ":                      {"hola que tal", ""},
+		"Dato numérico 100 no permitido? ": {"100", "carácter 1 no permitido"},
+		"con caracteres y coma ?":          {"los,true, vengadores", "carácter , no permitido"},
+		"sin data ok":                      {"", "tamaño mínimo 3 caracteres"},
+		"un carácter numérico ?":           {"8", "tamaño mínimo 3 caracteres"},
+		"palabra mas numero permitido ?":   {"son 4 bidones", "carácter 4 no permitido"},
+		"con paréntesis y numero ?":        {"son {4 bidones}", "carácter { no permitido"},
+		"con solo paréntesis ?":            {"son (bidones)", "carácter ( no permitido"},
+		"palabras y numero ?":              {"apellido Actualizado 1", "carácter 1 no permitido"},
+		"un carácter ok?":                  {"!", "tamaño mínimo 3 caracteres"},
 	}
 )
 
 func Test_TagTextOnly(t *testing.T) {
-	tag := modelTextOnly.BuildContainerView("1", "name", true)
+	tag := modelTextOnly.BuildInputHtml("1", "name")
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}
@@ -45,7 +45,7 @@ func Test_TagTextOnly(t *testing.T) {
 func Test_InputTextOnly(t *testing.T) {
 	for prueba, data := range dataTextOnly {
 		t.Run((prueba + data.inputData), func(t *testing.T) {
-			err := modelTextOnly.ValidateField(data.inputData, data.skip_validation)
+			err := modelTextOnly.ValidateInput(data.inputData)
 
 			var err_str string
 			if err != nil {
@@ -63,7 +63,7 @@ func Test_InputTextOnly(t *testing.T) {
 func Test_GoodInputTextOnly(t *testing.T) {
 	for _, data := range modelTextOnly.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelTextOnly.ValidateField(data, false); ok != nil {
+			if ok := modelTextOnly.ValidateInput(data); ok != nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -73,7 +73,7 @@ func Test_GoodInputTextOnly(t *testing.T) {
 func Test_WrongInputTextOnly(t *testing.T) {
 	for _, data := range modelTextOnly.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelTextOnly.ValidateField(data, false); ok == nil {
+			if ok := modelTextOnly.ValidateInput(data); ok == nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

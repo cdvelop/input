@@ -5,7 +5,7 @@ import (
 	"strconv"
 )
 
-func (c check) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
+func (c check) BuildInputHtml(id, fieldName string) string {
 
 	keys := make([]string, 0, len(c.Data.SourceData()))
 	for k := range c.Data.SourceData() {
@@ -31,21 +31,21 @@ func (c check) BuildContainerView(id, field_name string, allow_skip_completed bo
 	for i, value := range keys {
 		id3 := id + "." + strconv.Itoa(i)
 
-		tags += c.newTag(id3, field_name, value, (c.Data.SourceData())[value], c.only_internal_contend)
+		tags += c.newTag(id3, fieldName, value, (c.Data.SourceData())[value])
 	}
 
 	return tags
 }
 
-func (c check) newTag(id, field_name, field_value, text_field string, only_internal_contend bool) string {
+func (c check) newTag(id, fieldName, field_value, text_field string) string {
 
 	if id == "" {
 		id = field_value
 	}
 
-	tag_input := `<input type="checkbox" id="` + id + `" name="` + field_name + `" value="` + field_value + `" onchange="CheckChange(this)"><span>` + text_field + `</span>`
+	tag_input := `<input type="checkbox" id="` + id + `" name="` + fieldName + `" value="` + field_value + `" onchange="CheckChange(this)"><span>` + text_field + `</span>`
 
-	if !c.only_internal_contend {
+	if !c.onlyInternalContend {
 		return `<label data-id="` + field_value + `" for="` + id + `" class="block-label">` + tag_input + `</label>`
 	} else {
 		return tag_input

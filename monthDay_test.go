@@ -11,26 +11,26 @@ var (
 	modelMonthDay = input.MonthDay()
 
 	dataMonthDay = map[string]struct {
-		inputData       string
-		skip_validation bool
-		expected        string
+		inputData string
+
+		expected string
 	}{
-		"dia ok?":                     {"01", false, ""},
-		"caracteres?":                 {"0l", false, "l no es un numero"},
-		"mes ok?":                     {"31", false, ""},
-		"fecha recortada sin año ok?": {"31-01", false, "tamaño máximo 2 caracteres"},
-		"correcto ?":                  {"1-1", false, "tamaño máximo 2 caracteres"},
-		"incorrecto ":                 {"2002-12-03", false, "tamaño máximo 2 caracteres"},
-		"formato incorrecto ":         {"21/12", false, "tamaño máximo 2 caracteres"},
-		"data incorrecta ":            {"0000-00-00", false, "tamaño máximo 2 caracteres"},
-		"toda la data correcta?":      {"", false, "tamaño mínimo 2 caracteres"},
+		"dia ok?":                     {"01", ""},
+		"caracteres?":                 {"0l", "l no es un numero"},
+		"mes ok?":                     {"31", ""},
+		"fecha recortada sin año ok?": {"31-01", "tamaño máximo 2 caracteres"},
+		"correcto ?":                  {"1-1", "tamaño máximo 2 caracteres"},
+		"incorrecto ":                 {"2002-12-03", "tamaño máximo 2 caracteres"},
+		"formato incorrecto ":         {"21/12", "tamaño máximo 2 caracteres"},
+		"data incorrecta ":            {"0000-00-00", "tamaño máximo 2 caracteres"},
+		"toda la data correcta?":      {"", "tamaño mínimo 2 caracteres"},
 	}
 )
 
 func Test_InputMonthDay(t *testing.T) {
 	for prueba, data := range dataMonthDay {
 		t.Run((prueba + data.inputData), func(t *testing.T) {
-			err := modelMonthDay.ValidateField(data.inputData, data.skip_validation)
+			err := modelMonthDay.ValidateInput(data.inputData)
 
 			var err_str string
 			if err != nil {
@@ -46,7 +46,7 @@ func Test_InputMonthDay(t *testing.T) {
 }
 
 func Test_TagMonthDay(t *testing.T) {
-	tag := modelMonthDay.BuildContainerView("1", "name", true)
+	tag := modelMonthDay.BuildInputHtml("1", "name")
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}
@@ -55,7 +55,7 @@ func Test_TagMonthDay(t *testing.T) {
 func Test_GoodInputMonthDay(t *testing.T) {
 	for _, data := range modelMonthDay.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelMonthDay.ValidateField(data, false); ok != nil {
+			if ok := modelMonthDay.ValidateInput(data); ok != nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -65,7 +65,7 @@ func Test_GoodInputMonthDay(t *testing.T) {
 func Test_WrongInputMonthDay(t *testing.T) {
 	for _, data := range modelMonthDay.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelMonthDay.ValidateField(data, false); ok == nil {
+			if ok := modelMonthDay.ValidateInput(data); ok == nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

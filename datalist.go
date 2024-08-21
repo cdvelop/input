@@ -14,27 +14,27 @@ func DataList(name string, data sourceData) *datalist {
 }
 
 type datalist struct {
-	name string
-	Data sourceData
+	name               string
+	Data               sourceData
+	AllowSkipCompleted bool
 }
 
-func (d datalist) InputName() string {
-	return d.name
-}
-
-func (datalist) HtmlName() string {
-	return "datalist"
+func (d datalist) InputName(customName, htmlName *string) {
+	if customName != nil {
+		*customName = d.name
+	}
+	if htmlName != nil {
+		*htmlName = "datalist"
+	}
 }
 
 //  validación con datos de entrada
-func (d datalist) ValidateField(data_in string, skip_validation bool, options ...string) error {
-	if !skip_validation {
-		if _, exists := d.Data.SourceData()[data_in]; !exists {
-			if data_in != "" {
-				return errors.New("valor " + data_in + " no permitido en datalist")
-			} else {
-				return errors.New("selección requerida")
-			}
+func (d datalist) ValidateInput(value string) error {
+	if _, exists := d.Data.SourceData()[value]; !exists {
+		if value != "" {
+			return errors.New("valor " + value + " no permitido en datalist")
+		} else {
+			return errors.New("selección requerida")
 		}
 	}
 	return nil

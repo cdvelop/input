@@ -53,10 +53,18 @@ type textArea struct {
 	Permitted
 }
 
-func (textArea) InputName() string {
-	return "TextArea"
+func (t textArea) InputName(customName, htmlName *string) {
+	if customName != nil {
+		*customName = "TextArea"
+	}
+	if htmlName != nil {
+		*htmlName = "textarea"
+	}
 }
 
+func (t textArea) BuildInputHtml(id, fieldName string) string {
+	return t.BuildHtmlTag("textarea", "TextArea", id, fieldName)
+}
 func (t textArea) ResetParameters() any {
 
 	return &struct {
@@ -68,12 +76,4 @@ func (t textArea) ResetParameters() any {
 		ResetJsFuncName: "ResetTextArea",
 		Enable:          true,
 	}
-}
-
-func (t textArea) HtmlName() string {
-	return "textarea"
-}
-
-func (t textArea) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
-	return t.BuildHtmlTag(t.HtmlName(), "TextArea", id, field_name, allow_skip_completed)
 }

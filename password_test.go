@@ -11,24 +11,24 @@ var (
 	modelPassword = input.Password()
 
 	dataPassword = map[string]struct {
-		inputData       string
-		skip_validation bool
-		expected        string
+		inputData string
+
+		expected string
 	}{
-		"valida numero letras y carácter": {"c0ntra3", false, ""},
-		"valida muchos caracteres":        {"M1 contraseÑ4", false, ""},
-		"valida 8 caracteres":             {"contrase", false, ""},
-		"valida 5 caracteres":             {"contñ", false, ""},
-		"valida solo números":             {"12345", false, ""},
-		"no valida menos de 2":            {"1", false, "tamaño mínimo 5 caracteres"},
-		"sin data":                        {"", false, "tamaño mínimo 5 caracteres"},
+		"valida numero letras y carácter": {"c0ntra3", ""},
+		"valida muchos caracteres":        {"M1 contraseÑ4", ""},
+		"valida 8 caracteres":             {"contrase", ""},
+		"valida 5 caracteres":             {"contñ", ""},
+		"valida solo números":             {"12345", ""},
+		"no valida menos de 2":            {"1", "tamaño mínimo 5 caracteres"},
+		"sin data":                        {"", "tamaño mínimo 5 caracteres"},
 	}
 )
 
 func Test_InputPassword(t *testing.T) {
 	for prueba, data := range dataPassword {
 		t.Run((prueba + ": " + data.inputData), func(t *testing.T) {
-			err := modelPassword.ValidateField(data.inputData, data.skip_validation)
+			err := modelPassword.ValidateInput(data.inputData)
 
 			var err_str string
 			if err != nil {
@@ -44,7 +44,7 @@ func Test_InputPassword(t *testing.T) {
 }
 
 func Test_TagPassword(t *testing.T) {
-	tag := modelPassword.BuildContainerView("1", "name", true)
+	tag := modelPassword.BuildInputHtml("1", "name")
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}
@@ -53,7 +53,7 @@ func Test_TagPassword(t *testing.T) {
 func Test_GoodInputPassword(t *testing.T) {
 	for _, data := range modelPassword.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelPassword.ValidateField(data, false); ok != nil {
+			if ok := modelPassword.ValidateInput(data); ok != nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -63,7 +63,7 @@ func Test_GoodInputPassword(t *testing.T) {
 func Test_WrongInputPassword(t *testing.T) {
 	for _, data := range modelPassword.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelPassword.ValidateField(data, false); ok == nil {
+			if ok := modelPassword.ValidateInput(data); ok == nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -75,7 +75,7 @@ var modelPasswordMinimal = input.Password(`min="10"`, `max="30"`)
 func Test_GoodInputPasswordMinimal(t *testing.T) {
 	for _, data := range modelPasswordMinimal.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelPasswordMinimal.ValidateField(data, false); ok != nil {
+			if ok := modelPasswordMinimal.ValidateInput(data); ok != nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -85,7 +85,7 @@ func Test_GoodInputPasswordMinimal(t *testing.T) {
 func Test_WrongInputPasswordMinimal(t *testing.T) {
 	for _, data := range modelPasswordMinimal.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelPasswordMinimal.ValidateField(data, false); ok == nil {
+			if ok := modelPasswordMinimal.ValidateInput(data); ok == nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

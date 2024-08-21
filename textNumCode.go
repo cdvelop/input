@@ -26,41 +26,39 @@ type textNumCode struct {
 	per Permitted
 }
 
-func (textNumCode) InputName() string {
-	return "TextNumCode"
+func (t textNumCode) InputName(customName, htmlName *string) {
+	if customName != nil {
+		*customName = "TextNumCode"
+	}
+	if htmlName != nil {
+		*htmlName = "tel"
+	}
 }
 
-func (t textNumCode) HtmlName() string {
-	return "tel"
+func (t textNumCode) BuildInputHtml(id, fieldName string) string {
+	return t.BuildHtmlTag("tel", "TextNumCode", id, fieldName)
 }
 
-func (t textNumCode) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
-	return t.BuildHtmlTag(t.HtmlName(), "TextNumCode", id, field_name, allow_skip_completed)
-}
+func (t textNumCode) ValidateInput(value string) error {
 
-func (t textNumCode) ValidateField(data_in string, skip_validation bool, options ...string) error {
-	if !skip_validation {
+	if len(value) >= 1 {
+		var ok bool
+		char := value[0]
 
-		if len(data_in) >= 1 {
-			var ok bool
-			char := data_in[0]
-
-			if valid_letters[rune(char)] {
-				ok = true
-			}
-
-			if valid_number[rune(char)] {
-				ok = true
-			}
-
-			if !ok {
-				return errors.New("no se puede comenzar con " + string(char))
-			}
+		if valid_letters[rune(char)] {
+			ok = true
 		}
 
-		return t.per.Validate(data_in)
+		if valid_number[rune(char)] {
+			ok = true
+		}
+
+		if !ok {
+			return errors.New("no se puede comenzar con " + string(char))
+		}
 	}
-	return nil
+
+	return t.per.Validate(value)
 }
 
 func (t textNumCode) GoodTestData() (out []string) {

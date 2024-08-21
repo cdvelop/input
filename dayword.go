@@ -20,16 +20,24 @@ type dayWord struct {
 	attributes
 }
 
-func (dayWord) InputName() string {
-	return "DayWord"
+func (d dayWord) InputName(customName, htmlName *string) {
+	if customName != nil {
+		*customName = "DayWord"
+	}
+	if htmlName != nil {
+		*htmlName = "text"
+	}
 }
 
-func (d dayWord) HtmlName() string {
-	return "text"
+func (d dayWord) BuildInputHtml(id, fieldName string) string {
+	tag := `<label class="date-spanish">`
+	tag += d.BuildHtmlTag("text", "DayWord", id, fieldName)
+	tag += `</label>`
+	return tag
 }
 
-func (d dayWord) ValidateField(data_in string, skip_validation bool, options ...string) error {
-	return d.month.ValidateField(data_in, skip_validation, options...)
+func (d dayWord) ValidateInput(value string) error {
+	return d.month.ValidateInput(value)
 }
 
 func (d dayWord) GoodTestData() (out []string) {
@@ -38,11 +46,4 @@ func (d dayWord) GoodTestData() (out []string) {
 
 func (d dayWord) WrongTestData() (out []string) {
 	return d.month.WrongTestData()
-}
-
-func (d dayWord) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
-	tag := `<label class="date-spanish">`
-	tag += d.BuildHtmlTag(d.HtmlName(), "DayWord", id, field_name, allow_skip_completed)
-	tag += `</label>`
-	return tag
 }

@@ -26,23 +26,22 @@ type radio struct {
 	attributes
 }
 
-func (r radio) InputName() string {
-	return r.name
-}
-
-func (radio) HtmlName() string {
-	return "radio"
+func (r radio) InputName(customName, htmlName *string) {
+	if customName != nil {
+		*customName = r.name
+	}
+	if htmlName != nil {
+		*htmlName = "radio"
+	}
 }
 
 // validación con datos de entrada
-func (r radio) ValidateField(data_in string, skip_validation bool, options ...string) error {
-	if !skip_validation {
-		if _, exists := r.Data.SourceData()[data_in]; !exists {
-			if data_in != "" {
-				return errors.New("valor " + data_in + " no corresponde a botón radio")
-			} else {
-				return errors.New("selección requerida")
-			}
+func (r radio) ValidateInput(value string) error {
+	if _, exists := r.Data.SourceData()[value]; !exists {
+		if value != "" {
+			return errors.New("valor " + value + " no corresponde a botón radio")
+		} else {
+			return errors.New("selección requerida")
 		}
 	}
 	return nil

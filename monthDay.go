@@ -24,16 +24,17 @@ type monthDay struct {
 	Permitted
 }
 
-func (monthDay) InputName() string {
-	return "MonthDay"
+func (monthDay) InputName(customName, htmlName *string) {
+	if customName != nil {
+		*customName = "MonthDay"
+	}
+	if htmlName != nil {
+		*htmlName = "text"
+	}
 }
 
-func (monthDay) HtmlName() string {
-	return "text"
-}
-
-func (m monthDay) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
-	return m.BuildHtmlTag(m.HtmlName(), "MonthDay", id, field_name, allow_skip_completed)
+func (m monthDay) BuildInputHtml(id, fieldName string) string {
+	return m.BuildHtmlTag("text", "MonthDay", id, fieldName)
 }
 
 func (m monthDay) GoodTestData() (out []string) {

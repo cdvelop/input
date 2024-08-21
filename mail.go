@@ -25,36 +25,33 @@ type mail struct {
 	per Permitted
 }
 
-func (m mail) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
-	return m.BuildHtmlTag(m.HtmlName(), "Mail", id, field_name, allow_skip_completed)
+func (m mail) BuildInputHtml(id, fieldName string) string {
+	return m.BuildHtmlTag("mail", "Mail", id, fieldName)
 }
 
-func (mail) InputName() string {
-	return "Mail"
-}
-
-func (mail) HtmlName() string {
-	return "mail"
+func (mail) InputName(customName, htmlName *string) {
+	if customName != nil {
+		*customName = "Mail"
+	}
+	if htmlName != nil {
+		*htmlName = "mail"
+	}
 }
 
 // validación con datos de entrada
-func (m mail) ValidateField(data_in string, skip_validation bool, options ...string) error {
-	if !skip_validation {
+func (m mail) ValidateInput(value string) error {
 
-		if String().Contains(data_in, "example") != 0 {
-			return errors.New(data_in + " es un correo de ejemplo")
-		}
-
-		parts := String().Split(data_in, "@")
-		if len(parts) != 2 {
-			return errors.New("error en @ del correo " + data_in)
-		}
-
-		return m.per.Validate(data_in)
-
+	if String().Contains(value, "example") != 0 {
+		return errors.New(value + " es un correo de ejemplo")
 	}
 
-	return nil
+	parts := String().Split(value, "@")
+	if len(parts) != 2 {
+		return errors.New("error en @ del correo " + value)
+	}
+
+	return m.per.Validate(value)
+
 }
 
 func (mail) GoodTestData() (out []string) {

@@ -15,24 +15,22 @@ type date struct {
 	attributes
 }
 
-func (date) InputName() string {
-	return "Date"
+func (d date) InputName(customName, htmlName *string) {
+	if customName != nil {
+		*customName = "Date"
+	}
+	if htmlName != nil {
+		*htmlName = "date"
+	}
 }
 
-func (d date) HtmlName() string {
-	return "date"
-}
-
-func (d date) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
-	return d.BuildHtmlTag(d.HtmlName(), "Date", id, field_name, allow_skip_completed)
+func (d date) BuildInputHtml(id, fieldName string) string {
+	return d.BuildHtmlTag("date", "Date", id, fieldName)
 }
 
 // validación con datos de entrada
-func (d date) ValidateField(data_in string, skip_validation bool, options ...string) error {
-	if !skip_validation {
-		return d.CheckDateExists(data_in)
-	}
-	return nil
+func (d date) ValidateInput(value string) error {
+	return d.CheckDateExists(value)
 }
 
 func (d date) GoodTestData() (out []string) {

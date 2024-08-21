@@ -1,6 +1,8 @@
 package input
 
 type attributes struct {
+	AllowSkipCompleted bool //permite que el campo no sea completado
+
 	DataSet string // `data-xxx="nnn"`
 
 	Class string // clase css ej: class="age"

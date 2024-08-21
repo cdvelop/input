@@ -10,31 +10,31 @@ var (
 	modelRut = Rut()
 
 	dataRut = map[string]struct {
-		inputData       string
-		skip_validation bool
-		expected        string
+		inputData string
+
+		expected string
 	}{
-		"sin guion 15890022k":         {"15890022k", false, errGuionRut},
-		"no tiene guion 177344788":    {"177344788", false, errGuionRut},
-		"ok 7863697-1":                {"7863697-1", false, ""},
-		"ok 20373221-K":               {"20373221-k", false, ""},
-		"run validado? permitido?":    {"7863697-W", false, "dígito verificador W inválido"},
-		"cambio dígito a k 7863697-k": {"7863697-k", false, "dígito verificador k inválido"},
-		"cambio dígito a 0 7863697-0": {"7863697-0", false, "dígito verificador 0 inválido"},
-		"ok 14080717-6":               {"14080717-6", false, ""},
-		"incorrecto 14080717-0":       {"14080717-0", false, "dígito verificador 0 inválido"},
-		"correcto cero al inicio? ":   {"07863697-1", false, errCeroRut},
-		"data correcta solo espacio?": {" ", false, errRut01},
-		"ok 17734478-8":               {"17734478-8", false, ""},
-		"caracteres permitidos?":      {`%$"1 `, false, errGuionRut},
-		"no tiene guion 20373221K":    {"20373221k", false, errGuionRut},
+		"sin guion 15890022k":         {"15890022k", errGuionRut},
+		"no tiene guion 177344788":    {"177344788", errGuionRut},
+		"ok 7863697-1":                {"7863697-1", ""},
+		"ok 20373221-K":               {"20373221-k", ""},
+		"run validado? permitido?":    {"7863697-W", "dígito verificador W inválido"},
+		"cambio dígito a k 7863697-k": {"7863697-k", "dígito verificador k inválido"},
+		"cambio dígito a 0 7863697-0": {"7863697-0", "dígito verificador 0 inválido"},
+		"ok 14080717-6":               {"14080717-6", ""},
+		"incorrecto 14080717-0":       {"14080717-0", "dígito verificador 0 inválido"},
+		"correcto cero al inicio? ":   {"07863697-1", errCeroRut},
+		"data correcta solo espacio?": {" ", errRut01},
+		"ok 17734478-8":               {"17734478-8", ""},
+		"caracteres permitidos?":      {`%$"1 `, errGuionRut},
+		"no tiene guion 20373221K":    {"20373221k", errGuionRut},
 	}
 )
 
 func Test_InputRut(t *testing.T) {
 	for prueba, data := range dataRut {
 		t.Run((prueba), func(t *testing.T) {
-			err := modelRut.ValidateField(data.inputData, data.skip_validation)
+			err := modelRut.ValidateInput(data.inputData)
 
 			var err_str string
 			if err != nil {
@@ -50,7 +50,7 @@ func Test_InputRut(t *testing.T) {
 }
 
 func Test_TagRut(t *testing.T) {
-	tag := modelRut.BuildContainerView("1", "name", true)
+	tag := modelRut.BuildInputHtml("1", "name")
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}
@@ -65,7 +65,7 @@ func Test_RutDigito(t *testing.T) {
 func Test_GoodInputRut(t *testing.T) {
 	for _, data := range modelRut.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelRut.ValidateField(data, false); ok != nil {
+			if ok := modelRut.ValidateInput(data); ok != nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -75,7 +75,7 @@ func Test_GoodInputRut(t *testing.T) {
 func Test_WrongInputRut(t *testing.T) {
 	for _, data := range modelRut.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelRut.ValidateField(data, false); ok == nil {
+			if ok := modelRut.ValidateInput(data); ok == nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

@@ -6,7 +6,7 @@ import (
 	"strconv"
 )
 
-func (r radio) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
+func (r radio) BuildInputHtml(id, fieldName string) string {
 	var id3 string
 
 	keys := make([]string, 0, len(r.Data.SourceData()))
@@ -39,7 +39,7 @@ func (r radio) BuildContainerView(id, field_name string, allow_skip_completed bo
 
 		r.Value = `value="` + value + `"`
 
-		tags += r.BuildHtmlTag(r.HtmlName(), r.name, id3, field_name, allow_skip_completed)
+		tags += r.BuildHtmlTag("radio", r.name, id3, fieldName)
 
 		tags += `<span>` + r.Data.SourceData()[value] + `</span>`
 		tags += `</label>`

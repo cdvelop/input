@@ -42,16 +42,17 @@ type password struct {
 	Permitted
 }
 
-func (password) InputName() string {
-	return "Password"
+func (p password) InputName(customName, htmlName *string) {
+	if customName != nil {
+		*customName = "Password"
+	}
+	if htmlName != nil {
+		*htmlName = "password"
+	}
 }
 
-func (p password) HtmlName() string {
-	return "password"
-}
-
-func (p password) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
-	return p.BuildHtmlTag(p.HtmlName(), "Password", id, field_name, allow_skip_completed)
+func (p password) BuildInputHtml(id, fieldName string) string {
+	return p.BuildHtmlTag("password", "Password", id, fieldName)
 }
 
 func (p password) GoodTestData() (out []string) {

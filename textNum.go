@@ -24,16 +24,17 @@ type textNum struct {
 	Permitted
 }
 
-func (textNum) InputName() string {
-	return "TextNum"
+func (t textNum) InputName(customName, htmlName *string) {
+	if customName != nil {
+		*customName = "TextNum"
+	}
+	if htmlName != nil {
+		*htmlName = "text"
+	}
 }
 
-func (t textNum) HtmlName() string {
-	return "text"
-}
-
-func (t textNum) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
-	return t.BuildHtmlTag(t.HtmlName(), "TextNum", id, field_name, allow_skip_completed)
+func (t textNum) BuildInputHtml(id, fieldName string) string {
+	return t.BuildHtmlTag("text", "TextNum", id, fieldName)
 }
 
 func (t textNum) GoodTestData() (out []string) {

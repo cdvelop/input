@@ -5,23 +5,23 @@ import (
 )
 
 // Action:radio,text,number etc TagInput <input type="input"
-func (a attributes) BuildHtmlTag(html_name, input_name, id, field_name string, allow_skip_completed bool) string {
+func (a attributes) BuildHtmlTag(htmlName, customName, id, fieldName string) string {
 
 	var open string
 	var close string
 
-	switch html_name {
+	switch htmlName {
 	case "textarea":
 		open = `<textarea `
 		close = `></textarea>`
 
 	default:
-		open = `<input type="` + html_name + `" `
+		open = `<input type="` + htmlName + `" `
 		close = `>`
 
 	}
 
-	result := open + `id="` + id + `" name="` + field_name + `" data-name="` + input_name + `"`
+	result := open + `id="` + id + `" name="` + fieldName + `" data-name="` + customName + `"`
 
 	elem := reflect.ValueOf(a)
 	elemType := elem.Type()
@@ -30,6 +30,12 @@ func (a attributes) BuildHtmlTag(html_name, input_name, id, field_name string, a
 		field := elem.Field(i)
 
 		attributeName := elemType.Field(i).Name
+
+		// Skip if the field is not of type string
+		if field.Kind() != reflect.String {
+			continue
+		}
+
 		fieldValue := field.Interface().(string)
 
 		if fieldValue != "" {
@@ -37,7 +43,7 @@ func (a attributes) BuildHtmlTag(html_name, input_name, id, field_name string, a
 			switch attributeName {
 
 			case "Pattern":
-				// if !allow_skip_completed {
+				// if !AllowSkipCompleted {
 				// 	result += ` pattern="` + a.Pattern + `"`
 				// }
 
@@ -55,11 +61,11 @@ func (a attributes) BuildHtmlTag(html_name, input_name, id, field_name string, a
 
 	}
 
-	if a.Onchange == "" && a.Onkeyup == "" && a.Oninput == "" && html_name != "hidden" {
+	if a.Onchange == "" && a.Onkeyup == "" && a.Oninput == "" && htmlName != "hidden" {
 		result += ` oninput="` + DefaultValidateFunction + `"`
 	}
 
-	if !allow_skip_completed {
+	if !a.AllowSkipCompleted {
 		result += ` required`
 	}
 

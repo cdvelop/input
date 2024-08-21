@@ -22,33 +22,30 @@ type dateAge struct {
 	day *date
 }
 
-func (dateAge) InputName() string {
-	return "DateAge"
+func (d dateAge) InputName(customName, htmlName *string) {
+	if customName != nil {
+		*customName = "DateAge"
+	}
+	if htmlName != nil {
+		*htmlName = "date"
+	}
 }
 
-func (d dateAge) HtmlName() string {
-	return "date"
-}
-
-func (d dateAge) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
+func (d dateAge) BuildInputHtml(id, fieldName string) string {
 
 	tag := `<label class="age-number"><input data-name="age-number" type="number" min="0" max="150" oninput="AgeInputChange(this)" title="Campo Informativo"></label>`
 
 	tag += `<label class="age-date">`
 
-	tag += d.BuildHtmlTag(d.HtmlName(), "DateAge", id, field_name, allow_skip_completed)
+	tag += d.BuildHtmlTag("date", "DateAge", id, fieldName)
 
 	tag += `</label>`
 
 	return tag
 }
 
-func (d dateAge) ValidateField(data_in string, skip_validation bool, options ...string) error { //en realidad es YYYY-MM-DD
-	if !skip_validation {
-		return d.day.CheckDateExists(data_in)
-
-	}
-	return nil
+func (d dateAge) ValidateInput(value string) error { //en realidad es YYYY-MM-DD
+	return d.day.CheckDateExists(value)
 }
 
 func (d dateAge) GoodTestData() (out []string) {

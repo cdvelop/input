@@ -23,17 +23,17 @@ type textSearch struct {
 	Permitted
 }
 
-func (textSearch) InputName() string {
-	return "TextSearch"
+func (t textSearch) InputName(customName, htmlName *string) {
+	if customName != nil {
+		*customName = "TextSearch"
+	}
+	if htmlName != nil {
+		*htmlName = "search"
+	}
 }
 
-func (t textSearch) HtmlName() string {
-	return "search"
-}
-
-func (t textSearch) BuildContainerView(id, field_name string, allow_skip_completed bool) string {
-	return t.BuildHtmlTag(t.HtmlName(), "TextSearch", id, field_name, allow_skip_completed)
-
+func (t textSearch) BuildInputHtml(id, fieldName string) string {
+	return t.BuildHtmlTag("search", "TextSearch", id, fieldName)
 }
 
 func (s textSearch) GoodTestData() (out []string) {

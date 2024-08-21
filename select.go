@@ -13,27 +13,27 @@ func SelecTag(name string, data sourceData) *selecTag {
 }
 
 type selecTag struct {
-	name string
-	Data sourceData
+	name               string
+	Data               sourceData
+	AllowSkipCompleted bool
 }
 
-func (s selecTag) InputName() string {
-	return s.name
-}
-
-func (s selecTag) HtmlName() string {
-	return "select"
+func (s selecTag) InputName(customName, htmlName *string) {
+	if customName != nil {
+		*customName = s.name
+	}
+	if htmlName != nil {
+		*htmlName = "select"
+	}
 }
 
 // validación con datos de entrada
-func (s selecTag) ValidateField(data_in string, skip_validation bool, options ...string) error {
-	if !skip_validation {
-		if _, exists := s.Data.SourceData()[data_in]; !exists {
-			if data_in != "" {
-				return errors.New("valor " + data_in + " no corresponde al select")
-			} else {
-				return errors.New("selección requerida")
-			}
+func (s selecTag) ValidateInput(value string) error {
+	if _, exists := s.Data.SourceData()[value]; !exists {
+		if value != "" {
+			return errors.New("valor " + value + " no corresponde al select")
+		} else {
+			return errors.New("selección requerida")
 		}
 	}
 	return nil

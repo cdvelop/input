@@ -39,7 +39,7 @@ var (
 func Test_InputTextArea(t *testing.T) {
 	for prueba, data := range dataTextArea {
 		t.Run((prueba + data.inputData), func(t *testing.T) {
-			err := modelTextArea.ValidateField(data.inputData, false)
+			err := modelTextArea.ValidateInput(data.inputData)
 
 			var err_str string
 			if err != nil {
@@ -55,7 +55,7 @@ func Test_InputTextArea(t *testing.T) {
 }
 
 func Test_TagTextArea(t *testing.T) {
-	tag := modelTextArea.BuildContainerView("1", "name", true)
+	tag := modelTextArea.BuildInputHtml("1", "name")
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}
@@ -63,7 +63,7 @@ func Test_TagTextArea(t *testing.T) {
 func Test_GoodInputTextArea(t *testing.T) {
 	for _, data := range modelTextArea.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelTextArea.ValidateField(data, false); ok != nil {
+			if ok := modelTextArea.ValidateInput(data); ok != nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -73,7 +73,7 @@ func Test_GoodInputTextArea(t *testing.T) {
 func Test_WrongInputTextArea(t *testing.T) {
 	for _, data := range modelTextArea.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelTextArea.ValidateField(data, false); ok == nil {
+			if ok := modelTextArea.ValidateInput(data); ok == nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

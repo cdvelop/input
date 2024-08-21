@@ -29,7 +29,7 @@ var (
 )
 
 func Test_TagDNI(t *testing.T) {
-	tag := modelDNI.BuildContainerView("1", "name", true)
+	tag := modelDNI.BuildInputHtml("1", "name")
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}
@@ -38,7 +38,7 @@ func Test_TagDNI(t *testing.T) {
 func Test_InputDNI(t *testing.T) {
 	for prueba, data := range dataDNI {
 		t.Run((prueba), func(t *testing.T) {
-			err := modelDNI.ValidateField(data.inputData, false)
+			err := modelDNI.ValidateInput(data.inputData)
 
 			var err_str string
 			if err != nil {
@@ -56,7 +56,7 @@ func Test_InputDNI(t *testing.T) {
 func Test_GoodInputDNI(t *testing.T) {
 	for _, data := range modelDNI.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelDNI.ValidateField(data, false); ok != nil {
+			if ok := modelDNI.ValidateInput(data); ok != nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -66,7 +66,7 @@ func Test_GoodInputDNI(t *testing.T) {
 func Test_WrongInputDNI(t *testing.T) {
 	for _, data := range modelDNI.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelDNI.ValidateField(data, false); ok == nil {
+			if ok := modelDNI.ValidateInput(data); ok == nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})

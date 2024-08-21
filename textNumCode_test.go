@@ -11,34 +11,34 @@ var (
 	modelTextNumCode = input.TextNumCode()
 
 	dataTextNumCode = map[string]struct {
-		inputData       string
-		skip_validation bool
-		expected        string
+		inputData string
+
+		expected string
 	}{
-		"2 letras un numero ":            {"et1", false, ""},
-		"código venta ":                  {"V22400", false, ""},
-		"código numero y letras":         {"12f", false, ""},
-		"guion bajo permitido?":          {"son_24_botellas", false, ""},
-		"espacio permitido?":             {"1os cuatro", false, "espacios en blanco no permitidos"},
-		"palabras guion_bajo si? ":       {"son_2_cuadros", false, ""},
-		"palabras separadas si?":         {"son 2 cuadros", false, "espacios en blanco no permitidos"},
-		"palabras guion medio si?":       {"son-2-cuadros", false, ""},
-		"solo texto ok":                  {"tres", false, ""},
-		"friday ok":                      {"friday", false, ""},
-		"saturday ok":                    {"saturday", false, ""},
-		"wednesday ok":                   {"Wednesday", false, ""},
-		"month 10 ok":                    {"10", false, ""},
-		"month 03 ok":                    {"03", false, ""},
-		"solo un carácter":               {"3", false, "tamaño mínimo 2 caracteres"},
-		"guion al inicio ? 2 caracteres": {"-1", false, "no se puede comenzar con -"},
-		"/ al inicio 2 caracteres":       {"/1", false, "no se puede comenzar con /"},
+		"2 letras un numero ":            {"et1", ""},
+		"código venta ":                  {"V22400", ""},
+		"código numero y letras":         {"12f", ""},
+		"guion bajo permitido?":          {"son_24_botellas", ""},
+		"espacio permitido?":             {"1os cuatro", "espacios en blanco no permitidos"},
+		"palabras guion_bajo si? ":       {"son_2_cuadros", ""},
+		"palabras separadas si?":         {"son 2 cuadros", "espacios en blanco no permitidos"},
+		"palabras guion medio si?":       {"son-2-cuadros", ""},
+		"solo texto ok":                  {"tres", ""},
+		"friday ok":                      {"friday", ""},
+		"saturday ok":                    {"saturday", ""},
+		"wednesday ok":                   {"Wednesday", ""},
+		"month 10 ok":                    {"10", ""},
+		"month 03 ok":                    {"03", ""},
+		"solo un carácter":               {"3", "tamaño mínimo 2 caracteres"},
+		"guion al inicio ? 2 caracteres": {"-1", "no se puede comenzar con -"},
+		"/ al inicio 2 caracteres":       {"/1", "no se puede comenzar con /"},
 	}
 )
 
 func Test_InputTextNumCode(t *testing.T) {
 	for prueba, data := range dataTextNumCode {
 		t.Run((prueba + data.inputData), func(t *testing.T) {
-			err := modelTextNumCode.ValidateField(data.inputData, data.skip_validation)
+			err := modelTextNumCode.ValidateInput(data.inputData)
 
 			var err_str string
 			if err != nil {
@@ -53,7 +53,7 @@ func Test_InputTextNumCode(t *testing.T) {
 	}
 }
 func Test_TagTextNumCode(t *testing.T) {
-	tag := modelTextNumCode.BuildContainerView("1", "name", true)
+	tag := modelTextNumCode.BuildInputHtml("1", "name")
 	if tag == "" {
 		log.Fatalln("ERROR NO TAG RENDERING ")
 	}
@@ -62,7 +62,7 @@ func Test_TagTextNumCode(t *testing.T) {
 func Test_GoodInputTextNumCode(t *testing.T) {
 	for _, data := range modelTextNumCode.GoodTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelTextNumCode.ValidateField(data, false); ok != nil {
+			if ok := modelTextNumCode.ValidateInput(data); ok != nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
@@ -72,7 +72,7 @@ func Test_GoodInputTextNumCode(t *testing.T) {
 func Test_WrongInputTextNumCode(t *testing.T) {
 	for _, data := range modelTextNumCode.WrongTestData() {
 		t.Run((data), func(t *testing.T) {
-			if ok := modelTextNumCode.ValidateField(data, false); ok == nil {
+			if ok := modelTextNumCode.ValidateInput(data); ok == nil {
 				log.Fatalf("resultado [%v] [%v]", ok, data)
 			}
 		})
